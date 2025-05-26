@@ -20,3 +20,11 @@
 {"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-26T22:37:40.543Z"}
 {"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:37:40.546Z"}
 {"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:37:40.547Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-26T22:39:48.846Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-26T22:39:50.709Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:39:50.712Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:39:50.712Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-26T22:51:33.786Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-26T22:51:35.796Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:51:35.800Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:51:35.800Z"}

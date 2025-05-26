@@ -1,15 +1,14 @@
 import Joi from "joi";
+import { CreateJournalParams } from "../types";
 
-export const validateJournalEntry = (
-  payload: unknown
-): {
-  transcript: string;
-  audio?: {
-    data: string;
-    mimetype: string;
-  };
-} => {
+export const validateJournalEntry = (payload: unknown): CreateJournalParams => {
   const schema = Joi.object({
+    userId: Joi.string().hex().length(24).required().messages({
+      "string.hex": "User ID must be a valid MongoDB ID",
+      "string.length": "User ID must be 24 characters",
+      "any.required": "User ID is required",
+    }),
+
     transcript: Joi.string().min(10).max(10000).required().messages({
       "string.empty": "Transcript cannot be empty",
       "string.min": "Transcript must be at least 10 characters",
@@ -32,7 +31,9 @@ export const validateJournalEntry = (
 
   if (error) {
     throw new Error(
-      `Validation failed: ${error.details.map((d) => d.message).join(", ")}`
+      `Journal validation failed: ${error.details
+        .map((d) => d.message)
+        .join(", ")}`
     );
   }
 
