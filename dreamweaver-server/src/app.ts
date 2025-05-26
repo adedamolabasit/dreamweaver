@@ -1,23 +1,28 @@
-import express from 'express';
-import cors from 'cors';
-import { config } from 'dotenv';
-// import dreamRouter from './routes/dream.routes';
-// import ipRouter from './routes/ip.routes';
-// import errorMiddleware from './middleware/error.middleware';
-
-config(); // Load .env
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import config from "./config/config";
+import routes from "./routes";
+import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
 
-// Middleware
-app.use(cors({ origin: process.env.FRONTEND_URL || '*' }));
+app.use(cors(config.cors));
+app.use(helmet());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Routes
-// app.use('/api/dreams', dreamRouter);
-// app.use('/api/ip', ipRouter);
+if (process.env.NODE_ENV !== "test") {
+  app.use(morgan(config.morgan.format));
+}
 
-// // Error handling
-// app.use(errorMiddleware);
+app.use("/api/v1", routes);
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "UP" });
+});
+
+app.use(errorHandler as express.ErrorRequestHandler); 
 
 export default app;

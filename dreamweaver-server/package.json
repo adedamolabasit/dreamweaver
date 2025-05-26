@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "start": "node dist/server.ts",
+    "start:dev": "concurrently \"tsc --watch\" \"nodemon -q dist/server.ts\"",
+    "dev": "nodemon --exec ts-node src/server.ts",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -12,14 +16,22 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "helmet": "^8.1.0",
     "http-errors": "^2.0.0",
-    "mongoose": "^8.15.0",
+    "joi": "^17.13.3",
+    "mongoose": "^8.15.1",
+    "morgan": "^1.10.0",
+    "winston": "^3.17.0",
     "zod": "^3.25.28"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
+    "@types/joi": "^17.2.3",
+    "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^22.15.21",
+    "concurrently": "^9.1.2",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"

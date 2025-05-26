@@ -1,7 +1,7 @@
 import { Router } from "express";
-
+import dreamRoutes from "./dream.routes";
 const router = Router();
 
-router.post("/journal", () => console.log());
+router.use("/dream", dreamRoutes);
 
 export default router;

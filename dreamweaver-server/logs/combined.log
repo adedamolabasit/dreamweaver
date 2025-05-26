@@ -1,0 +1,22 @@
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:35:42.775Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:35:42.779Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:36:14.165Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:36:14.167Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:36:32.267Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:36:32.272Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-26T22:37:16.686Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-26T22:37:18.533Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:37:18.536Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:37:18.537Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-26T22:37:24.579Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-26T22:37:26.398Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:37:26.400Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:37:26.400Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-26T22:37:31.217Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-26T22:37:33.113Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:37:33.117Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:37:33.117Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-26T22:37:38.219Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-26T22:37:40.543Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-26T22:37:40.546Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-26T22:37:40.547Z"}
