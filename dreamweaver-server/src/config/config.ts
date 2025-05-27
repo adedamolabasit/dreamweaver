@@ -12,6 +12,8 @@ interface Config {
   cors: {
     origin: string | string[];
     credentials: boolean;
+    methods?: string[];
+    allowedHeaders?: string[];
   };
   morgan: {
     format: string;
@@ -20,11 +22,11 @@ interface Config {
     uri: string;
     options: mongoose.ConnectOptions;
   };
+
   isProduction: boolean;
 }
 
 const getMongoUri = (): string => {
-
   const user = encodeURIComponent(process.env.MONGO_USER || "");
   const pass = encodeURIComponent(process.env.MONGO_PASS || "");
   const cluster = process.env.MONGO_CLUSTER || "localhost:27017";
@@ -38,12 +40,15 @@ const config: Config = {
   isProduction: (process.env.NODE_ENV || "development") === "production",
   port: parseInt(process.env.PORT || "5000"),
   cors: {
-    origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(",") : "*",
+    origin: 'http://localhost:5173',
     credentials: process.env.CORS_CREDENTIALS === "true",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   },
   morgan: {
     format: process.env.MORGAN_FORMAT || "dev",
   },
+
   mongo: {
     uri: getMongoUri(),
     options: {

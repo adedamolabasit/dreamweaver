@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Mic, MicOff, Loader2, Send } from "lucide-react";
-
-interface JournalEntry {
-  id: string;
-  content: string;
-  createdAt: Date;
-}
+import { useCreateJournal } from "../hooks/useJournal.";
+import { useJournals } from "../hooks/useJournal.";
+import { JournalEntry } from "../types/types";
+import { CenteredLoader } from "./Loader/CenteredLoader";
 
 const SomniRec: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -17,6 +15,15 @@ const SomniRec: React.FC = () => {
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+
+  const { mutate, isLoading } = useCreateJournal();
+  const { data: journals, isLoading: journalLoading } = useJournals();
+
+  useEffect(() => {
+    if (journals && !journalLoading) {
+      setJournalEntries(journals);
+    }
+  });
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -111,45 +118,41 @@ const SomniRec: React.FC = () => {
     setIsRecording(false);
   };
 
-  const sendToBackend = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     if (!transcript.trim()) return;
 
     setIsProcessing(true);
+    setError("");
 
-    try {
-      const cleanTranscript = transcript.replace(/\[.*?\]/g, "").trim();
+    const cleanTranscript = transcript.replace(/\[.*?\]/g, "").trim();
 
-      let audioBlob: Blob | null = null;
-      if (audioChunksRef.current.length > 0) {
-        audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+    const newEntry: JournalEntry = {
+      id: Date.now().toString(),
+      transcript: cleanTranscript,
+    };
+
+    // Optional: Prepare audio blob if needed later
+    // const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+
+    mutate(
+      { userId: "6834fbe9b6caf9ccf6e3f834", transcript: cleanTranscript },
+      {
+        onSuccess: () => {
+          setJournalEntries((prev) => [newEntry, ...prev]);
+          setTranscript("");
+          audioChunksRef.current = [];
+        },
+        onError: (err: any) => {
+          console.error("Mutation failed:", err);
+          setError("Failed to save journal entry. Please try again.");
+        },
+        onSettled: () => {
+          setIsProcessing(false);
+        },
       }
-
-      // Simulate API call (replace with actual backend integration)
-      const newEntry: JournalEntry = {
-        id: Date.now().toString(),
-        content: cleanTranscript,
-        createdAt: new Date(),
-      };
-
-      // In a real app, you would send to your backend here
-      // await fetch('/api/journal', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ transcript: cleanTranscript, audio: audioBlob }),
-      //   headers: { 'Content-Type': 'application/json' }
-      // });
-
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      setJournalEntries((prev) => [newEntry, ...prev]);
-      setTranscript("");
-      audioChunksRef.current = [];
-    } catch (err) {
-      console.error("Error saving journal entry:", err);
-      setError("Failed to save journal entry. Please try again.");
-    } finally {
-      setIsProcessing(false);
-    }
+    );
   };
 
   const toggleRecording = () => {
@@ -159,6 +162,13 @@ const SomniRec: React.FC = () => {
       startRecording();
     }
   };
+
+  if (isLoading)
+    return (
+      <div>
+        <CenteredLoader />
+      </div>
+    );
 
   return (
     <div className="flex flex-col items-center max-w-4xl mx-auto h-full p-4">
@@ -239,8 +249,8 @@ const SomniRec: React.FC = () => {
 
             {transcript && !isRecording && (
               <button
-                onClick={sendToBackend}
-                disabled={isProcessing}
+                onClick={handleSubmit}
+                disabled={isLoading}
                 className="flex items-center justify-center gap-2 w-full py-3 bg-purple-700 hover:bg-purple-600 rounded-lg transition-colors disabled:opacity-50"
               >
                 {isProcessing ? (
@@ -276,14 +286,15 @@ const SomniRec: React.FC = () => {
               key={entry.id}
               className="p-5 rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300"
             >
-              <p className="font-light">{entry.content}</p>
+              <p className="font-light">{entry.transcript}</p>
               <p className="text-xs text-blue-200/50 mt-2">
-                {entry.createdAt.toLocaleDateString("en-US", {
+                {/* {entry.createdAt.toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
                   hour: "2-digit",
                   minute: "2-digit",
-                })}
+                })} */}
+                {entry.createdAt}
               </p>
             </div>
           ))

@@ -1,8 +1,14 @@
 export interface CreateJournalParams {
   userId: string;
   transcript: string;
-  audio?: {
-    data: string;
-    mimetype: string;
-  };
 }
+
+export interface CreateJournalParams {
+  userId: string;
+  transcript: string;
+}
+
+export interface UpdateJournalParams {
+  transcript: string;
+}
+
