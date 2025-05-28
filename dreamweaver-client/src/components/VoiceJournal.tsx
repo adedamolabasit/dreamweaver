@@ -16,8 +16,9 @@ const SomniRec: React.FC = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
-  const { mutate, isLoading } = useCreateJournal();
+  const { mutate, isPending } = useCreateJournal();
   const { data: journals, isLoading: journalLoading } = useJournals();
+
 
   useEffect(() => {
     if (journals && !journalLoading) {
@@ -163,7 +164,7 @@ const SomniRec: React.FC = () => {
     }
   };
 
-  if (isLoading)
+  if (isPending)
     return (
       <div>
         <CenteredLoader />
@@ -250,7 +251,7 @@ const SomniRec: React.FC = () => {
             {transcript && !isRecording && (
               <button
                 onClick={handleSubmit}
-                disabled={isLoading}
+                disabled={isPending}
                 className="flex items-center justify-center gap-2 w-full py-3 bg-purple-700 hover:bg-purple-600 rounded-lg transition-colors disabled:opacity-50"
               >
                 {isProcessing ? (

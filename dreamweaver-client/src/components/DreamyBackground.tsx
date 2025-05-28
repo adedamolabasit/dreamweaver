@@ -2,71 +2,65 @@ import React, { useEffect, useRef } from 'react';
 
 const DreamyBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
-    
+
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
-    
-    let gradientOffset = 0;
-    
-    const drawBackground = () => {
-      // Create gradient background
-      const gradient = ctx.createLinearGradient(
-        0, 0, 
-        canvas.width, canvas.height
-      );
-      
-      // Deep space colors with animation
-      const t = (Date.now() / 20000) + gradientOffset;
-      gradient.addColorStop(0, `rgba(74, 29, 150, ${0.8 + Math.sin(t) * 0.2})`); // Deep purple
-      gradient.addColorStop(0.3, `rgba(30, 58, 138, ${0.8 + Math.cos(t) * 0.2})`); // Nebula blue
-      gradient.addColorStop(0.6, `rgba(219, 39, 119, ${0.7 + Math.sin(t + 1) * 0.2})`); // Starlight pink
-      gradient.addColorStop(1, `rgba(74, 29, 150, ${0.8 + Math.cos(t + 2) * 0.2})`); // Back to purple
-      
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
-      // Add some stars/particles
-      const numStars = 100;
-      for (let i = 0; i < numStars; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const radius = Math.random() * 1.5;
-        const opacity = Math.random() * 0.8 + 0.2;
-        
+
+    const numStars = 150;
+    const stars = Array.from({ length: numStars }).map(() => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 1.5 + 0.5,
+      twinkle: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.02 + 0.005
+    }));
+
+    const drawStars = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const star of stars) {
+        star.twinkle += star.speed;
+        const alpha = 0.5 + Math.sin(star.twinkle) * 0.5;
+
         ctx.beginPath();
-        ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
         ctx.fill();
       }
-      
-      gradientOffset += 0.001;
-      requestAnimationFrame(drawBackground);
+
+      requestAnimationFrame(drawStars);
     };
-    
-    drawBackground();
-    
+
+    drawStars();
+
     return () => {
       window.removeEventListener('resize', resizeCanvas);
     };
   }, []);
-  
+
   return (
-    <canvas 
-      ref={canvasRef} 
-      className="fixed top-0 left-0 w-full h-full -z-10"
-    />
+    <>
+      <div className="fixed top-0 left-0 w-full h-full -z-30 bg-gradient-to-br from-[#1a103c] to-[#0d1930]" />
+
+      <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)] pointer-events-none" />
+
+      <canvas
+        ref={canvasRef}
+        className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
+      />
+    </>
   );
 };
 

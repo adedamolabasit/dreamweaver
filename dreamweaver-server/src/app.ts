@@ -8,7 +8,13 @@ import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
 
-app.use(cors(config.cors));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    allowedHeaders: ["Content-Type", "x-signature"],
+    credentials: true,
+  })
+);
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,6 +29,6 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "UP" });
 });
 
-app.use(errorHandler as express.ErrorRequestHandler); 
+app.use(errorHandler as express.ErrorRequestHandler);
 
 export default app;

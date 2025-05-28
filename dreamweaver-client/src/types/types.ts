@@ -13,3 +13,16 @@ export interface JournalResponse {
   content: string;
   createdAt: Date;
 }
+
+export interface RegisterUserParams {
+  walletAddress: string;
+}
+
+export interface UpdateUserParams {
+  walletAddress: string;
+  updateData: {
+    username?: string;
+    url?: string;
+    lastSeen?: Date;
+  };
+}

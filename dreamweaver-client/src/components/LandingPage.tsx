@@ -1,8 +1,13 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Sparkles, Brain, Palette, Stars, Wand2 } from 'lucide-react';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Sparkles, Brain, Palette, Stars, Wand2 } from "lucide-react";
+import DreamyBackground from "./DreamyBackground";
 
-const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; description: string }> = ({ icon, title, description }) => (
+const FeatureCard: React.FC<{
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}> = ({ icon, title, description }) => (
   <div className="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 dreamcard">
     <div className="text-amber-300 mb-4">{icon}</div>
     <h3 className="text-xl font-medium mb-2">{title}</h3>
@@ -17,29 +22,33 @@ const LandingPage: React.FC = () => {
     {
       icon: <Brain size={24} />,
       title: "Dream Analysis",
-      description: "Transform your dreams into meaningful insights with our advanced Jungian archetype analysis system."
+      description:
+        "Transform your dreams into meaningful insights with our advanced Jungian archetype analysis system.",
     },
     {
       icon: <Palette size={24} />,
       title: "Visual Storyboarding",
-      description: "Convert dream narratives into vivid visual stories and character designs with AI-powered tools."
+      description:
+        "Convert dream narratives into vivid visual stories and character designs with AI-powered tools.",
     },
     {
       icon: <Stars size={24} />,
       title: "Dream Gallery",
-      description: "Build and explore a personal collection of dream worlds, characters, and narratives."
+      description:
+        "Build and explore a personal collection of dream worlds, characters, and narratives.",
     },
     {
       icon: <Wand2 size={24} />,
       title: "Dream Minting",
-      description: "Turn your most precious dream creations into unique digital assets in the dreamverse."
-    }
+      description:
+        "Turn your most precious dream creations into unique digital assets in the dreamverse.",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900 text-white font-serif relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_70%)]"></div>
-      
+    <div className=" min-h-screen   text-white font-serif relative overflow-hidden">
+      <DreamyBackground />
+
       <div className="relative z-10">
         <header className="container mx-auto px-4 py-6 flex justify-between items-center">
           <div className="flex items-center gap-2">
@@ -57,14 +66,15 @@ const LandingPage: React.FC = () => {
               <br />
               <span className="text-blue-200">Into Reality</span>
             </h1>
-            
+
             <p className="text-xl md:text-2xl text-blue-100/80 font-light mb-8 leading-relaxed">
-              Step into a world where your dreams become tangible creations. 
-              Analyze, visualize, and preserve your dreamscape with our innovative protocol.
+              Step into a world where your dreams become tangible creations.
+              Analyze, visualize, and preserve your dreamscape with our
+              innovative protocol.
             </p>
-            
-            <button 
-              onClick={() => navigate('/dream')}
+
+            <button
+              onClick={() => navigate("/dream")}
               className="px-8 py-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 transition-all duration-300 font-medium text-lg shadow-lg shadow-purple-900/30 group relative overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
@@ -80,16 +90,17 @@ const LandingPage: React.FC = () => {
               <FeatureCard key={index} {...feature} />
             ))}
           </div>
-          
+
           <div className="mt-24 text-center">
             <p className="text-blue-200/60 font-light max-w-2xl mx-auto">
-              Join us in revolutionizing how we capture, understand, and share the infinite possibilities 
-              of our dream experiences. Your journey into the dreamverse begins here.
+              Join us in revolutionizing how we capture, understand, and share
+              the infinite possibilities of our dream experiences. Your journey
+              into the dreamverse begins here.
             </p>
           </div>
         </main>
       </div>
-      
+
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent"></div>
     </div>
   );
