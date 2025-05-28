@@ -1,20 +1,31 @@
 import { RequestHandler } from "express";
-import { validateJournalEntry, validateJournalUpdate } from "../validation/dream.validation";
-import { responseHandler } from "../helpers/response";
-import { 
+import {
+  validateJournalEntry,
+  validateJournalUpdate,
+} from "../validation/dream.validation";
+import { responseHandler } from "../../helpers/response";
+import {
   processCreateDreamJournal,
   processGetAllJournals,
   processGetJournalById,
   processUpdateJournal,
   processDeleteJournal,
-  processGetUserJournals
+  processGetUserJournals,
 } from "../services/dream.service";
 
 export const createDreamJournal: RequestHandler = async (req, res, next) => {
   try {
-    const { userId, transcript } = validateJournalEntry(req.body);
-    const journalEntry = await processCreateDreamJournal({ userId, transcript });
-    res.status(201).json(responseHandler("Dream journal created successfully", journalEntry));
+    const userId = req.user?.id as string;
+    const { transcript } = validateJournalEntry(req.body);
+    const journalEntry = await processCreateDreamJournal({
+      userId,
+      transcript,
+    });
+    res
+      .status(201)
+      .json(
+        responseHandler("Dream journal created successfully", journalEntry)
+      );
   } catch (error) {
     next(error);
   }
@@ -41,7 +52,10 @@ export const getJournalById: RequestHandler = async (req, res, next) => {
 export const updateJournal: RequestHandler = async (req, res, next) => {
   try {
     const { transcript } = validateJournalUpdate(req.body);
-    const updatedJournal = await processUpdateJournal(req.params.id, transcript);
+    const updatedJournal = await processUpdateJournal(
+      req.params.id,
+      transcript
+    );
     res.json(responseHandler("Journal updated", updatedJournal));
   } catch (error) {
     next(error);

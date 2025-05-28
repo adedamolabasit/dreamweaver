@@ -3,7 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import config from "./config/config";
-import routes from "./routes";
+import routes from "../src/modules/routes"
 import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
@@ -11,7 +11,7 @@ const app = express();
 app.use(
   cors({
     origin: "http://localhost:5173",
-    allowedHeaders: ["Content-Type", "x-signature"],
+    allowedHeaders: ["Content-Type", "authorization"],
     credentials: true,
   })
 );

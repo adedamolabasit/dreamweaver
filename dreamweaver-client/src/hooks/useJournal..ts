@@ -19,7 +19,7 @@ export const useCreateJournal = () => {
   return useMutation({
     mutationFn: createJournalEntry,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['journals'] });
+      queryClient.invalidateQueries({ queryKey: ['create-journals'] });
     },
   });
 };

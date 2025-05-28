@@ -6,20 +6,28 @@ export const apiClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true, // Important for cookies
+  withCredentials: true,
 });
 
-// Add request interceptor to include the signature
-apiClient.interceptors.request.use((config) => {
-  const signature = Cookies.get('signature');
-  
-  if (signature) {
-    config.headers['x-signature'] = signature;
+apiClient.interceptors.request.use(
+  (config) => {
+    let token = Cookies.get("token");
+
+    if (token?.startsWith('"') && token?.endsWith('"')) {
+      token = token.slice(1, -1);
+    }
+
+    console.log(token,'zll')
+
+    if (token) {
+      config.headers["authorization"] = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+);
 
 export default apiClient;

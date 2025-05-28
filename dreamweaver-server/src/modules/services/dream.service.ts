@@ -1,8 +1,8 @@
-import { UnauthorizedError, NotFoundError } from "../errors/httpError";
-import { DreamJournalEntry } from "../models/dream.journal.model";
-import { User } from "../models/user.model";
-import { CreateJournalParams, UpdateJournalParams } from "../types";
-import logger from "../utils/logger";
+import { UnauthorizedError, NotFoundError } from "../../errors/httpError";
+import { DreamJournalEntry } from "../../models/dream.journal.model";
+import { User } from "../../models/user.model";
+import { CreateJournalParams, UpdateJournalParams } from "../../types";
+import logger from "../../utils/logger";
 import mongoose from "mongoose";
 
 export const processCreateDreamJournal = async ({
@@ -18,9 +18,9 @@ export const processCreateDreamJournal = async ({
     if (!user) throw new UnauthorizedError("Unauthorized user");
 
     const entry = await DreamJournalEntry.create({ user: userId, transcript });
-    
+
     await User.findByIdAndUpdate(userId, {
-      $addToSet: { journalEntries: entry._id }
+      $addToSet: { journalEntries: entry._id },
     });
 
     return {
@@ -38,7 +38,7 @@ export const processCreateDreamJournal = async ({
 export const processGetAllJournals = async () => {
   try {
     return await DreamJournalEntry.find()
-      .populate('user', 'username')
+      .populate("user", "username")
       .sort({ createdAt: -1 });
   } catch (error) {
     logger.error("Failed to get all journals:", error);
@@ -52,7 +52,10 @@ export const processGetJournalById = async (id: string) => {
       throw new NotFoundError("Journal not found");
     }
 
-    const journal = await DreamJournalEntry.findById(id).populate('user', 'username');
+    const journal = await DreamJournalEntry.findById(id).populate(
+      "user",
+      "username"
+    );
     if (!journal) throw new NotFoundError("Journal not found");
 
     return journal;
@@ -72,7 +75,7 @@ export const processUpdateJournal = async (id: string, transcript: string) => {
       id,
       { transcript },
       { new: true, runValidators: true }
-    ).populate('user', 'username');
+    ).populate("user", "username");
 
     if (!updatedJournal) throw new NotFoundError("Journal not found");
     return updatedJournal;
@@ -93,7 +96,7 @@ export const processDeleteJournal = async (id: string) => {
 
     // Remove reference from user
     await User.findByIdAndUpdate(journal.user, {
-      $pull: { journalEntries: journal._id }
+      $pull: { journalEntries: journal._id },
     });
   } catch (error) {
     logger.error("Failed to delete journal:", error);
@@ -108,7 +111,7 @@ export const processGetUserJournals = async (userId: string) => {
     }
 
     return await DreamJournalEntry.find({ user: userId })
-      .populate('user', 'username')
+      .populate("user", "username")
       .sort({ createdAt: -1 });
   } catch (error) {
     logger.error("Failed to get user journals:", error);

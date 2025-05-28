@@ -4,6 +4,7 @@ import { useCreateJournal } from "../hooks/useJournal.";
 import { useJournals } from "../hooks/useJournal.";
 import { JournalEntry } from "../types/types";
 import { CenteredLoader } from "./Loader/CenteredLoader";
+import moment from "moment";
 
 const SomniRec: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -16,9 +17,12 @@ const SomniRec: React.FC = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
-  const { mutate, isPending } = useCreateJournal();
-  const { data: journals, isLoading: journalLoading } = useJournals();
-
+  const { mutate: creatJournal, isPending } = useCreateJournal();
+  const {
+    data: journals,
+    isLoading: journalLoading,
+    refetch: refetchJournal,
+  } = useJournals();
 
   useEffect(() => {
     if (journals && !journalLoading) {
@@ -134,16 +138,14 @@ const SomniRec: React.FC = () => {
       transcript: cleanTranscript,
     };
 
-    // Optional: Prepare audio blob if needed later
-    // const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
-
-    mutate(
-      { userId: "6834fbe9b6caf9ccf6e3f834", transcript: cleanTranscript },
+    creatJournal(
+      { transcript: cleanTranscript },
       {
         onSuccess: () => {
           setJournalEntries((prev) => [newEntry, ...prev]);
           setTranscript("");
           audioChunksRef.current = [];
+          refetchJournal();
         },
         onError: (err: any) => {
           console.error("Mutation failed:", err);
@@ -289,13 +291,7 @@ const SomniRec: React.FC = () => {
             >
               <p className="font-light">{entry.transcript}</p>
               <p className="text-xs text-blue-200/50 mt-2">
-                {/* {entry.createdAt.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })} */}
-                {entry.createdAt}
+                {moment(entry.createdAt).format("MMMM D, YYYY [at] h:mm A")}
               </p>
             </div>
           ))

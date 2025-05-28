@@ -1,10 +1,9 @@
 import mongoose, { Document } from "mongoose";
-import { v4 as uuidv4 } from "uuid";
 
 export interface IUser extends Document {
   username: string;
   walletAddress: string;
-  url?: string;
+  avatar?: string;
   createdAt: Date;
   lastSeen: Date;
   updatedAt: Date;
@@ -19,14 +18,14 @@ const UserSchema = new mongoose.Schema<IUser>(
       trim: true,
       minlength: 3,
       maxlength: 30,
-      default:'watcher'
+      default:'weaver'
     },
     walletAddress: {
       type: String,
       required: true,
       unique: true,
     },
-    url: {
+    avatar: {
       type: String,
       required: false,
       trim: true,

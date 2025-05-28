@@ -1,4 +1,5 @@
 import React from "react";
+
 import { useNavigate } from "react-router-dom";
 import { Sparkles, Brain, Palette, Stars, Wand2 } from "lucide-react";
 import DreamyBackground from "./DreamyBackground";

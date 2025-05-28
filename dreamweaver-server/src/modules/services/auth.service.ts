@@ -1,6 +1,8 @@
-import { User } from "../models/user.model";
-import logger from "../utils/logger";
-import { RegisterUserParams, UpdateUserParams } from "../types";
+import { User } from "../../models/user.model";
+import logger from "../../utils/logger";
+import { RegisterUserParams, UpdateUserParams } from "../../types";
+import { generateJwt } from "../../utils/jwtGenerator";
+import { RandomUserGenerator } from "../../utils/avatarGenerator";
 
 export const processRegisterUser = async ({
   walletAddress,
@@ -8,16 +10,28 @@ export const processRegisterUser = async ({
   try {
     let user = await User.findOne({ walletAddress });
 
-    if (user) return;
+    if (!user) {
+      const profile = RandomUserGenerator.generateUser();
+      console.log(profile, "profile");
+      user = await User.create({
+        walletAddress,
+        username: profile.username,
+        avatar: profile.avatarUrl,
+      });
+    }
 
-    const userEntry = await User.create({ walletAddress });
+    const jwt = generateJwt({
+      data: {
+        id: user.id.toString(),
+        walletAddress: user.walletAddress,
+      },
+      sub: user.walletAddress,
+    });
 
-    return {
-      _id: userEntry._id,
-    };
+    return { jwt };
   } catch (error) {
-    logger.error("User creation failed:", error);
-    throw new Error("Failed to create user");
+    logger.error("User authentication failed:", error);
+    throw new Error("Failed to authenticate user");
   }
 };
 

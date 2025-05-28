@@ -1,4 +1,3 @@
-// routes/dream.routes.ts
 import { Router } from "express";
 import { 
   createDreamJournal,
@@ -8,11 +7,10 @@ import {
   deleteJournal,
   getUserJournals,
 } from "../controllers/dream.controller";
-import { authenticatedUser } from "../middleware/auth.middleware";
+import { authenticatedUser } from "../../middleware/auth.middleware";
 
 const router = Router();
 
-// Apply middleware to specific routes
 router.post("/journal", authenticatedUser, createDreamJournal);
 router.get("/journals", authenticatedUser, getAllJournals); 
 router.get("/journal/:id", authenticatedUser, getJournalById);

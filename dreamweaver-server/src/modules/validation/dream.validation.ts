@@ -3,9 +3,6 @@ import { CreateJournalParams, UpdateJournalParams } from "../../types";
 
 export const validateJournalEntry = (payload: unknown): CreateJournalParams => {
   const schema = Joi.object({
-    userId: Joi.string().min(1).required().messages({
-      "any.required": "User ID is required",
-    }),
     transcript: Joi.string().min(10).max(10000).required().messages({
       "string.empty": "Transcript cannot be empty",
       "string.min": "Transcript must be at least 10 characters",

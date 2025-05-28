@@ -1,7 +1,8 @@
 import { RequestHandler } from "express";
-import { verifyMessage } from "ethers";
 import { User, IUser } from "../models/user.model";
 import logger from "../utils/logger";
+import { UnauthorizedError } from "../errors/httpError";
+import { verifyJwt } from "../utils/jwtGenerator";
 
 export const authenticatedUser: RequestHandler = async (
   req,
@@ -9,44 +10,45 @@ export const authenticatedUser: RequestHandler = async (
   next
 ): Promise<any> => {
   try {
-    const signature = req.headers["x-signature"] as string;
+    let userPayload;
+    const { authorization } = req.headers;
 
-    if (!signature || signature.includes("[object Promise]")) {
-      return res.status(401).json({
-        success: false,
-        message: "Valid signature required",
-      });
+    if (!authorization || typeof authorization !== "string") {
+      throw new UnauthorizedError("Authorization token is required");
     }
-    const issuer = "dreamweaver";
 
-    let recoveredAddress: string;
+    const [authType, authToken] = req.headers.authorization?.split(" ") || [];
+
+    if (authType !== "Bearer") {
+      throw new UnauthorizedError("Invalid authorization token");
+    }
+
     try {
-      recoveredAddress = verifyMessage(issuer, signature);
+      const payload = verifyJwt(authToken);
+      userPayload = payload;
+
+      console.log(payload, "po");
+
+      if (!payload.sub) {
+        throw new UnauthorizedError("Invalid authorization token");
+      }
+
+      const user = (await User.findOne({
+        walletAddress: payload.sub,
+      })) as IUser;
+
+      if (!user) {
+        throw new UnauthorizedError("Invalid authorization token");
+      }
+
+      req.user = {
+        walletAddress: user.walletAddress,
+        id: user.id,
+        isAuthenticated: true,
+      };
     } catch (error) {
-      return res.status(401).json({
-        success: false,
-        message: "Invalid signature format",
-      });
+      throw new UnauthorizedError("Invalid authorization token");
     }
-
-    const user = (await User.findOne({
-      walletAddress: recoveredAddress.toLowerCase(),
-    })) as IUser;
-
-    if (!user) {
-      return res.status(403).json({
-        success: false,
-        message: "User not registered",
-      });
-    }
-
-    console.log(user);
-
-    // req.user = {
-    //   walletAddress: recoveredAddress,
-    //   id: user.id,
-    //   isAuthenticated: true,
-    // };
 
     next();
   } catch (error) {

@@ -1,5 +1,5 @@
 export interface JournalEntry {
-  id: string;
+  id?: string;
   transcript: string;
   createdAt?: string;
   user?: {
@@ -15,7 +15,9 @@ export interface JournalResponse {
 }
 
 export interface RegisterUserParams {
-  walletAddress: string;
+  jwt: {
+    token: string;
+  };
 }
 
 export interface UpdateUserParams {

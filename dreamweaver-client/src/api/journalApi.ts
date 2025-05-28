@@ -14,7 +14,6 @@ export const fetchUserJournals = async (
 };
 
 export const createJournalEntry = async (payload: {
-  userId: string;
   transcript: string;
 }): Promise<JournalEntry> => {
   const { data } = await apiClient.post("/dream/journal", payload);

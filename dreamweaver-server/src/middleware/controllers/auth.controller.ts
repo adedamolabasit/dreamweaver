@@ -1,14 +1,14 @@
 import { RequestHandler } from "express";
-import { responseHandler } from "../helpers/response";
+import { responseHandler } from "../../helpers/response";
 import {
   validateUser,
   validateUpdateUser,
-} from "../validation/user.validation";
+} from "../../modules/validation/user.validation";
 import {
   processRegisterUser,
   getUserByWalletAddress,
   updateUserData,
-} from "../services/auth.service";
+} from "../../services/auth.service";
 
 export const registerUser: RequestHandler = async (req, res, next) => {
   try {
