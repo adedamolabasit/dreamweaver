@@ -1,5 +1,5 @@
 export interface JournalEntry {
-  id?: string;
+  _id?: string;
   transcript: string;
   createdAt?: string;
   user?: {

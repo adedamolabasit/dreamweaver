@@ -6,10 +6,8 @@ export const fetchAllJournals = async (): Promise<JournalEntry[]> => {
   return data.data;
 };
 
-export const fetchUserJournals = async (
-  userId: string
-): Promise<JournalEntry[]> => {
-  const { data } = await apiClient.get(`/dream/user/${userId}/journals`);
+export const fetchUserJournals = async (): Promise<JournalEntry[]> => {
+  const { data } = await apiClient.get(`/dream/user/journals`);
   return data.data;
 };
 

@@ -1,16 +1,24 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   fetchAllJournals,
+  fetchUserJournals,
   createJournalEntry,
   updateJournalEntry,
   deleteJournalEntry,
-} from '../api/journalApi';
-import { JournalEntry } from '../types/types';
+} from "../api/journalApi";
+import { JournalEntry } from "../types/types";
 
-export const useJournals = () => {
+export const useGetAllJournals = () => {
   return useQuery<JournalEntry[], Error>({
-    queryKey: ['journals'],
+    queryKey: ["all-journals"],
     queryFn: fetchAllJournals,
+  });
+};
+
+export const useGetAllUsersJournals = () => {
+  return useQuery<JournalEntry[], Error>({
+    queryKey: ["users-journals"],
+    queryFn: fetchUserJournals,
   });
 };
 
@@ -19,7 +27,7 @@ export const useCreateJournal = () => {
   return useMutation({
     mutationFn: createJournalEntry,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['create-journals'] });
+      queryClient.invalidateQueries({ queryKey: ["create-journals"] });
     },
   });
 };
@@ -30,7 +38,7 @@ export const useUpdateJournal = () => {
     mutationFn: ({ id, transcript }: { id: string; transcript: string }) =>
       updateJournalEntry(id, transcript),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['journals'] });
+      queryClient.invalidateQueries({ queryKey: ["update-journals"] });
     },
   });
 };
@@ -40,7 +48,7 @@ export const useDeleteJournal = () => {
   return useMutation({
     mutationFn: deleteJournalEntry,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['journals'] });
+      queryClient.invalidateQueries({ queryKey: ["journals"] });
     },
   });
 };

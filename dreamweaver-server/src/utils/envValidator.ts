@@ -6,6 +6,7 @@ export function validateEnv(): void {
     "MONGO_CLUSTER",
     "JWT_SECRET",
     "JWT_EXPIRY_TIME",
+    "OPENAI_API_KEY"
   ];
 
   if (process.env.NODE_ENV === "production") {

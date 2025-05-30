@@ -1,0 +1,249 @@
+[
+  {
+    "dream": "I was running through a dark forest, but something was chasing me — a shadowy figure that I couldn’t see clearly.",
+    "primaryArchetype": "The Shadow",
+    "secondaryArchetypes": ["The Self"],
+    "symbolMeanings": [
+      {
+        "symbol": "dark forest",
+        "meaning": "unknown aspects of the dreamer's mind, confusion or fear, being lost or searching for direction"
+      },
+      {
+        "symbol": "shadowy figure",
+        "meaning": "unresolved issues, hidden fears, aspects of self that the dreamer is not aware of or does not want to confront"
+      }
+    ],
+    "emotionalTone": ["fear", "confusion", "searching"],
+    "potentialConflicts": [
+      "internal conflict with unknown or repressed parts of the self",
+      "struggle with fear and acceptance of hidden aspects"
+    ]
+  },
+  {
+    "dream": "I found a hidden door in my childhood home. When I opened it, there was a glowing garden on the other side, full of light and warmth.",
+    "primaryArchetype": "The Self",
+    "secondaryArchetypes": ["The Child", "The Great Mother"],
+    "symbolMeanings": [
+      {
+        "symbol": "hidden door",
+        "meaning": "unexplored aspects of self"
+      },
+      {
+        "symbol": "childhood home",
+        "meaning": "past influences"
+      },
+      {
+        "symbol": "glowing garden",
+        "meaning": "spiritual enlightenment"
+      }
+    ],
+    "emotionalTone": ["curiosity", "nostalgia", "serenity"],
+    "potentialConflicts": [
+      "fear of the unknown",
+      "clinging to the past",
+      "struggle with self-acceptance"
+    ]
+  },
+  {
+  "primaryArchetype": "The Shadow",
+  "secondaryArchetypes": [
+    "The Hero",
+    "The Trickster",
+    "The Great Mother"
+  ],
+  "symbolMeanings": [
+    {
+      "symbol": "father's car",
+      "meaning": "Authority and inherited aspects of the Self, often related to one's life path or responsibilities passed down through generations."
+    },
+    {
+      "symbol": "market",
+      "meaning": "A place of social exchange and interaction, representing opportunities and the various aspects of one’s persona interacting with the external world."
+    },
+    {
+      "symbol": "locked gate",
+      "meaning": "Represents personal limitations or barriers, possibly unconscious fears or repressed emotions that prevent one from moving forward."
+    },
+    {
+      "symbol": "money",
+      "meaning": "Symbolizes power and the ethical dilemmas it may bring, as well as responsibilities related to wealth."
+    },
+    {
+      "symbol": "thieves",
+      "meaning": "Indicates fear of loss and violation, often pointing to the shadow aspects of the psyche—those parts of ourselves we do not wish to acknowledge."
+    },
+    {
+      "symbol": "strange place",
+      "meaning": "Reflects unfamiliar aspects of oneself or new experiences that are yet to be integrated into the conscious mind."
+    },
+    {
+      "symbol": "military friend",
+      "meaning": "Symbolizes aspects of security and protection, possibly a projection of one’s need to rely on others or personal defense mechanisms."
+    },
+    {
+      "symbol": "rescue",
+      "meaning": "Indicates a need for salvation or assistance, reflecting a dependency on others or aspects of the hero archetype within oneself."
+    }
+  ],
+  "emotionalTone": [
+    "uncertainty",
+    "anxiety",
+    "exploration"
+  ],
+  "potentialConflicts": [
+    "fear of authority",
+    "resistance to change",
+    "struggle with personal limitations"
+  ]
+}
+]
+
+
+
+
+// I was flying over a vast ocean. The sky was endless, and I felt so free and weightless, like I could go anywhere.
+
+// I was running through a dark forest, but something was chasing me — a shadowy figure that I couldn’t see clearly.
+
+// I found a hidden door in my childhood home. When I opened it, there was a glowing garden on the other side, full of light and warmth.
+
+// I met a wise old man who spoke in riddles. He seemed to know things about me I hadn’t realized.
+
+// I was about to give an important speech, but suddenly I lost my voice and couldn’t say a word.
+
+// I transformed into a bird and soared above the trees, feeling the wind beneath my wings.
+
+// I walked through a city, but all the buildings started melting like wax, dripping down the streets.
+
+// I looked in the mirror, but my reflection was fractured and showed a different face — one I didn’t recognize.
+
+// I was swimming in a crystal-clear lake surrounded by towering mountains, feeling calm and peaceful.
+
+// I was frozen, unable to move or scream, while a terrifying presence hovered just out of sight.
+
+// I met a long-lost friend in a sunny meadow, and we laughed like no time had passed at all.
+
+// I wandered through an endless library where the books seemed to write themselves as I watched.
+
+// I climbed a steep mountain, and at the top, there was a glowing portal beckoning me forward.
+
+// I received a mysterious letter with no return address — it felt urgent but I couldn’t read the sender’s name.
+
+// I rode a train that never stopped, passing through surreal and dreamlike landscapes that kept changing.
+
+// I found an old key that opened a chest filled with memories from my childhood — happy and sad.
+
+// I danced at a grand masquerade ball where everyone wore animal masks, and the music was enchanting.
+
+// I was lost in a maze made entirely of mirrors, seeing endless reflections of myself.
+
+// I discovered I could control the weather — making rain fall or sun shine just by willing it.
+
+// I walked on a tightrope high above the city at night, the lights sparkling below me like stars.
+
+
+
+
+Personal 
+
+"I had a dream when I was young not really young but  in the dream shows that probably  was probably in my 21, i'm currently 26, i norrowed my dad's car, i actually do not like taking my dad's car, I just took  his car went to the market i was meant to pick my mom from her shop so I'm getting the parked the car somewhere so and I was on my way to meet my mom but before I reach my mom's shop, i  realize that I had packed the car inside the market in which the market Gates is going to be locked before we get done and it's i can't  move the car from the market if the gate is looked, so i went back to take the car out of the market, but I know that for sure that I didn't go back to the market, i was going to pack the car somewhere else,In the car, i saw a lot of money , it's not really clear how i got the money, but someone on the street noticed that i got that huge amount of money, i really do not know how i go out of the car into a room with a lady, not sure the intention of the lady, some thieves started knocking our door, i tried, we tried to escape them, but we are in a strange place, we don't know where to go, we had to go back, but i had to tell the lady to hold on that will come back, with the money with her, on my way out some of the thieves started to ataack me but i escape, into a room with a lady, the lady was scared at first but i think she was able to help, i called one of my friend in the military, and to my surprise he came in time with soldiers and guns to help me out, so i manage to show him where we are and the rescued me."
+
+
+
+
+
+
+
+
+[
+  {
+    "description": "Under the cloak of dusk, Lila stands before her father's old, rusted car, contemplating the journey ahead. The car, filled with maps and old letters, sparks memories of her father and the weight of her inheritance.",
+    "originalPrompt": "a vintage rusted car at dusk, filled with maps and letters, a young woman standing beside it, thoughtful",
+    "generatedImages": [
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-8RRtqlDs8PT55uTyOIsFbBwC.png?st=2025-05-29T20%3A15%3A04Z&se=2025-05-29T22%3A15%3A04Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T21%3A15%3A04Z&ske=2025-05-30T21%3A15%3A04Z&sks=b&skv=2024-08-04&sig=F386DphlmPWl7wZU2rM/5q14M8b7GoaT3UUr9UISSI4%3D",
+        "style": "Pixar-Style 3D"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-JcUA2yJ56yta5MbhoPcf6dNV.png?st=2025-05-29T20%3A15%3A16Z&se=2025-05-29T22%3A15%3A16Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T10%3A19%3A32Z&ske=2025-05-30T10%3A19%3A32Z&sks=b&skv=2024-08-04&sig=meldesfXO4hQXCf5b/7fkewHrv69cw40gdynm2Tx52w%3D",
+        "style": "Watercolor Painting"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-MOSBsFkN0OmlR1MVwPitnoXW.png?st=2025-05-29T20%3A15%3A30Z&se=2025-05-29T22%3A15%3A30Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T03%3A48%3A11Z&ske=2025-05-30T03%3A48%3A11Z&sks=b&skv=2024-08-04&sig=OHD//j905ZzoHzEU/6n2A8wpxDzEjsvtYK7zL1VIbO8%3D",
+        "style": "Comic Book"
+      }
+    ]
+  },
+  {
+    "description": "At the bustling, enigmatic market, Lila and Ezra navigate through crowded stalls under watchful eyes. The market is a labyrinth of colors and mysteries, reflecting Lila's internal chaos and quest for understanding.",
+    "originalPrompt": "busy mystical market with colorful stalls and diverse crowd, young woman and military man walking cautiously",
+    "generatedImages": [
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-5lAsgSsDin3JXVtwHYrcTIwh.png?st=2025-05-29T20%3A15%3A44Z&se=2025-05-29T22%3A15%3A44Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T03%3A32%3A59Z&ske=2025-05-30T03%3A32%3A59Z&sks=b&skv=2024-08-04&sig=kQlP04jOOTGH80G/kw39r5WxVWjCo4BgDgdHP26C%2BRE%3D",
+        "style": "Pixar-Style 3D"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-Y93SqKv1G2F4axUIt0ng2zBF.png?st=2025-05-29T20%3A15%3A56Z&se=2025-05-29T22%3A15%3A56Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T21%3A15%3A56Z&ske=2025-05-30T21%3A15%3A56Z&sks=b&skv=2024-08-04&sig=MH3lIDlDNXeZATbQgcoDH%2BIvnViGT4CGiCdZS1KgLdM%3D",
+        "style": "Watercolor Painting"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-CC7gjNOnURzjptHRpvzXOhpY.png?st=2025-05-29T20%3A16%3A09Z&se=2025-05-29T22%3A16%3A09Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T15%3A13%3A45Z&ske=2025-05-30T15%3A13%3A45Z&sks=b&skv=2024-08-04&sig=NHKeqf1avzb6VCFhntBHjmbVTP1eFW1I7fBz8YnIRlc%3D",
+        "style": "Comic Book"
+      }
+    ]
+  },
+  {
+    "description": "Confronted by the imposing locked gate, Lila faces the Gatekeeper. Their dialogue is a battle of wits and wills, revealing Lila's determination and the secrets that the gate holds.",
+    "originalPrompt": "young woman confronting a mysterious gatekeeper at a large ornate locked gate, tense atmosphere",
+    "generatedImages": [
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-MiXL4GyO7S5wCjZcf6ekVciv.png?st=2025-05-29T20%3A16%3A27Z&se=2025-05-29T22%3A16%3A27Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-28T23%3A07%3A17Z&ske=2025-05-29T23%3A07%3A17Z&sks=b&skv=2024-08-04&sig=hnN2szrDbNvPLtATbsFUAldTGUfszVIkqWGS6Mvi2MQ%3D",
+        "style": "Pixar-Style 3D"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-xJSAEk9dyeINY08ZDlmNqMIE.png?st=2025-05-29T20%3A16%3A39Z&se=2025-05-29T22%3A16%3A39Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T15%3A36%3A07Z&ske=2025-05-30T15%3A36%3A07Z&sks=b&skv=2024-08-04&sig=%2BuhjqeKr6cau%2B6wSAwR%2BVMzy8GcJ0a1KIFQjFcaI1xI%3D",
+        "style": "Watercolor Painting"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-nWGeRZMF6pHwOn3m9KTTN1OV.png?st=2025-05-29T20%3A16%3A52Z&se=2025-05-29T22%3A16%3A52Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T04%3A56%3A14Z&ske=2025-05-30T04%3A56%3A14Z&sks=b&skv=2024-08-04&sig=QnAwKPwhZ2vCq7qBETMaRQHEqFlOMQpMOV0gQOna8XA%3D",
+        "style": "Comic Book"
+      }
+    ]
+  },
+  {
+    "description": "In a hidden alley of the market, Lila battles The Shadow to retrieve the stolen car. The fight is intense, symbolizing her struggle with her darker self and her resolve to emerge victorious.",
+    "originalPrompt": "intense confrontation between a young woman and a shadowy figure in a dark alley of a mystical market",
+    "generatedImages": [
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-gQ5vmY1YrXdcSCrE75HBTJRJ.png?st=2025-05-29T20%3A17%3A02Z&se=2025-05-29T22%3A17%3A02Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T21%3A17%3A02Z&ske=2025-05-30T21%3A17%3A02Z&sks=b&skv=2024-08-04&sig=3urwzlREvzhsim3BvGTBq4XchhjxEdUK/LQ5AShSgW8%3D",
+        "style": "Pixar-Style 3D"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-UKCKwe2HkKY23XiddK4KzTwB.png?st=2025-05-29T20%3A17%3A14Z&se=2025-05-29T22%3A17%3A14Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T21%3A01%3A37Z&ske=2025-05-30T21%3A01%3A37Z&sks=b&skv=2024-08-04&sig=OLqUX6F4mv7zwFHPqNejs6V7lSzFWNDfOuSwZslczzs%3D",
+        "style": "Watercolor Painting"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-XQgjT7aOMwjvxVMHa1BNTmRV.png?st=2025-05-29T20%3A17%3A26Z&se=2025-05-29T22%3A17%3A26Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T05%3A02%3A50Z&ske=2025-05-30T05%3A02%3A50Z&sks=b&skv=2024-08-04&sig=0khtZJ07OXCF448p9omP/tcZbPzyxQ0WbIIImoBMNzM%3D",
+        "style": "Comic Book"
+      }
+    ]
+  },
+  {
+    "description": "With the car reclaimed and her fears faced, Lila and Ezra drive away from the market. The journey is not just a return but a new beginning, with Lila at the wheel, charting her own course.",
+    "originalPrompt": "young woman and military man driving an old car away from a mystical market at dawn, sense of new beginnings",
+    "generatedImages": [
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-Ye1LOYDTBTlPqy5SxgS8wPQz.png?st=2025-05-29T20%3A17%3A38Z&se=2025-05-29T22%3A17%3A38Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T10%3A14%3A41Z&ske=2025-05-30T10%3A14%3A41Z&sks=b&skv=2024-08-04&sig=d0Vy9X1F92ytKn4VIhAXTxmdYnDXuD7p8sCazBIrl3c%3D",
+        "style": "Pixar-Style 3D"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-IJet77QK7DEynPgN3KaNZNG1.png?st=2025-05-29T20%3A17%3A51Z&se=2025-05-29T22%3A17%3A51Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T18%3A34%3A09Z&ske=2025-05-30T18%3A34%3A09Z&sks=b&skv=2024-08-04&sig=bdTLYMi%2BvvSsLuZE3U2VcE2NNRm5p/Dawviv8/%2Bc7G0%3D",
+        "style": "Watercolor Painting"
+      },
+      {
+        "url": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-MzHLj6QdzaK29EJPoD1nh1qJ/user-mwVvNU3LHWeegZpGLnM7iNiH/img-8ZBaG37iGyylgQ5DW4LPe9AF.png?st=2025-05-29T20%3A18%3A04Z&se=2025-05-29T22%3A18%3A04Z&sp=r&sv=2024-08-04&sr=b&rscd=inline&rsct=image/png&skoid=8b33a531-2df9-46a3-bc02-d4b1430a422c&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-29T21%3A17%3A02Z&ske=2025-05-30T21%3A17%3A02Z&sks=b&skv=2024-08-04&sig=mnU%2Bg6bjLlEzoIvmPHmR0kB6%2Bzic4oiPNW4Owhpn8pA%3D",
+        "style": "Comic Book"
+      }
+    ]
+  }
+]

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Mic, MicOff, Loader2, Send } from "lucide-react";
 import { useCreateJournal } from "../hooks/useJournal.";
-import { useJournals } from "../hooks/useJournal.";
+import { useGetAllJournals } from "../hooks/useJournal.";
 import { JournalEntry } from "../types/types";
 import { CenteredLoader } from "./Loader/CenteredLoader";
 import moment from "moment";
@@ -22,7 +22,7 @@ const SomniRec: React.FC = () => {
     data: journals,
     isLoading: journalLoading,
     refetch: refetchJournal,
-  } = useJournals();
+  } = useGetAllJournals();
 
   useEffect(() => {
     if (journals && !journalLoading) {
@@ -134,7 +134,7 @@ const SomniRec: React.FC = () => {
     const cleanTranscript = transcript.replace(/\[.*?\]/g, "").trim();
 
     const newEntry: JournalEntry = {
-      id: Date.now().toString(),
+      _id: Date.now().toString(),
       transcript: cleanTranscript,
     };
 
@@ -286,7 +286,7 @@ const SomniRec: React.FC = () => {
         ) : (
           journalEntries.map((entry) => (
             <div
-              key={entry.id}
+              key={entry._id}
               className="p-5 rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300"
             >
               <p className="font-light">{entry.transcript}</p>

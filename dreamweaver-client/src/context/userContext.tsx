@@ -10,7 +10,7 @@ interface User {
 interface UserContextType {
   token: string | null;
   setUserToken: (token: string) => void;
-  clearUser: () => void;
+  clearUserToken: () => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -35,13 +35,13 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     Cookies.set("token", JSON.stringify(token), { expires: 7 });
   };
 
-  const clearUser = () => {
+  const clearUserToken = () => {
     Cookies.remove("token");
     setToken(null);
   };
 
   return (
-    <UserContext.Provider value={{ token, setUserToken, clearUser }}>
+    <UserContext.Provider value={{ token, setUserToken, clearUserToken }}>
       {children}
     </UserContext.Provider>
   );

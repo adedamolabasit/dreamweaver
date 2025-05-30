@@ -2,8 +2,6 @@ import { useEffect, useRef } from "react";
 import { Mic, PenTool, Brain, Images, Star } from "lucide-react";
 import { Sparkles, Wallet, LogOut } from "lucide-react";
 import { useAuthUser } from "../hooks/useAuth";
-import Cookies from "js-cookie";
-import apiClient from "../api/apiClient";
 import { useConnectModal } from "@tomo-inc/tomo-evm-kit";
 import { useAccount, useDisconnect } from "wagmi";
 import { useUser } from "../context/userContext";
@@ -24,7 +22,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
   const { mutate: authUser } = useAuthUser();
 
-  const { setUserToken } = useUser();
+  const { setUserToken, clearUserToken } = useUser();
 
   const hasAuthenticatedRef = useRef(false);
 
@@ -47,11 +45,14 @@ const Navigation: React.FC<NavigationProps> = ({
 
   const handleDisconnect = () => {
     disconnect();
-    Cookies.remove("signature", {
-      path: "/dream",
-      domain: window.location.hostname,
-    });
+    clearUserToken();
   };
+
+  useEffect(() => {
+    if (!isConnected) {
+      clearUserToken();
+    }
+  }, [isConnected]);
 
   useEffect(() => {
     const authenticateWithSignature = async () => {
@@ -67,49 +68,6 @@ const Navigation: React.FC<NavigationProps> = ({
 
     authenticateWithSignature();
   }, [address]);
-
-  //   authenticateWithSignature();
-  // }, [authenticate]);
-
-  // useEffect(() => {
-  //   const handleAuthentication = async () => {
-  //     if (!address) return;
-
-  //     try {
-  //       // const issuer = "dreamweaver";
-  //       // 1. Properly await the signature
-  //       console.log(address, "adddrees");
-  //       const signature = await handleSignMessage(address);
-
-  //       console.log(signature, "sig");
-
-  //       // 2. Store the actual signature (not the Promise)
-  //       Cookies.set("signature", signature, {
-  //         expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-  //         secure: process.env.NODE_ENV === "production",
-  //         sameSite: "strict",
-  //       });
-
-  //       // 3. Include in API requests
-  //       apiClient.interceptors.request.use((config) => {
-  //         config.headers["x-signature"] = signature;
-  //         return config;
-  //       });
-  //     } catch (error) {
-  //       console.error("Signing failed:", error);
-  //       Cookies.remove("signature");
-  //     }
-  //   };
-
-  //   handleAuthentication();
-  // }, [address]);
-
-  useEffect(() => {
-    const signature = Cookies.get("signature");
-    if (!signature && typeof openConnectModal === "function") {
-      openConnectModal();
-    }
-  }, [openConnectModal]);
 
   const navItems = [
     { id: "journal", icon: <Mic />, label: "Journal" },

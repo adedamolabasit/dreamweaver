@@ -7,7 +7,6 @@ export class HttpError extends Error {
     this.statusCode = statusCode;
     this.details = details;
     
-    // Maintain proper stack trace
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, HttpError);
     }
@@ -16,7 +15,6 @@ export class HttpError extends Error {
   }
 }
 
-// Common error types
 export class BadRequestError extends HttpError {
   constructor(message = "Bad Request", details?: any) {
     super(400, message, details);
@@ -29,14 +27,38 @@ export class UnauthorizedError extends HttpError {
   }
 }
 
+export class ForbiddenError extends HttpError {
+  constructor(message = "Forbidden", details?: any) {
+    super(403, message, details);
+  }
+}
+
 export class NotFoundError extends HttpError {
   constructor(message = "Not Found", details?: any) {
     super(404, message, details);
   }
 }
 
+export class ConflictError extends HttpError {
+  constructor(message = "Conflict", details?: any) {
+    super(409, message, details);
+  }
+}
+
 export class InternalServerError extends HttpError {
   constructor(message = "Internal Server Error", details?: any) {
     super(500, message, details);
+  }
+}
+
+export class UnprocessableEntityError extends HttpError {
+  constructor(message = "Unprocessable Entity", details?: any) {
+    super(422, message, details);
+  }
+}
+
+export class TooManyRequestsError extends HttpError {
+  constructor(message = "Too Many Requests", details?: any) {
+    super(429, message, details);
   }
 }

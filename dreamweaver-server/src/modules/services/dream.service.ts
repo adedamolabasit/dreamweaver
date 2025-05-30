@@ -1,4 +1,4 @@
-import { UnauthorizedError, NotFoundError } from "../../errors/httpError";
+import { UnauthorizedError, NotFoundError, ForbiddenError} from "../../errors/httpError";
 import { DreamJournalEntry } from "../../models/dream.journal.model";
 import { User } from "../../models/user.model";
 import { CreateJournalParams, UpdateJournalParams } from "../../types";
@@ -65,22 +65,43 @@ export const processGetJournalById = async (id: string) => {
   }
 };
 
-export const processUpdateJournal = async (id: string, transcript: string) => {
+export const processUpdateJournal = async (
+  userId: string,
+  journalId: string,
+  transcript: string
+) => {
   try {
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      throw new NotFoundError("Journal not found");
+    if (
+      !mongoose.Types.ObjectId.isValid(journalId) ||
+      !mongoose.Types.ObjectId.isValid(userId)
+    ) {
+      throw new NotFoundError("Invalid ID format");
     }
 
-    const updatedJournal = await DreamJournalEntry.findByIdAndUpdate(
-      id,
-      { transcript },
-      { new: true, runValidators: true }
+    const updatedJournal = await DreamJournalEntry.findOneAndUpdate(
+      {
+        _id: journalId,
+        user: userId,
+      },
+      {
+        transcript,
+        updatedAt: new Date(),
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
     ).populate("user", "username");
 
-    if (!updatedJournal) throw new NotFoundError("Journal not found");
+    if (!updatedJournal) {
+      throw new ForbiddenError(
+        "Journal not found or you don't have permission"
+      );
+    }
+
     return updatedJournal;
   } catch (error) {
-    logger.error("Failed to update journal:", error);
+    logger.error(`Failed to update journal ${journalId}:`, error);
     throw new Error("Failed to update journal");
   }
 };
