@@ -1,12 +1,6 @@
-import {
-  UnauthorizedError,
-  NotFoundError,
-  ForbiddenError,
-} from "../../errors/httpError";
+import { NotFoundError } from "../../errors/httpError";
 import { DreamJournalEntry } from "../../models/dream.journal.model";
-
-import { User } from "../../models/user.model";
-import { CreateJournalParams, UpdateJournalParams } from "../../types";
+import { Production, IProduction } from "../../models/production.scence.model";
 import logger from "../../utils/logger";
 import mongoose from "mongoose";
 
@@ -22,28 +16,84 @@ export const processWeaveDream = async ({
       ? new mongoose.Types.ObjectId(userId)
       : new mongoose.Types.ObjectId();
 
-    const journal = DreamJournalEntry.find({ id: id, user: userId })
+    const journal = await DreamJournalEntry.findOne({
+      _id: id,
+      user: userIdObj,
+    })
       .populate("user", "username")
       .sort({ createdAt: -1 });
 
     if (!journal) {
-      throw new NotFoundError("journal not found");
+      throw new NotFoundError("Journal not found");
     }
 
-
-
-    await User.findByIdAndUpdate(userId, {
-      $addToSet: { journalEntries: entry._id },
+    const entry = await Production.create({
+      userId: userIdObj,
+      dreamId: journal._id,
+      originalDream: journal.transcript,
+      status: "unpublished",
     });
 
-    return {
-      _id: entry._id,
-      user: { _id: user._id, username: user.username },
-      transcript: entry.transcript,
-      createdAt: entry.createdAt,
-    };
+    return entry;
   } catch (error) {
-    logger.error("DreamJournal creation failed:", error);
-    throw new Error("Failed to create dream journal");
+    logger.error("Dream production creation failed:", error);
+    throw new Error("Failed to create dream production");
+  }
+};
+
+export const updateProduction = async ({
+  userId,
+  productionId,
+  updateData,
+}: {
+  userId: string;
+  productionId: string;
+  updateData: Partial<IProduction>;
+}) => {
+  try {
+    const userIdObj = new mongoose.Types.ObjectId(userId);
+    const productionObjId = new mongoose.Types.ObjectId(productionId);
+
+    const existingProduction = await Production.findOne({
+      _id: productionObjId,
+      userId: userIdObj,
+    });
+
+    if (!existingProduction) {
+      throw new NotFoundError("Production not found");
+    }
+
+    if (updateData.analysis) {
+      existingProduction.analysis = {
+        ...existingProduction.analysis,
+        ...updateData.analysis,
+      };
+      delete updateData.analysis;
+    }
+
+    if (updateData.story) {
+      existingProduction.story = {
+        ...existingProduction.story,
+        ...updateData.story,
+      };
+      delete updateData.story;
+    }
+
+    if (updateData.play) {
+      existingProduction.play = {
+        ...existingProduction.play,
+        ...updateData.play,
+      };
+      delete updateData.play;
+    }
+
+    Object.assign(existingProduction, updateData);
+
+    const updatedProduction = await existingProduction.save();
+
+    return updatedProduction;
+  } catch (error) {
+    logger.error("Production update failed:", error);
+    throw new Error("Failed to update production");
   }
 };
