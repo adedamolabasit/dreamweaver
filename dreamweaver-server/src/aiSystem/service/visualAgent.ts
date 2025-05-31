@@ -1,78 +1,92 @@
 import OpenAI from "openai";
 
-type Story = {
-  title: string;
-  synopsis: string;
-  characters: { name: string; description: string }[];
-  scenes: { description: string; visualPrompt: string }[];
-};
-
-export const generatePlay = async (
-  story: Story
-): Promise<{
-  title: string;
-  acts: {
-    number: number;
-    scenes: {
-      description: string;
-      dialogue: string[];
-      stageDirections: string;
-    }[];
-  }[];
-}> => {
-  const openai = new OpenAI({
-    apiKey:
-      "",
-  });
-
-  const response = await openai.chat.completions.create({
-    model: "gpt-4-turbo",
-    temperature: 0.7,
-    messages: [
-      {
-        role: "system",
-        content: `
-You are a playwright who transforms narrative stories into dramatic 3-act plays.
-
-Convert the input story into a 3-act play structure with these requirements:
-- Each act should have multiple scenes.
-- Each scene must include:
-  - A brief description setting the scene.
-  - Detailed dialogue lines as an array of strings.
-  - Stage directions describing character movements, emotions, and scene actions.
-- The play should emphasize emotional arcs and narrative flow.
-- Output must be a valid JSON object with this structure:
-
-{
-  "title": string,
-  "acts": [
-    {
-      "number": number,
-      "scenes": [
-        {
-          "description": string,
-          "dialogue": string[],
-          "stageDirections": string
-        }
-      ]
-    }
-  ]
+interface GeneratedImage {
+  url: string;
+  style: string;
 }
 
-Respond with JSON only — no extra text, explanation, or markdown.
-`,
-      },
-      {
-        role: "user",
-        content: `
-Here is the story to adapt:
-${JSON.stringify(story, null, 2)}
-`,
-      },
-    ],
+interface SceneWithVariants {
+  description: string;
+  originalPrompt: string;
+  generatedImages: GeneratedImage[];
+}
+
+interface StoryScene {
+  description: string;
+  visualPrompt: string;
+}
+
+export interface StoryVisuals {
+  scenes: StoryScene[];
+}
+
+export const generateMultiStyleSceneImages = async (
+  story: StoryVisuals
+): Promise<SceneWithVariants[]> => {
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
   });
 
-  return JSON.parse(response.choices[0].message.content!);
+  const results: SceneWithVariants[] = [];
+
+  const artStyles = [
+    {
+      name: "Pixar-Style 3D",
+      prompt: "Pixar-style 3D animation, vibrant colors",
+    },
+    {
+      name: "Watercolor Painting",
+      prompt: "Watercolor painting style, soft edges",
+    },
+    {
+      name: "Comic Book",
+      prompt: "Comic book style, bold outlines, halftone shading",
+    },
+  ];
+
+  for (const scene of story.scenes) {
+    const sceneResult: SceneWithVariants = {
+      description: scene.description,
+      originalPrompt: scene.visualPrompt,
+      generatedImages: [],
+    };
+
+    for (const style of artStyles) {
+      try {
+        const response = await openai.images.generate({
+          model: "dall-e-3",
+          prompt: `${style.prompt}, ${scene.visualPrompt}`,
+          n: 1,
+          size: "1024x1024",
+          quality: "standard",
+          style: "vivid",
+        });
+
+        // const response = await openai.images.generate({
+        //   model: "dall-e-2",
+        //   prompt: `${style.prompt}, ${scene.visualPrompt}`,
+        //   n: 1,
+        //   size: "512x512",
+        // });
+
+        if (response.data?.[0]?.url) {
+          sceneResult.generatedImages.push({
+            url: response.data[0].url,
+            style: style.name,
+          });
+        }
+      } catch (error) {
+        console.error(
+          `Failed to generate ${style.name} variant for scene: ${scene.description}`
+        );
+        console.error(error);
+      }
+    }
+
+    results.push(sceneResult);
+  }
+
+  return results;
 };
 
 async function main() {
@@ -136,7 +150,7 @@ async function main() {
     ],
   };
 
-  const archetypeAnalysis = await generatePlay(story);
+  const archetypeAnalysis = await generateMultiStyleSceneImages(story);
   console.log(
     "Archetype Analysis Result:\n",
     JSON.stringify(archetypeAnalysis, null, 2)

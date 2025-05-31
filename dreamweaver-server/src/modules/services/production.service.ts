@@ -3,6 +3,7 @@ import { DreamJournalEntry } from "../../models/dream.journal.model";
 import { Production, IProduction } from "../../models/production.scence.model";
 import logger from "../../utils/logger";
 import mongoose from "mongoose";
+import { aiProduction } from "../../aiSystem/orchestrator";
 
 export const processWeaveDream = async ({
   userId,
@@ -96,4 +97,29 @@ export const updateProduction = async ({
     logger.error("Production update failed:", error);
     throw new Error("Failed to update production");
   }
+};
+
+export const processStartProduction = async ({
+  userId,
+  productionId,
+}: {
+  userId: string;
+  productionId: string;
+}) => {
+  const userIdObj = new mongoose.Types.ObjectId(userId);
+  const productionObjId = new mongoose.Types.ObjectId(productionId);
+
+  const existingProduction = await Production.findOne({
+    _id: productionObjId,
+    userId: userIdObj,
+  });
+
+  if (!existingProduction) {
+    throw new NotFoundError("Production not found");
+  }
+
+  aiProduction({
+    productionId,
+    dreamContent: existingProduction.originalDream as string,
+  });
 };

@@ -1,7 +1,6 @@
 import OpenAI from "openai";
 
-// Type Definitions
-interface ArchetypeAnalysis {
+export interface ArchetypeAnalysis {
   primaryArchetype: string;
   secondaryArchetypes: string[];
   symbols: {
@@ -17,7 +16,6 @@ interface PromptTemplates {
   [key: string]: (params: any) => string;
 }
 
-// Constants
 const JUNGIAN_ARCHETYPES = [
   "The Self",
   "The Shadow",
@@ -31,7 +29,6 @@ const JUNGIAN_ARCHETYPES = [
   "The Child",
 ];
 
-// Prompt Templates
 const createPrompt: PromptTemplates = {
   "symbol-extraction": ({ transcript }) => `
     Analyze this dream transcript and extract symbolic elements:
@@ -78,18 +75,16 @@ const createPrompt: PromptTemplates = {
   `,
 };
 
-// --- Utility Function to strip markdown ---
 function extractJSON(text: string): string {
   const match = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
   return match ? match[1] : text;
 }
 
-// Core Analysis Function
 export const analyzeArchetypes = async (
   transcript: string
 ): Promise<ArchetypeAnalysis> => {
   const openai = new OpenAI({
-    apiKey: "",
+    apiKey: process.env.OPENAI_API_KEY,
   });
 
   try {
