@@ -6020,3 +6020,392 @@
 {"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T21:59:43.820Z"}
 {"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T21:59:43.823Z"}
 {"level":"info","message":"Environment: development","timestamp":"2025-05-30T21:59:43.824Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:18:59.869Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:19:02.063Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:19:02.065Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:19:02.065Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:19:31.200Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:19:32.999Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:19:33.004Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:19:33.005Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:19:43.394Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:19:45.262Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:19:45.267Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:19:45.267Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:27:01.399Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:27:04.199Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:27:04.204Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:27:04.205Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:27:20.402Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:27:22.632Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:27:22.641Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:27:22.642Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:27:45.628Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:27:48.747Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:27:48.752Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:27:48.752Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:27:59.101Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:28:01.993Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:28:01.998Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:28:01.999Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:28:06.103Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:28:07.710Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:28:07.712Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:28:07.713Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:29:15.733Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:29:17.991Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:29:17.993Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:29:17.993Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:30:15.880Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:30:17.464Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:30:17.468Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:30:17.469Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:31:16.205Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:31:19.081Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:31:19.083Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:31:19.083Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:32:17.133Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:32:19.245Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:32:19.249Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:32:19.249Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:34:14.670Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:34:17.265Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:34:17.269Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:34:17.270Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:41:04.982Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:41:06.836Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:41:06.840Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:41:06.840Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:42:17.600Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:42:19.740Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:42:19.745Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:42:19.745Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:46:09.922Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:46:12.182Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:46:12.186Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:46:12.187Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:47:18.089Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:47:20.309Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:47:20.312Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:47:20.313Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:49:08.335Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:49:10.814Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:49:10.820Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:49:10.820Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:50:00.231Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:50:02.659Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:50:02.662Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:50:02.663Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:50:15.979Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:50:18.277Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:50:20.893Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:50:20.898Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:50:20.898Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:50:45.255Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:50:47.756Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:50:47.761Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:50:47.762Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:51:01.864Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:51:03.600Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:51:05.330Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:51:05.334Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:51:05.335Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:52:21.640Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:52:23.981Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:52:23.983Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:52:23.983Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:52:28.170Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:52:30.494Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:52:30.499Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:52:30.499Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:54:09.129Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:54:11.531Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:54:11.536Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:54:11.537Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:54:15.812Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:54:17.731Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:54:17.734Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:54:17.734Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:54:29.309Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:54:30.972Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:54:30.976Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:54:30.977Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:55:26.553Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:55:28.590Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:55:28.595Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:55:28.595Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:55:31.103Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:55:32.810Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:55:32.814Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:55:32.815Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:57:14.343Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:57:16.427Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:57:16.428Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:57:16.429Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:57:18.945Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:57:20.767Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:57:20.771Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:57:20.772Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:59:41.864Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:59:43.665Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:59:43.668Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:59:43.669Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T22:59:48.392Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T22:59:50.343Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T22:59:50.346Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T22:59:50.347Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:02:35.103Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:02:37.026Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:02:37.031Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:02:37.032Z"}
+{"level":"error","message":"Authentication error: Invalid authorization token","name":"UnauthorizedError","stack":"UnauthorizedError: Invalid authorization token\n    at new UnauthorizedError (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/errors/httpError.ts:26:5)\n    at authenticatedUser (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/middleware/auth.middleware.ts:50:13)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:157:13)\n    at Route.dispatch (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:117:3)\n    at handle (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:435:11)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at /Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:295:15\n    at processParams (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:582:12)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:291:5)","statusCode":401,"timestamp":"2025-05-30T23:03:48.044Z"}
+{"level":"error","message":"Authentication error: Invalid authorization token","name":"UnauthorizedError","stack":"UnauthorizedError: Invalid authorization token\n    at new UnauthorizedError (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/errors/httpError.ts:26:5)\n    at authenticatedUser (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/middleware/auth.middleware.ts:50:13)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:157:13)\n    at Route.dispatch (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:117:3)\n    at handle (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:435:11)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at /Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:295:15\n    at processParams (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:582:12)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:291:5)","statusCode":401,"timestamp":"2025-05-30T23:03:49.056Z"}
+{"level":"error","message":"Authentication error: Invalid authorization token","name":"UnauthorizedError","stack":"UnauthorizedError: Invalid authorization token\n    at new UnauthorizedError (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/errors/httpError.ts:26:5)\n    at authenticatedUser (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/middleware/auth.middleware.ts:50:13)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:157:13)\n    at Route.dispatch (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:117:3)\n    at handle (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:435:11)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at /Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:295:15\n    at processParams (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:582:12)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:291:5)","statusCode":401,"timestamp":"2025-05-30T23:03:51.353Z"}
+{"level":"error","message":"Authentication error: Invalid authorization token","name":"UnauthorizedError","stack":"UnauthorizedError: Invalid authorization token\n    at new UnauthorizedError (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/errors/httpError.ts:26:5)\n    at authenticatedUser (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/middleware/auth.middleware.ts:50:13)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:157:13)\n    at Route.dispatch (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:117:3)\n    at handle (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:435:11)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at /Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:295:15\n    at processParams (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:582:12)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:291:5)","statusCode":401,"timestamp":"2025-05-30T23:03:52.364Z"}
+{"level":"error","message":"Authentication error: Invalid authorization token","name":"UnauthorizedError","stack":"UnauthorizedError: Invalid authorization token\n    at new UnauthorizedError (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/errors/httpError.ts:26:5)\n    at authenticatedUser (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/middleware/auth.middleware.ts:50:13)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:157:13)\n    at Route.dispatch (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:117:3)\n    at handle (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:435:11)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at /Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:295:15\n    at processParams (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:582:12)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:291:5)","statusCode":401,"timestamp":"2025-05-30T23:03:54.383Z"}
+{"level":"error","message":"Authentication error: Invalid authorization token","name":"UnauthorizedError","stack":"UnauthorizedError: Invalid authorization token\n    at new UnauthorizedError (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/errors/httpError.ts:26:5)\n    at authenticatedUser (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/middleware/auth.middleware.ts:50:13)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:157:13)\n    at Route.dispatch (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/route.js:117:3)\n    at handle (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:435:11)\n    at Layer.handleRequest (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/lib/layer.js:152:17)\n    at /Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:295:15\n    at processParams (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:582:12)\n    at next (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/router/index.js:291:5)","statusCode":401,"timestamp":"2025-05-30T23:03:58.395Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:05:01.660Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:05:05.035Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:05:06.949Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:05:06.960Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:05:06.962Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:05:15.288Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:05:17.127Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:05:17.132Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:05:17.132Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:05:38.196Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:05:43.346Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:05:47.180Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:05:47.184Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:05:47.185Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:06:15.959Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:06:19.101Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:06:19.103Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:06:19.103Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:06:23.331Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:06:26.924Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:06:26.927Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:06:26.927Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:06:33.525Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:06:38.085Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:06:38.088Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:06:38.088Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:07:31.022Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:07:37.876Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:07:37.879Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:07:37.879Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:08:52.948Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:08:59.580Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:08:59.585Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:08:59.586Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:11:38.777Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:11:45.789Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:11:45.795Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:11:45.795Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:13:49.571Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:13:58.190Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:13:58.195Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:13:58.195Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:16:51.472Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:17:01.469Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:17:01.473Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:17:01.473Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:17:34.513Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:17:37.676Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:17:45.737Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:17:45.741Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:17:45.741Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:18:18.338Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:18:27.754Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:18:27.756Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:18:27.756Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:21:29.603Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:21:38.775Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:21:38.779Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:21:38.780Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:22:16.353Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:22:27.172Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:22:27.175Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:22:27.175Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:22:54.577Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:22:56.974Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:23:06.382Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:23:06.385Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:23:06.385Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:23:11.128Z"}
+{"cause":{"commonWireVersion":0,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"logicalSessionTimeoutMinutes":30,"maxElectionId":null,"maxSetVersion":null,"servers":{"ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017":{"$clusterTime":{"clusterTime":{"$timestamp":{"i":6,"t":1748647395}},"signature":{"hash":{"0":172,"1":225,"10":250,"11":154,"12":196,"13":125,"14":195,"15":209,"16":188,"17":156,"18":21,"19":233,"2":152,"3":6,"4":222,"5":134,"6":33,"7":73,"8":93,"9":139},"keyId":7464323186700583000}},"address":"ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017","arbiters":[],"electionId":null,"error":null,"hosts":["ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017","ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017","ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017"],"iscryptd":false,"lastUpdateTime":74727488,"lastWriteDate":{"$date":"2025-05-30T23:23:15Z"},"logicalSessionTimeoutMinutes":30,"maxBsonObjectSize":16777216,"maxMessageSizeBytes":48000000,"maxWireVersion":25,"maxWriteBatchSize":100000,"me":"ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017","minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":"ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017","roundTripTime":1146,"setName":"atlas-ge0a95-shard-0","setVersion":40,"tags":{"availabilityZone":"euw3-az1","diskState":"READY","nodeType":"ELECTABLE","provider":"AWS","region":"EU_WEST_3","workloadType":"OPERATIONAL"},"topologyVersion":{"counter":4,"processId":{"$oid":"682e25883bdaa7c54d97f668"}},"type":"RSSecondary"},"ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017":{"$clusterTime":{"clusterTime":{"$timestamp":{"i":2,"t":1748647394}},"signature":{"hash":{"0":4,"1":179,"10":231,"11":248,"12":246,"13":236,"14":81,"15":59,"16":130,"17":36,"18":75,"19":146,"2":12,"3":49,"4":136,"5":183,"6":81,"7":6,"8":247,"9":215},"keyId":7464323186700583000}},"address":"ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017","arbiters":[],"electionId":null,"error":null,"hosts":["ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017","ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017","ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017"],"iscryptd":false,"lastUpdateTime":74726144,"lastWriteDate":{"$date":"2025-05-30T23:23:14Z"},"logicalSessionTimeoutMinutes":30,"maxBsonObjectSize":16777216,"maxMessageSizeBytes":48000000,"maxWireVersion":25,"maxWriteBatchSize":100000,"me":"ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017","minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":"ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017","roundTripTime":1118,"setName":"atlas-ge0a95-shard-0","setVersion":40,"tags":{"availabilityZone":"euw3-az2","diskState":"READY","nodeType":"ELECTABLE","provider":"AWS","region":"EU_WEST_3","workloadType":"OPERATIONAL"},"topologyVersion":{"counter":3,"processId":{"$oid":"682e2a8d706294c38f1599cc"}},"type":"RSSecondary"},"ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017":{"$clusterTime":null,"address":"ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017","arbiters":[],"electionId":null,"error":null,"hosts":[],"iscryptd":false,"lastUpdateTime":74722762,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"}},"setName":"atlas-ge0a95-shard-0","stale":false,"type":"ReplicaSetNoPrimary"},"errorLabelSet":{},"level":"error","message":"MongoDB initial connection error: Server selection timed out after 5000 ms","reason":{"commonWireVersion":0,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"logicalSessionTimeoutMinutes":30,"maxElectionId":null,"maxSetVersion":null,"servers":{"ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017":{"$clusterTime":{"clusterTime":{"$timestamp":{"i":6,"t":1748647395}},"signature":{"hash":{"0":172,"1":225,"10":250,"11":154,"12":196,"13":125,"14":195,"15":209,"16":188,"17":156,"18":21,"19":233,"2":152,"3":6,"4":222,"5":134,"6":33,"7":73,"8":93,"9":139},"keyId":7464323186700583000}},"address":"ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017","arbiters":[],"electionId":null,"error":null,"hosts":["ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017","ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017","ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017"],"iscryptd":false,"lastUpdateTime":74727488,"lastWriteDate":{"$date":"2025-05-30T23:23:15Z"},"logicalSessionTimeoutMinutes":30,"maxBsonObjectSize":16777216,"maxMessageSizeBytes":48000000,"maxWireVersion":25,"maxWriteBatchSize":100000,"me":"ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017","minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":"ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017","roundTripTime":1146,"setName":"atlas-ge0a95-shard-0","setVersion":40,"tags":{"availabilityZone":"euw3-az1","diskState":"READY","nodeType":"ELECTABLE","provider":"AWS","region":"EU_WEST_3","workloadType":"OPERATIONAL"},"topologyVersion":{"counter":4,"processId":{"$oid":"682e25883bdaa7c54d97f668"}},"type":"RSSecondary"},"ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017":{"$clusterTime":{"clusterTime":{"$timestamp":{"i":2,"t":1748647394}},"signature":{"hash":{"0":4,"1":179,"10":231,"11":248,"12":246,"13":236,"14":81,"15":59,"16":130,"17":36,"18":75,"19":146,"2":12,"3":49,"4":136,"5":183,"6":81,"7":6,"8":247,"9":215},"keyId":7464323186700583000}},"address":"ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017","arbiters":[],"electionId":null,"error":null,"hosts":["ac-8epwcoq-shard-00-00.fcmllmq.mongodb.net:27017","ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017","ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017"],"iscryptd":false,"lastUpdateTime":74726144,"lastWriteDate":{"$date":"2025-05-30T23:23:14Z"},"logicalSessionTimeoutMinutes":30,"maxBsonObjectSize":16777216,"maxMessageSizeBytes":48000000,"maxWireVersion":25,"maxWriteBatchSize":100000,"me":"ac-8epwcoq-shard-00-01.fcmllmq.mongodb.net:27017","minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":"ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017","roundTripTime":1118,"setName":"atlas-ge0a95-shard-0","setVersion":40,"tags":{"availabilityZone":"euw3-az2","diskState":"READY","nodeType":"ELECTABLE","provider":"AWS","region":"EU_WEST_3","workloadType":"OPERATIONAL"},"topologyVersion":{"counter":3,"processId":{"$oid":"682e2a8d706294c38f1599cc"}},"type":"RSSecondary"},"ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017":{"$clusterTime":null,"address":"ac-8epwcoq-shard-00-02.fcmllmq.mongodb.net:27017","arbiters":[],"electionId":null,"error":null,"hosts":[],"iscryptd":false,"lastUpdateTime":74722762,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"}},"setName":"atlas-ge0a95-shard-0","stale":false,"type":"ReplicaSetNoPrimary"},"stack":"MongooseServerSelectionError: Server selection timed out after 5000 ms\n    at _handleConnectionErrors (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/mongoose/lib/connection.js:1165:11)\n    at NativeConnection.openUri (/Users/mac/Downloads/surrealworld/dreamweaver-server/node_modules/mongoose/lib/connection.js:1096:11)\n    at async connectDB (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/config/db.ts:12:5)\n    at async startServer (/Users/mac/Downloads/surrealworld/dreamweaver-server/src/server.ts:9:5)","timestamp":"2025-05-30T23:23:16.212Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:24:04.654Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:24:15.631Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:24:15.636Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:24:15.636Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:26:53.221Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:26:55.095Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:26:55.099Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:26:55.100Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:30:09.228Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:30:11.225Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:30:11.228Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:30:11.228Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:32:41.833Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:32:43.812Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:32:43.816Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:32:43.816Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:33:03.586Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:33:05.380Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:33:05.382Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:33:05.382Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:34:59.666Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:35:01.849Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:35:01.852Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:35:01.852Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:37:13.991Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:37:15.960Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:37:15.965Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:37:15.965Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:42:57.519Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:43:03.422Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:43:03.427Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:43:03.428Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:43:23.233Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:43:25.137Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:43:25.141Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:43:25.142Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:45:28.310Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:45:30.999Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:45:31.003Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:45:31.003Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:47:27.568Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:47:29.507Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:47:29.509Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:47:29.509Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:48:05.886Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:48:08.896Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:48:11.273Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:48:11.277Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:48:11.278Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:48:26.254Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:48:28.504Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:48:28.507Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:48:28.507Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:53:09.092Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:53:11.086Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-30T23:53:11.087Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-30T23:53:11.087Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:53:11.090Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:53:11.090Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:53:15.661Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:53:17.492Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-30T23:53:17.493Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-30T23:53:17.493Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:53:17.496Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:53:17.497Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-30T23:54:41.544Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-30T23:54:43.913Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-30T23:54:43.914Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-30T23:54:43.915Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-30T23:54:43.917Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-30T23:54:43.918Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:00:21.421Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:00:23.455Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:00:25.404Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:00:25.405Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:00:25.405Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:00:25.407Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:00:25.407Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:00:41.903Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:00:43.700Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:00:43.701Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:00:43.702Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:00:43.705Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:00:43.706Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:02:23.694Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:02:26.152Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:02:26.153Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:02:26.153Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:02:26.155Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:02:26.156Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:02:40.079Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:02:41.840Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:02:41.840Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:02:41.841Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:02:41.841Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:02:41.842Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:02:47.165Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:02:49.218Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:02:49.219Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:02:49.220Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:02:49.223Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:02:49.224Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:03:02.208Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:03:04.443Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:03:04.445Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:03:04.446Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:03:04.449Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:03:04.450Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:03:10.831Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:03:12.605Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:03:14.284Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:03:14.286Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:03:14.286Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:03:14.290Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:03:14.290Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:12:21.133Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:12:23.652Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:12:23.653Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:12:23.654Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:12:23.658Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:12:23.659Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:14:48.839Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:14:51.209Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:14:51.211Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:14:51.211Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:14:51.213Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:14:51.214Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:15:55.044Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:15:57.234Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:15:57.234Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:15:57.234Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:15:57.235Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:15:57.235Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:16:02.292Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:16:04.114Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:16:04.116Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:16:04.116Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:16:04.119Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:16:04.120Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:24:25.127Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:24:27.772Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:24:27.773Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:24:27.773Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:24:27.777Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:24:27.777Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:25:06.240Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:25:08.251Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:25:08.253Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:25:08.254Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:25:08.257Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:25:08.257Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:25:43.209Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:25:45.373Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:25:45.373Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:25:45.373Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:25:45.374Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:25:45.375Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:26:35.170Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:26:37.283Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:26:37.286Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:26:37.286Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:26:37.289Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:26:37.290Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:27:16.843Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:27:19.238Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:27:19.239Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:27:19.239Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:27:19.241Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:27:19.242Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-05-31T00:27:30.984Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-05-31T00:27:32.754Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-05-31T00:27:32.755Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-05-31T00:27:32.755Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-05-31T00:27:32.756Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-05-31T00:27:32.756Z"}
