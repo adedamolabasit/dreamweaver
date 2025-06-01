@@ -1,8 +1,8 @@
-import apiClient from "./apiClient";
+import { apiClient, publicApiClient } from "./apiClient";
 import { JournalEntry } from "../types/types";
 
 export const fetchAllJournals = async (): Promise<JournalEntry[]> => {
-  const { data } = await apiClient.get("/dream/journals");
+  const { data } = await publicApiClient.get("/dream/journals");
   return data.data;
 };
 

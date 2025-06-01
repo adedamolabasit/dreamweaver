@@ -19,9 +19,21 @@ export interface IProduction extends Document {
   dreamId: mongoose.Types.ObjectId | IDreamJournalEntry;
   originalDream: string;
   analysis?: {
-    interpretation?: string;
-    symbols?: string[];
-    emotions?: string[];
+    primaryArchetype: string;
+    secondaryArchetypes: string[];
+    symbols: {
+      name: string;
+      meaning: string;
+      frequency: number;
+    }[];
+    emotionalTone: string[];
+    potentialConflicts: string[];
+  };
+  interpretation?: {
+    interpretation: string;
+    symbols: string[];
+    emotions: string[];
+    potentialStories: string[];
   };
   story?: {
     title?: string;
@@ -31,6 +43,7 @@ export interface IProduction extends Document {
       description?: string;
     }[];
     scenes?: {
+      // id?: string;
       description?: string;
       visualPrompt?: string;
       imageUrl?: string;
@@ -46,6 +59,15 @@ export interface IProduction extends Document {
         stageDirections?: string;
       }[];
     }[];
+  };
+  visuals?: {
+    // id?: string;
+    description: string;
+    originalPrompt: string;
+    generatedImages: {
+      url: string;
+      style: string;
+    };
   };
   progress: number;
   status: ProductionStatus;
@@ -67,9 +89,23 @@ const ProductionSchema = new mongoose.Schema<IProduction>(
     },
     originalDream: { type: String, required: true },
     analysis: {
+      primaryArchetype: { type: String },
+      secondaryArchetypes: [{ type: String }],
+      symbols: [
+        {
+          name: { type: String },
+          meaning: { type: String },
+          frequency: { type: Number },
+        },
+      ],
+      emotionalTone: [{ type: String }],
+      potentialConflicts: [{ type: String }],
+    },
+    interpretation: {
       interpretation: { type: String },
       symbols: [{ type: String }],
       emotions: [{ type: String }],
+      potentialStories: [{ type: String }],
     },
     story: {
       title: { type: String },
@@ -103,9 +139,16 @@ const ProductionSchema = new mongoose.Schema<IProduction>(
         },
       ],
     },
+    visuals: {
+      description: { type: String },
+      originalPrompt: { type: String },
+      generatedImages: {
+        url: { type: String },
+        style: { type: String },
+      },
+    },
     progress: {
       type: Number,
-      required: false,
       default: 0,
     },
     status: {
@@ -133,7 +176,9 @@ const ProductionSchema = new mongoose.Schema<IProduction>(
 
 ProductionSchema.index({
   originalDream: "text",
-  "analysis.interpretation": "text",
+  "analysis.primaryArchetype": "text",
+  "analysis.symbols.meaning": "text",
+  "interpretation.interpretation": "text",
   "story.title": "text",
   "story.synopsis": "text",
   "play.title": "text",

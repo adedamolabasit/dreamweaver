@@ -17,8 +17,6 @@ apiClient.interceptors.request.use(
       token = token.slice(1, -1);
     }
 
-    console.log(token,'zll')
-
     if (token) {
       config.headers["authorization"] = `Bearer ${token}`;
     }
@@ -29,5 +27,12 @@ apiClient.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+export const publicApiClient = axios.create({
+  baseURL: "http://localhost:5000/api/v1",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 export default apiClient;
