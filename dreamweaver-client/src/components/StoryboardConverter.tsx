@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Flower as Flow, Wand2, Edit, Save, X, Plus } from "lucide-react";
 import { Sparkles, Wallet, Loader2, Notebook, Scroll } from "lucide-react";
 import StoryGenerator from "./Storygenerator";
@@ -6,6 +6,13 @@ import ComicBookDisplay from "./ComicBookDisplay";
 import ArchetypeDisplay from "./ArcheTypeDisplay";
 import InterpretationDisplay from "./InterpretationDisplay";
 import { useGetAllUsersJournals, useUpdateJournal } from "../hooks/useJournal.";
+import {
+  useWeaveDream,
+  useInitiateProduction,
+  useGetAllUsersProductions,
+  useGetProductionById,
+} from "../hooks/useProduction";
+import { ProductionResponse } from "../types/types";
 
 import { useAccount } from "wagmi";
 import moment from "moment";
@@ -14,6 +21,8 @@ import {
   sampleArchetypeData,
   sampleInterpretationData,
 } from "../api/mock/sampleData";
+import { Visual } from "./ComicBookDisplay";
+import { StoryboardTimeline } from "./StroyboardTimeline";
 
 interface JournalEntry {
   _id: string;
@@ -24,12 +33,24 @@ interface JournalEntry {
 const StoryboardConverter: React.FC = () => {
   const [isGeneratingStory, setIsGeneratingStory] = useState<boolean>(false);
   const [storyGenerated, setStoryGenerated] = useState<boolean>(false);
+  const [productionId, setProdutionId] = useState<string | undefined>("");
+
   const [activeView, setActiveView] = useState<
     "story" | "archetypes" | "interpretation"
   >("story");
 
-  const { data: journals, isLoading, refetch: refetchJournal } = useGetAllUsersJournals();
+  const {
+    data: journals,
+    isLoading,
+    refetch: refetchJournal,
+  } = useGetAllUsersJournals();
   const { mutate: updateJournal } = useUpdateJournal();
+  const { mutate: weaveDream } = useWeaveDream();
+  const { mutate: initiateProducttion } = useInitiateProduction();
+  const { data: production, refetch: refetchProduction } = useGetProductionById(
+    "683c8f76a9560538d7bb4d33"
+  );
+
   const { isConnected } = useAccount();
 
   const [activeJournalId, setActiveJournalId] = useState<string | undefined>();
@@ -50,7 +71,7 @@ const StoryboardConverter: React.FC = () => {
         onSuccess: () => {
           refetchJournal();
           setIsEditing(false);
-        }
+        },
       }
     );
   };
@@ -60,16 +81,46 @@ const StoryboardConverter: React.FC = () => {
     setIsEditing(false);
   };
 
-  const handleGenerateStory = () => {
-    if (!activeJournal) return;
+  const handleIntiateProduction = async (productionId: string) => {
+    initiateProducttion(productionId as string, {
+      onSuccess: (data: ProductionResponse) => {
+        console.log(data);
+      },
+      onError: (err: any) => {
+        console.error("Mutation failed:", err);
+      },
+    });
+  };
+
+  const handleWeaveDream = async () => {
+    console.log("testing...");
     setIsGeneratingStory(true);
-    setStoryGenerated(false);
+
+    // if (!activeJournal) return;
+    // setIsGeneratingStory(true);
+    // weaveDream(activeJournalId as string, {
+    //   onSuccess: (data: ProductionResponse) => {
+    //     if (data._id) {
+    //       setProdutionId(data._id);
+    //       handleIntiateProduction(data._id);
+    //     }
+    //   },
+    //   onError: (err: any) => {
+    //     console.error("Mutation failed:", err);
+    //   },
+    // });
   };
 
   const handleGenerationComplete = () => {
-    setIsGeneratingStory(false);
+    setIsGeneratingStory(true);
     setStoryGenerated(true);
   };
+
+  useEffect(() => {
+    if (productionId) {
+      refetchProduction();
+    }
+  }, [production, refetchProduction]);
 
   const activeJournal = journals?.find((j) => j._id === activeJournalId);
 
@@ -169,7 +220,9 @@ const StoryboardConverter: React.FC = () => {
                     </p>
                     <button
                       className="p-1.5 rounded-full bg-purple-700/70 hover:bg-purple-600/80 transition-colors"
-                      onClick={(e) => handleEditClick(journal as JournalEntry, e)}
+                      onClick={(e) =>
+                        handleEditClick(journal as JournalEntry, e)
+                      }
                     >
                       <Edit size={14} />
                     </button>
@@ -254,7 +307,7 @@ const StoryboardConverter: React.FC = () => {
                       ? "bg-green-600/80 hover:bg-green-500/90"
                       : "bg-gradient-to-r from-purple-600/80 to-pink-500/80 hover:from-purple-500/90 hover:to-pink-400/90"
                   }`}
-                  onClick={handleGenerateStory}
+                  onClick={handleWeaveDream}
                   disabled={!activeJournal || isGeneratingStory}
                 >
                   {storyGenerated ? "Regenerate Story" : "Weave Characters"}
@@ -418,8 +471,15 @@ const StoryboardConverter: React.FC = () => {
             </div>
 
             <div className="p-4 bg-gradient-to-br from-blue-950/30 to-purple-950/30 rounded-lg border border-blue-500/10">
-              {activeView === "story" && (
-                <ComicBookDisplay data={sampleStoryData} />
+              {activeView === "story" && production && (
+                <ComicBookDisplay
+                  story={production.story}
+                  visuals={
+                    production.visuals
+                      ? ([production.visuals] as Visual[])
+                      : undefined
+                  }
+                />
               )}
               {activeView === "archetypes" && (
                 <ArchetypeDisplay data={sampleArchetypeData} />

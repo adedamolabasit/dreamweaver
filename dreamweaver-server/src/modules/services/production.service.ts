@@ -106,12 +106,9 @@ export const processStartProduction = async ({
   userId: string;
   productionId: string;
 }) => {
-  const userIdObj = new mongoose.Types.ObjectId(userId);
-  const productionObjId = new mongoose.Types.ObjectId(productionId);
-
   const existingProduction = await Production.findOne({
-    _id: productionObjId,
-    userId: userIdObj,
+    _id: productionId,
+    userId: userId,
   });
 
   if (!existingProduction) {
@@ -122,4 +119,41 @@ export const processStartProduction = async ({
     productionId,
     dreamContent: existingProduction.originalDream as string,
   });
+};
+
+export const processGetUserProduction = async (userId: string) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      throw new NotFoundError("User not found");
+    }
+
+    return await Production.find({ userId }).sort({ createdAt: -1 });
+  } catch (error) {
+    logger.error("Failed to get user productions: ", error);
+    throw new Error("Failed to retrieve user productions");
+  }
+};
+
+export const processGetAllProduction = async () => {
+  try {
+    return await Production.find({
+      status: "published",
+    }).sort({ createdAt: -1 });
+  } catch (error) {
+    logger.error("Failed to get all productions: ", error);
+    throw new Error("Failed to retrieve all productions");
+  }
+};
+
+export const processGetProductionById = async (id: string) => {
+  try {
+
+    const production = await Production.findById({_id:id})
+    if (!production) throw new NotFoundError("Production not found");
+
+    return production;
+  } catch (error) {
+    logger.error("Failed to get production:", error);
+    throw error;
+  }
 };

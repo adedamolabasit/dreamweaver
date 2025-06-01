@@ -5,6 +5,8 @@ import { useGetAllJournals } from "../hooks/useJournal.";
 import { JournalEntry } from "../types/types";
 import { CenteredLoader } from "./Loader/CenteredLoader";
 import moment from "moment";
+import { StoryboardTimeline } from "./StroyboardTimeline";
+import { useGetAllProductions } from "../hooks/useProduction";
 
 const SomniRec: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -23,6 +25,12 @@ const SomniRec: React.FC = () => {
     isLoading: journalLoading,
     refetch: refetchJournal,
   } = useGetAllJournals();
+
+  const {
+    data: productions,
+    isLoading: productionLoading,
+    refetch: refetchProduction,
+  } = useGetAllProductions();
 
   useEffect(() => {
     if (journals && !journalLoading) {
@@ -273,7 +281,7 @@ const SomniRec: React.FC = () => {
         )}
       </div>
 
-      <div className="w-full space-y-4 ">
+      <div className="w-full space-y-12 ">
         <h3 className="text-xl font-medium mb-4 flex items-center">
           <span className="mr-2">Dream Journal</span>
           <div className="h-px flex-1 bg-gradient-to-r from-transparent via-blue-300/30 to-transparent"></div>
@@ -284,16 +292,17 @@ const SomniRec: React.FC = () => {
             No entries yet. Record your first dream!
           </div>
         ) : (
-          journalEntries.map((entry) => (
-            <div
-              key={entry._id}
-              className="p-5 rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300"
-            >
-              <p className="font-light">{entry.transcript}</p>
-              <p className="text-xs text-blue-200/50 mt-2">
-                {moment(entry.createdAt).format("MMMM D, YYYY [at] h:mm A")}
-              </p>
-            </div>
+          productions?.map((production) => (
+            <StoryboardTimeline production={production} />
+            // <div
+            //   key={entry._id}
+            //   className="p-5 rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300"
+            // >
+            //   <p className="font-light">{entry.transcript}</p>
+            //   <p className="text-xs text-blue-200/50 mt-2">
+            //     {moment(entry.createdAt).format("MMMM D, YYYY [at] h:mm A")}
+            //   </p>
+            // </div>
           ))
         )}
       </div>
