@@ -55,14 +55,11 @@ const ComicBookDisplay: React.FC<ComicBookDisplayProps> = ({
     const sceneId = `scene${index + 1}`;
 
     const visual = flatVisuals.find((v) => {
-      console.log(`Comparing: Looking for ${sceneId} vs ${v.id}`);
       return v.id === sceneId;
     });
 
     if (visual) {
-      console.log("Found visual:", visual);
       const comicImage = visual.generatedImages.find((img: any) => {
-        console.log(`Checking image style: ${img.style}`);
         return img.style === "Comic Book";
       });
       return comicImage || null;
@@ -138,17 +135,22 @@ const ComicBookDisplay: React.FC<ComicBookDisplayProps> = ({
                   <div className="aspect-[4/3] bg-purple-900/10">
                     {comicImage ? (
                       <div className="relative aspect-[4/3] bg-gradient-to-br from-purple-900/10 to-blue-900/10 bg-purple-900/20">
-                        <img
-                          src={comicImage.url}
-                          alt={`${scene.visualPrompt || "Scene"} - Comic Book`}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.onerror = null;
-                            target.src =
-                              "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJhMTAzMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMCI+SW1hZ2UgTm90IEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=";
-                          }}
-                        />
+                        {comicImage?.url && (
+                          <img
+                            src={`https://jade-peaceful-macaw-761.mypinata.cloud/ipfs/${comicImage.ipfsHash}?pinataGatewayToken=BmZjUB5nCCxIeDdY6v_uM2RJhyqwnTKtGFnahd_IsPXD9He4pVRxPOcSvDfCpYwM`}
+                            alt={`${
+                              scene.visualPrompt || "Scene"
+                            } - Comic Book`}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.onerror = null;
+                              target.src =
+                                "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJhMTAzMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMCI+SW1hZ2UgTm90IEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=";
+                            }}
+                          />
+                        )}
+
                         <div className="flex">
                           <div className="absolute top-2 right-2 left-2  text-white text-xs px-2 py-1 rounded">
                             <div className="">DreamWeaver</div>

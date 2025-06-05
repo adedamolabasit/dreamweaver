@@ -1,19 +1,25 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { BookOpen, Heart, Users, ImageOff } from "lucide-react";
 import { ProductionResponse } from "../types/types";
 
 interface StoryParams {
   production: ProductionResponse | undefined;
+  handleActiveStory?: (id: string, viewStory: boolean) => void;
 }
 
-export const StoryboardTimeline: FC<StoryParams> = ({ production }) => {
+export const StoryboardTimeline: FC<StoryParams> = ({
+  production,
+  handleActiveStory,
+}) => {
   const [imageError, setImageError] = useState(false);
+  const [cid, setCid] = useState<string>();
 
   const { story, analysis, visuals } = production!;
-  console.log(production, "production-");
+
   const getFirstSceneComicImage = (): any => {
     if (visuals) {
       const flatVisuals = Array.isArray(visuals) ? visuals[0] : visuals;
+      console.log(flatVisuals, "flll");
       return (
         flatVisuals.generatedImages.find((img: any) =>
           img.style.toLowerCase().includes("comic")
@@ -23,10 +29,20 @@ export const StoryboardTimeline: FC<StoryParams> = ({ production }) => {
     return null;
   };
 
-  const coverImage = getFirstSceneComicImage();
+  useEffect(() => {
+    const coverImage = getFirstSceneComicImage();
+
+    if (coverImage) {
+      setCid(coverImage.ipfsHash);
+      console.log(cid, "cid");
+    }
+  }, []);
 
   return (
-    <div className="w-full space-y-6">
+    <div
+      className="w-full space-y-6 cursor-pointer"
+      onClick={() => handleActiveStory?.(production?._id as string, true)}
+    >
       <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-900/20 to-blue-900/20 border border-purple-500/20">
         <div className="flex flex-col md:flex-row items-start justify-between gap-4 mb-6">
           <div>
@@ -56,9 +72,9 @@ export const StoryboardTimeline: FC<StoryParams> = ({ production }) => {
 
         <div className="w-full flex flex-col md:flex-row md: items-start h-auto md:h-72 gap-6 mb-4 ">
           <div className="aspect-video h-full rounded-xl bg-gradient-to-br from-purple-900/20 to-blue-900/20 border border-purple-500/20 flex items-center justify-center w-full md:w-1/2 overflow-hidden">
-            {!imageError ? (
+            {cid ? (
               <img
-                src={coverImage.url}
+                src={`https://jade-peaceful-macaw-761.mypinata.cloud/ipfs/${cid}?pinataGatewayToken=ckardq1C_7H8MBVFx0g6R3zTQ6VRwDP8FyNGMvx_pOAcVrFmYFoBVDknjk4hN3Wm`}
                 alt="Cover Image"
                 className="w-full h-full object-cover"
                 onError={() => setImageError(true)}

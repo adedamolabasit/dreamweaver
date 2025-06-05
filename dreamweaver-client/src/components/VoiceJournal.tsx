@@ -26,11 +26,11 @@ const SomniRec: React.FC = () => {
     refetch: refetchJournal,
   } = useGetAllJournals();
 
-  const {
-    data: productions,
-    isLoading: productionLoading,
-    refetch: refetchProduction,
-  } = useGetAllProductions();
+  // const {
+  //   data: productions,
+  //   isLoading: productionLoading,
+  //   refetch: refetchProduction,
+  // } = useGetAllProductions();
 
   useEffect(() => {
     if (journals && !journalLoading) {
@@ -182,7 +182,7 @@ const SomniRec: React.FC = () => {
     );
 
   return (
-    <div className="flex flex-col items-center max-w-4xl mx-auto h-full p-4">
+    <div className="w-full flex flex-col items-center max-w-4xl mx-auto h-full p-4">
       <div className="text-center mb-8">
         <h2 className="text-3xl md:text-4xl font-semibold mb-3 tracking-wide">
           SomniRec
@@ -287,13 +287,14 @@ const SomniRec: React.FC = () => {
           <div className="h-px flex-1 bg-gradient-to-r from-transparent via-blue-300/30 to-transparent"></div>
         </h3>
 
-        {journalEntries.length === 0 ? (
+        {/* {journalEntries.length === 0 ? (
           <div className="p-5 rounded-lg bg-white/5 backdrop-blur-sm text-center text-white/50">
             No entries yet. Record your first dream!
           </div>
         ) : (
           productions?.map((production) => (
-            <StoryboardTimeline production={production} />
+            <div>.</div>
+            // <StoryboardTimeline production={production} />
             // <div
             //   key={entry._id}
             //   className="p-5 rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300"
@@ -304,7 +305,7 @@ const SomniRec: React.FC = () => {
             //   </p>
             // </div>
           ))
-        )}
+        )} */}
       </div>
     </div>
   );

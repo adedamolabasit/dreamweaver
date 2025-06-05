@@ -3,10 +3,19 @@ import { connectionOptions, workerConfig } from "./config";
 import logger from "../utils/logger";
 
 import { analyzeArchetypes } from "../aiSystem/service/archetypeService";
-import { interpreteDream, DreamAnalysis } from "../aiSystem/service/interpretationAgent";
-import { generatePlayElements, StoryParams } from "../aiSystem/service/playAgent";
+import {
+  interpreteDream,
+  DreamAnalysis,
+} from "../aiSystem/service/interpretationAgent";
+import {
+  generatePlayElements,
+  StoryParams,
+} from "../aiSystem/service/playAgent";
 import { generateStoryElements } from "../aiSystem/service/storyAgent";
-import { generateMultiStyleSceneImages, StoryVisuals } from "../aiSystem/service/visualAgent";
+import {
+  generateComicStyleSceneImages,
+  StoryVisuals,
+} from "../aiSystem/service/visualAgent";
 
 interface ArchetypeAnalysis {
   primaryArchetype: string;
@@ -47,11 +56,22 @@ interface VisualizeJobData {
 }
 
 // Queues
-export const analysisQueue = new Queue<AnalysisJobData>("ai-analysis", { connection: connectionOptions });
-export const interpreterQueue = new Queue<InterpreterJobData>("ai-interpreter", { connection: connectionOptions });
-export const storyQueue = new Queue<StoryJobData>("ai-story", { connection: connectionOptions });
-export const playQueue = new Queue<PlayJobData>("ai-play", { connection: connectionOptions });
-export const visualQueue = new Queue<VisualizeJobData>("ai-visual", { connection: connectionOptions });
+export const analysisQueue = new Queue<AnalysisJobData>("ai-analysis", {
+  connection: connectionOptions,
+});
+export const interpreterQueue = new Queue<InterpreterJobData>(
+  "ai-interpreter",
+  { connection: connectionOptions }
+);
+export const storyQueue = new Queue<StoryJobData>("ai-story", {
+  connection: connectionOptions,
+});
+export const playQueue = new Queue<PlayJobData>("ai-play", {
+  connection: connectionOptions,
+});
+export const visualQueue = new Queue<VisualizeJobData>("ai-visual", {
+  connection: connectionOptions,
+});
 
 // Workers
 export const analysisWorker = new Worker<AnalysisJobData>(
@@ -103,14 +123,20 @@ export const visualWorker = new Worker<VisualizeJobData>(
   async (job) => {
     const { productionId, story } = job.data;
     logger.info(`Generating visuals for production ${productionId}`);
-    const results = await generateMultiStyleSceneImages(story);
+    const results = await generateComicStyleSceneImages(story, productionId);
     return { productionId, results };
   },
   workerConfig
 );
 
 // Worker Failure Listeners
-[analysisWorker, interpreterWorker, storyWorker, playWorker, visualWorker].forEach((worker) => {
+[
+  analysisWorker,
+  interpreterWorker,
+  storyWorker,
+  playWorker,
+  visualWorker,
+].forEach((worker) => {
   worker.on("failed", (job, err) => {
     logger.error(`Job failed in ${worker.name} queue, Job ID ${job?.id}:`, err);
   });

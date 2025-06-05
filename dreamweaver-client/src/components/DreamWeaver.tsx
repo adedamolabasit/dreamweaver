@@ -6,16 +6,23 @@ import ArchetypeAnalyzer from "./ArchetypeAnalyzer";
 import DreamGallery from "./DreamGallery";
 import MintDream from "./MintDream";
 import DreamyBackground from "./DreamyBackground";
+import { StoryFeeds } from "./storys/StoryFeeds";
 
 function DreamWeaver() {
-  const [activeSection, setActiveSection] = useState("journal");
+  const [activeSection, setActiveSection] = useState("story");
+
+  const handleActiveTab = (tab:string) => {
+    setActiveSection(tab)
+  }
 
   const renderSection = () => {
     switch (activeSection) {
       case "journal":
         return <VoiceJournal />;
+      case "story":
+        return <StoryFeeds />;
       case "storyboard":
-        return <StoryboardConverter />;
+        return <StoryboardConverter  />;
       case "archetype":
         return <ArchetypeAnalyzer />;
       case "gallery":
@@ -30,7 +37,6 @@ function DreamWeaver() {
   return (
     <div className="relative min-h-screen overflow-hidden font-serif text-white">
       <DreamyBackground />
-    
 
       <div className="relative z-10 min-h-screen flex flex-col">
         <main className="flex-1 px-4 py-6  mt-28 md:p-8">

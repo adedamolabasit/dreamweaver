@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Mic, PenTool, Brain, Images, Star } from "lucide-react";
+import { Mic, PenTool, Brain, Images, Star, Magnet } from "lucide-react";
 import { Sparkles, Wallet, LogOut } from "lucide-react";
 import { useAuthUser } from "../hooks/useAuth";
 import { useConnectModal } from "@tomo-inc/tomo-evm-kit";
@@ -71,6 +71,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
   const navItems = [
     { id: "journal", icon: <Mic />, label: "Journal" },
+    { id: "story", icon: <Magnet />, label: "Story" },
     { id: "storyboard", icon: <PenTool />, label: "Storyboard" },
     { id: "archetype", icon: <Brain />, label: "Archetypes" },
     { id: "gallery", icon: <Images />, label: "Gallery" },

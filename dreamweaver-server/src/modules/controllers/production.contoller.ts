@@ -31,8 +31,6 @@ export const startProduction: RequestHandler = async (req, res, next) => {
     const userId = req.user?.id as string;
     const productionId = req.params.productionId;
 
-    console.log(productionId, "pp");
-
     processStartProduction({ userId, productionId });
 
     res.status(201).json(responseHandler("Production initiated!!!"));

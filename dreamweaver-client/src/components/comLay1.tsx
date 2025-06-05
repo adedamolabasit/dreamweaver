@@ -49,41 +49,35 @@ const ComicBookDisplay: React.FC<ComicBookDisplayProps> = ({
   story = defaultStory,
   visuals = defaultVisuals,
 }) => {
-const getComicBookImageForScene = (index: number) => {
-  // First ensure visuals is a flat array
-  const flatVisuals = Array.isArray(visuals[0]) ? visuals[0] : visuals;
-  
-  const sceneId = `scene${index + 1}`;
-  console.log('Flat visuals array:', flatVisuals);
-  
-  const visual = flatVisuals.find((v) => {
-    console.log(`Comparing: Looking for ${sceneId} vs ${v.id}`);
-    return v.id === sceneId;
-  });
-  
-  if (visual) {
-    console.log('Found visual:', visual);
-    const comicImage = visual.generatedImages.find((img: any) => {
-      console.log(`Checking image style: ${img.style}`);
-      return img.style === "Comic Book";
+  const getComicBookImageForScene = (index: number) => {
+    // First ensure visuals is a flat array
+    const flatVisuals = Array.isArray(visuals[0]) ? visuals[0] : visuals;
+
+    const sceneId = `scene${index + 1}`;
+
+    const visual = flatVisuals.find((v) => {
+      return v.id === sceneId;
     });
-    return comicImage || null;
-  }
-  
-  console.log(`No visual found for ${sceneId}`);
-  return null;
-};
 
-  console.log(getComicBookImageForScene(1),"ssx")
+    if (visual) {
+      const comicImage = visual.generatedImages.find((img: any) => {
+        return img.style === "Comic Book";
+      });
+      return comicImage || null;
+    }
 
-  // Safe access to story properties
+    return null;
+  };
+
   const safeStory = story || defaultStory;
   const safeVisuals = visuals || defaultVisuals;
 
   return (
     <div className="w-full">
       <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-2 text-center">{safeStory.title}</h2>
+        <h2 className="text-2xl font-bold mb-2 text-center">
+          {safeStory.title}
+        </h2>
         <p className="text-blue-100/80 text-sm mb-6 text-center max-w-2xl mx-auto">
           {safeStory.synopsis}
         </p>
@@ -118,7 +112,10 @@ const getComicBookImageForScene = (index: number) => {
             safeStory.scenes.map((scene, index) => {
               const comicImage = getComicBookImageForScene(index);
               return (
-                <div key={index} className="bg-purple-900/10 rounded-lg overflow-hidden border border-purple-500/20">
+                <div
+                  key={index}
+                  className="bg-purple-900/10 rounded-lg overflow-hidden border border-purple-500/20"
+                >
                   {/* Scene header */}
                   <div className="p-4 bg-purple-900/20 border-b border-purple-500/20">
                     <h4 className="text-lg font-medium text-purple-200">
@@ -132,7 +129,9 @@ const getComicBookImageForScene = (index: number) => {
                   {/* Visual prompt */}
                   <div className="p-4 bg-purple-900/10 border-b border-purple-500/10">
                     <p className="text-xs text-blue-200/60 italic">
-                      <span className="font-medium text-blue-200/80">Visual Prompt:</span> 
+                      <span className="font-medium text-blue-200/80">
+                        Visual Prompt:
+                      </span>
                       {scene.visualPrompt || "No visual prompt available"}
                     </p>
                   </div>
@@ -143,12 +142,13 @@ const getComicBookImageForScene = (index: number) => {
                       <div className="relative aspect-[4/3] bg-purple-900/20">
                         <img
                           src={comicImage.url}
-                          alt={`${scene.visualPrompt || 'Scene'} - Comic Book`}
+                          alt={`${scene.visualPrompt || "Scene"} - Comic Book`}
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.onerror = null;
-                            target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJhMTAzMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMCI+SW1hZ2UgTm90IEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+                            target.src =
+                              "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzJhMTAzMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMCI+SW1hZ2UgTm90IEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=";
                           }}
                         />
                         <div className="absolute bottom-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -213,7 +213,9 @@ const getComicBookImageForScene = (index: number) => {
                         ? "Resolution: "
                         : `Development ${index}: `}
                       <span className="text-blue-200/80">
-                        {scene.description?.substring(0, 100) || "No description available"}...
+                        {scene.description?.substring(0, 100) ||
+                          "No description available"}
+                        ...
                       </span>
                     </p>
                   </div>
@@ -232,15 +234,6 @@ const getComicBookImageForScene = (index: number) => {
 };
 
 export default ComicBookDisplay;
-
-
-
-
-
-
-
-
-
 
 // import React from "react";
 // import { BookOpen, Camera, Info, ChevronRight } from "lucide-react";
@@ -297,7 +290,7 @@ export default ComicBookDisplay;
 //     const flatVisuals = Array.isArray(visuals[0]) ? visuals[0] : visuals;
 //     const sceneId = `scene${index + 1}`;
 //     const visual = flatVisuals.find((v) => v.id === sceneId);
-    
+
 //     if (visual) {
 //       const comicImage = visual.generatedImages.find((img: any) => img.style === "Comic Book");
 //       return comicImage || null;

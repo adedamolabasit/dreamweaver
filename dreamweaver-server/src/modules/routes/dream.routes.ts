@@ -13,7 +13,7 @@ const router = Router();
 
 router.post("/journal", authenticatedUser, createDreamJournal);
 router.get("/journals", getAllJournals);
-router.get("/journal/:id", authenticatedUser, getJournalById);
+router.get("/journal/:id", getJournalById);
 router.put("/journal/:id", authenticatedUser, updateJournal);
 router.delete("/journal/:id", authenticatedUser, deleteJournal);
 router.get("/user/journals", authenticatedUser, getUserJournals);
