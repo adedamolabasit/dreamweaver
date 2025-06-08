@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Mic, MicOff, Loader2, Send } from "lucide-react";
-import { useCreateJournal } from "../hooks/useJournal.";
-import { useGetAllJournals } from "../hooks/useJournal.";
-import { JournalEntry } from "../types/types";
-import { CenteredLoader } from "./Loader/CenteredLoader";
-import moment from "moment";
-import { StoryboardTimeline } from "./StroyboardTimeline";
-import { useGetAllProductions } from "../hooks/useProduction";
+import { useCreateJournal } from "../../../../hooks/useJournal.";
+import { CenteredLoader } from "../../../../components/Loader/CenteredLoader";
+import DreamToast from "../../../../components/Toast";
+import { useToast } from "../../../../components/Toast";
 
 const SomniRec: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [transcript, setTranscript] = useState("");
-  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const recognitionRef = useRef<SpeechRecognition | null>(null);
@@ -20,23 +16,8 @@ const SomniRec: React.FC = () => {
   const audioChunksRef = useRef<Blob[]>([]);
 
   const { mutate: creatJournal, isPending } = useCreateJournal();
-  const {
-    data: journals,
-    isLoading: journalLoading,
-    refetch: refetchJournal,
-  } = useGetAllJournals();
 
-  // const {
-  //   data: productions,
-  //   isLoading: productionLoading,
-  //   refetch: refetchProduction,
-  // } = useGetAllProductions();
-
-  useEffect(() => {
-    if (journals && !journalLoading) {
-      setJournalEntries(journals);
-    }
-  });
+  const { showDream } = useToast();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -141,19 +122,11 @@ const SomniRec: React.FC = () => {
 
     const cleanTranscript = transcript.replace(/\[.*?\]/g, "").trim();
 
-    const newEntry: JournalEntry = {
-      _id: Date.now().toString(),
-      transcript: cleanTranscript,
-    };
-
     creatJournal(
       { transcript: cleanTranscript },
       {
         onSuccess: () => {
-          setJournalEntries((prev) => [newEntry, ...prev]);
-          setTranscript("");
-          audioChunksRef.current = [];
-          refetchJournal();
+          showDream("Journal Created", "Dream added to journal successfully");
         },
         onError: (err: any) => {
           console.error("Mutation failed:", err);
@@ -279,33 +252,6 @@ const SomniRec: React.FC = () => {
             )}
           </div>
         )}
-      </div>
-
-      <div className="w-full space-y-12 ">
-        <h3 className="text-xl font-medium mb-4 flex items-center">
-          <span className="mr-2">Dream Journal</span>
-          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-blue-300/30 to-transparent"></div>
-        </h3>
-
-        {/* {journalEntries.length === 0 ? (
-          <div className="p-5 rounded-lg bg-white/5 backdrop-blur-sm text-center text-white/50">
-            No entries yet. Record your first dream!
-          </div>
-        ) : (
-          productions?.map((production) => (
-            <div>.</div>
-            // <StoryboardTimeline production={production} />
-            // <div
-            //   key={entry._id}
-            //   className="p-5 rounded-lg bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300"
-            // >
-            //   <p className="font-light">{entry.transcript}</p>
-            //   <p className="text-xs text-blue-200/50 mt-2">
-            //     {moment(entry.createdAt).format("MMMM D, YYYY [at] h:mm A")}
-            //   </p>
-            // </div>
-          ))
-        )} */}
       </div>
     </div>
   );

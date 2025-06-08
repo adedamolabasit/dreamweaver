@@ -1,4 +1,8 @@
-import { UnauthorizedError, NotFoundError, ForbiddenError} from "../../errors/httpError";
+import {
+  UnauthorizedError,
+  NotFoundError,
+  ForbiddenError,
+} from "../../errors/httpError";
 import { DreamJournalEntry } from "../../models/dream.journal.model";
 import { User } from "../../models/user.model";
 import { CreateJournalParams, UpdateJournalParams } from "../../types";
@@ -131,9 +135,11 @@ export const processGetUserJournals = async (userId: string) => {
       throw new NotFoundError("User not found");
     }
 
-    return await DreamJournalEntry.find({ user: userId })
-      .populate("user", "username")
-      .sort({ createdAt: -1 });
+    const entries = await DreamJournalEntry.find({ user: userId }).sort({
+      createdAt: -1,
+    });
+    console.log("Found entries:", entries.length);
+    return entries;
   } catch (error) {
     logger.error("Failed to get user journals:", error);
     throw new Error("Failed to retrieve user journals");

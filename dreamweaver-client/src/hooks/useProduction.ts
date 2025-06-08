@@ -5,6 +5,7 @@ import {
   fetchUserProductions,
   fetchProductionById,
   fetchAllProductions,
+  updateProduction,
 } from "../api/productionApi";
 import { ProductionResponse } from "../types/types";
 
@@ -46,5 +47,16 @@ export const useGetProductionById = (id: string) => {
   return useQuery<ProductionResponse, Error>({
     queryKey: ["production-id", id],
     queryFn: () => fetchProductionById(id),
+  });
+};
+
+export const useUpdateProduction = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, obj }: { id: string; obj: { [key: string]: any } }) =>
+      updateProduction(id, obj),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["update-production"] });
+    },
   });
 };

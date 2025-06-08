@@ -1,4 +1,4 @@
-import { apiClient, publicApiClient } from "./apiClient";
+import { apiClient } from "./apiClient";
 import { ProductionResponse } from "../types/types";
 
 export const weaveDream = async (id: string): Promise<ProductionResponse> => {
@@ -14,7 +14,7 @@ export const initiateProducttion = async (
 };
 
 export const fetchUserProductions = async (): Promise<ProductionResponse[]> => {
-  const { data } = await apiClient.get(`/production/storys/1`);
+  const { data } = await apiClient.get(`/production/user-storys`);
   return data.data;
 };
 
@@ -27,5 +27,15 @@ export const fetchProductionById = async (
   id: string
 ): Promise<ProductionResponse> => {
   const { data } = await apiClient.get(`/production/story/${id}`);
+  return data.data;
+};
+
+export const updateProduction = async (
+  id: string,
+  obj: { [key: string]: any }
+): Promise<ProductionResponse> => {
+  const { data } = await apiClient.patch(`/production/story/${id}`, {
+    ...obj,
+  });
   return data.data;
 };

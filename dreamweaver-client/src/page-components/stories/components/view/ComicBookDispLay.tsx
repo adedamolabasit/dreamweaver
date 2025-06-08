@@ -1,40 +1,6 @@
 import React from "react";
 import { BookOpen, Camera, Info } from "lucide-react";
-
-interface Character {
-  name?: string;
-  description?: string;
-}
-
-interface Scene {
-  description?: string;
-  visualPrompt?: string;
-  imageUrl?: string;
-}
-
-interface GeneratedImage {
-  url: string;
-  style: string;
-}
-
-export interface Visual {
-  id: string;
-  description: string;
-  originalPrompt: string;
-  generatedImages: GeneratedImage[];
-}
-
-interface Story {
-  title?: string;
-  synopsis?: string;
-  characters?: Character[];
-  scenes?: Scene[];
-}
-
-interface ComicBookDisplayProps {
-  story?: Story;
-  visuals?: Visual[];
-}
+import { Visual, Story, ComicBookDisplayProps } from "../../types";
 
 const defaultStory: Story = {
   title: "Untitled Story",
@@ -113,25 +79,15 @@ const ComicBookDisplay: React.FC<ComicBookDisplayProps> = ({
                   key={index}
                   className="bg-purple-900/10 rounded-lg overflow-hidden border border-purple-500/20"
                 >
-                  {/* Scene header */}
                   <div className="p-4 bg-purple-900/20 border-b border-purple-500/20">
                     <h4 className="text-lg font-medium text-purple-200">
                       Scene {index + 1}
                     </h4>
-                    <p className="text-blue-100/80 text-2xl mt-1">
+                    <p className="text-blue-100/80 md:text-2xl mt-1">
                       {scene.description || "No scene description"}
                     </p>
                   </div>
 
-                  {/* Visual prompt */}
-                  {/* <div className="p-4 bg-purple-900/10 border-b border-purple-500/10">
-                    <p className="text-xs text-blue-200/60 italic">
-                      
-                      {scene.visualPrompt || "No visual prompt available"}
-                    </p>
-                  </div> */}
-
-                  {/* Single Comic Book Image */}
                   <div className="aspect-[4/3] bg-purple-900/10">
                     {comicImage ? (
                       <div className="relative aspect-[4/3] bg-gradient-to-br from-purple-900/10 to-blue-900/10 bg-purple-900/20">

@@ -7,3 +7,9 @@ export const registerUser = async (payload: {
   const { data } = await apiClient.post("/auth/register", payload);
   return data.data;
 };
+
+export const fetchUserProfile = async (walletAddress: string): Promise<any> => {
+  const { data } = await apiClient.get(`/auth/${walletAddress}`);
+  return data.data;
+};
+

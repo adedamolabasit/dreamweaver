@@ -155,7 +155,7 @@ export const aiProduction = async ({
       {
         visuals,
         progress: 100,
-        status: "published",
+        status: "completed",
         completedAt: new Date(),
         updatedAt: new Date(),
       },

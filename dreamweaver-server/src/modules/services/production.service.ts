@@ -32,7 +32,7 @@ export const processWeaveDream = async ({
       userId: userIdObj,
       dreamId: journal._id,
       originalDream: journal.transcript,
-      status: "unpublished",
+      status: "inactive",
     });
 
     return entry;
@@ -88,6 +88,14 @@ export const updateProduction = async ({
       delete updateData.play;
     }
 
+    if (updateData.publication !== undefined) {
+      existingProduction.publication = updateData.publication;
+    }
+
+    if (updateData.ipRegistration !== undefined) {
+      existingProduction.ipRegistration = updateData.ipRegistration;
+    }
+
     Object.assign(existingProduction, updateData);
 
     const updatedProduction = await existingProduction.save();
@@ -137,7 +145,7 @@ export const processGetUserProduction = async (userId: string) => {
 export const processGetAllProduction = async () => {
   try {
     return await Production.find({
-      status: "published",
+      status: "completed",
     }).sort({ createdAt: -1 });
   } catch (error) {
     logger.error("Failed to get all productions: ", error);
@@ -147,8 +155,7 @@ export const processGetAllProduction = async () => {
 
 export const processGetProductionById = async (id: string) => {
   try {
-
-    const production = await Production.findById({_id:id})
+    const production = await Production.findById({ _id: id });
     if (!production) throw new NotFoundError("Production not found");
 
     return production;

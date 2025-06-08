@@ -3,6 +3,7 @@ import logger from "../../utils/logger";
 import { RegisterUserParams, UpdateUserParams } from "../../types";
 import { generateJwt } from "../../utils/jwtGenerator";
 import { RandomUserGenerator } from "../../utils/avatarGenerator";
+import mongoose from "mongoose";
 
 export const processRegisterUser = async ({
   walletAddress,
@@ -37,7 +38,9 @@ export const processRegisterUser = async ({
 
 export const getUserByWalletAddress = async (walletAddress: string) => {
   try {
-    const user = User.findOne({ walletAddress });
+    const user = await User.findOne({ walletAddress });
+
+    console.log(user,'user1')
 
     return {
       user,
@@ -45,6 +48,16 @@ export const getUserByWalletAddress = async (walletAddress: string) => {
   } catch (error) {
     logger.error("Error fetching user:", error);
     throw new Error("Failed to fetch user");
+  }
+};
+
+export const processGetProfile = async (userId: string) => {
+  try {
+    const profile = await User.findById(userId).lean(); // returns plain object
+    return { profile };
+  } catch (error) {
+    logger.error("Error fetching profile:", error);
+    throw new Error("Failed to fetch profile");
   }
 };
 

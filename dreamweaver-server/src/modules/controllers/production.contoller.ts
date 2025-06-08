@@ -42,7 +42,7 @@ export const startProduction: RequestHandler = async (req, res, next) => {
 export const updateDreamProduction: RequestHandler = async (req, res, next) => {
   try {
     const userId = req.user?.id as string;
-    const productionId = req.params.id;
+    const productionId = req.params.productionId;
     const updateData = req.body;
 
     const updatedProduction = await updateProduction({

@@ -9,8 +9,8 @@ export type ProductionStatus =
   | "story_complete"
   | "play_complete"
   | "visual_complete"
+  | "completed"
   | "published"
-  | "unpublished"
   | "inactive"
   | "failed";
 
@@ -69,6 +69,13 @@ export interface IProduction extends Document {
       style: string;
     };
   };
+  ipRegistration?: {
+    ipId: string;
+    status: "verified" | "notVerified" | "pending";
+    licenseTermsIds: string;
+    tokenId: string;
+  };
+  publication: "draft" | "published";
   progress: number;
   status: ProductionStatus;
   createdAt?: Date;
@@ -147,10 +154,33 @@ const ProductionSchema = new mongoose.Schema<IProduction>(
         style: { type: String },
       },
     },
+    ipRegistration: {
+      type: {
+        ipId: { type: String, required: true },
+        status: {
+          type: String,
+          enum: ["verified", "notVerified", "pending"],
+          required: true,
+        },
+        licenseTermsIds: { type: String, required: true },
+        tokenId: { type: String, required: true },
+      },
+      required: false,
+      default: null,
+    },
+
+    publication: {
+      type: String,
+      enum: ["draft", "published"],
+      default: "draft",
+      required: true,
+    },
+
     progress: {
       type: Number,
       default: 0,
     },
+
     status: {
       type: String,
       enum: [
@@ -160,12 +190,12 @@ const ProductionSchema = new mongoose.Schema<IProduction>(
         "story_complete",
         "play_complete",
         "visual_complete",
+        "completed",
         "published",
-        "unpublished",
         "inactive",
         "failed",
       ],
-      default: "unpublished",
+      default: "inactive",
     },
   },
   {

@@ -90,3 +90,5 @@ export const getUserJournals: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
+

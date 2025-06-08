@@ -8,6 +8,18 @@ export interface JournalEntry {
   };
 }
 
+export interface ProfileResp {
+  user: {
+    _id: string;
+    username: string;
+    walletAddress: string | `0x${string}`;
+    avatar: string;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+  };
+}
+
 export type ProductionStatus =
   | "processing"
   | "archetype_complete"
@@ -15,8 +27,8 @@ export type ProductionStatus =
   | "story_complete"
   | "play_complete"
   | "visual_complete"
+  | "completed"
   | "published"
-  | "unpublished"
   | "inactive"
   | "failed";
 
@@ -74,6 +86,13 @@ export interface ProductionResponse {
       style: string;
     }[];
   };
+  ipRegistration?: {
+    ipId: string;
+    status: "verified" | "notVerified" | "pending";
+    licenseTermsIds: string;
+    tokenId: string;
+  };
+  publication: "draft" | "published";
   progress: number;
   status: ProductionStatus;
   createdAt?: Date;

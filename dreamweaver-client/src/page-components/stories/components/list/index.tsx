@@ -1,17 +1,15 @@
 import { FC, useEffect, useState } from "react";
 import { BookOpen, Heart, Users, ImageOff } from "lucide-react";
-import { ProductionResponse } from "../types/types";
+import { ProductionResponse } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 interface StoryParams {
   production: ProductionResponse | undefined;
-  handleActiveStory?: (id: string, viewStory: boolean) => void;
 }
 
-export const StoryboardTimeline: FC<StoryParams> = ({
-  production,
-  handleActiveStory,
-}) => {
-  const [imageError, setImageError] = useState(false);
+export const StoryListCard: FC<StoryParams> = ({ production }) => {
+  const navigate = useNavigate();
+
   const [cid, setCid] = useState<string>();
 
   const { story, analysis, visuals } = production!;
@@ -19,7 +17,6 @@ export const StoryboardTimeline: FC<StoryParams> = ({
   const getFirstSceneComicImage = (): any => {
     if (visuals) {
       const flatVisuals = Array.isArray(visuals) ? visuals[0] : visuals;
-      console.log(flatVisuals, "flll");
       return (
         flatVisuals.generatedImages.find((img: any) =>
           img.style.toLowerCase().includes("comic")
@@ -29,19 +26,30 @@ export const StoryboardTimeline: FC<StoryParams> = ({
     return null;
   };
 
+  const handleActiveStory = (productId: string) => {
+    if (!productId) {
+      console.warn("Missing productId!");
+      return;
+    }
+
+    const currentScroll = window.scrollY;
+    sessionStorage.setItem("scrollPosition", currentScroll.toString());
+
+    navigate(`/${productId}`);
+  };
+
   useEffect(() => {
     const coverImage = getFirstSceneComicImage();
 
     if (coverImage) {
       setCid(coverImage.ipfsHash);
-      console.log(cid, "cid");
     }
   }, []);
 
   return (
     <div
       className="w-full space-y-6 cursor-pointer"
-      onClick={() => handleActiveStory?.(production?._id as string, true)}
+      onClick={() => handleActiveStory(production?._id as string)}
     >
       <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-900/20 to-blue-900/20 border border-purple-500/20">
         <div className="flex flex-col md:flex-row items-start justify-between gap-4 mb-6">
@@ -77,7 +85,6 @@ export const StoryboardTimeline: FC<StoryParams> = ({
                 src={`https://jade-peaceful-macaw-761.mypinata.cloud/ipfs/${cid}?pinataGatewayToken=ckardq1C_7H8MBVFx0g6R3zTQ6VRwDP8FyNGMvx_pOAcVrFmYFoBVDknjk4hN3Wm`}
                 alt="Cover Image"
                 className="w-full h-full object-cover"
-                onError={() => setImageError(true)}
               />
             ) : (
               <div className="flex flex-col items-center justify-center text-white opacity-70">

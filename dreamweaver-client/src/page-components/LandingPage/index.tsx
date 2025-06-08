@@ -2,7 +2,7 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 import { Sparkles, Brain, Palette, Stars, Wand2 } from "lucide-react";
-import DreamyBackground from "./DreamyBackground";
+import DreamyBackground from "../../components/Background/DreamyBackground";
 
 const FeatureCard: React.FC<{
   icon: React.ReactNode;
@@ -75,7 +75,7 @@ const LandingPage: React.FC = () => {
             </p>
 
             <button
-              onClick={() => navigate("/dream")}
+              onClick={() => navigate("/stories")}
               className="px-8 py-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 transition-all duration-300 font-medium text-lg shadow-lg shadow-purple-900/30 group relative overflow-hidden"
             >
               <span className="relative z-10 flex items-center gap-2">
