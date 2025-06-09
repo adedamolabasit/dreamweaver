@@ -13,6 +13,7 @@ import { WeaveStory } from "./page-components/weave/components/create";
 import Profile from "./page-components/profile/components";
 import NotFoundPage from "./page-components/notFound";
 import { ToastProvider } from "./components/Toast";
+import { ArtGallery } from "./page-components/stories/components/list/ArtGallery";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,7 +44,7 @@ function App() {
                 <Route path="/stories" element={<Stories />} />
                 <Route path="/:id" element={<StoryView />} />
                 <Route path="/weave" element={<WeaveStory />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/art-gallery" element={<ArtGallery />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>

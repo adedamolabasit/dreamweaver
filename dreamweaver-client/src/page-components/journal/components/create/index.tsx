@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Mic, MicOff, Loader2, Send } from "lucide-react";
 import { useCreateJournal } from "../../../../hooks/useJournal.";
-import { CenteredLoader } from "../../../../components/Loader/CenteredLoader";
-import DreamToast from "../../../../components/Toast";
 import { useToast } from "../../../../components/Toast";
+import DreamLoader from "../../../../components/Loader/DreamLoader";
+import { useNavigate } from "react-router-dom";
 
 const SomniRec: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -17,7 +17,9 @@ const SomniRec: React.FC = () => {
 
   const { mutate: creatJournal, isPending } = useCreateJournal();
 
-  const { showDream } = useToast();
+  const { showDream, showError } = useToast();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -56,7 +58,6 @@ const SomniRec: React.FC = () => {
       };
 
       recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
-        console.error("Speech recognition error", event.error);
         setError(`Speech recognition error: ${event.error}`);
         stopRecording();
       };
@@ -92,7 +93,6 @@ const SomniRec: React.FC = () => {
 
       setIsRecording(true);
     } catch (err) {
-      console.error("Error accessing microphone:", err);
       setError("Could not access microphone. Please check permissions.");
     }
   };
@@ -127,10 +127,10 @@ const SomniRec: React.FC = () => {
       {
         onSuccess: () => {
           showDream("Journal Created", "Dream added to journal successfully");
+          navigate(`/weave`);
         },
-        onError: (err: any) => {
-          console.error("Mutation failed:", err);
-          setError("Failed to save journal entry. Please try again.");
+        onError: () => {
+          showError("Failed to save journal entry. Please try again.");
         },
         onSettled: () => {
           setIsProcessing(false);
@@ -148,11 +148,7 @@ const SomniRec: React.FC = () => {
   };
 
   if (isPending)
-    return (
-      <div>
-        <CenteredLoader />
-      </div>
-    );
+    return <DreamLoader message="Adding your dream to journal..." size="lg" />;
 
   return (
     <div className="w-full flex flex-col items-center max-w-4xl mx-auto h-full p-4">

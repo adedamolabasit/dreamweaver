@@ -4,7 +4,7 @@ import { useGetAllProductions } from "../../hooks/useProduction";
 import { ProductionResponse } from "./types";
 
 function Stories() {
-  const { data: productions } = useGetAllProductions();
+  const { data: productions, isFetching } = useGetAllProductions();
 
   const publishedProductions = productions?.filter(
     (production: ProductionResponse) => production.publication === "published"
@@ -14,7 +14,11 @@ function Stories() {
     <DashboardLayout>
       {publishedProductions?.map((production: ProductionResponse) => (
         <div className="flex flex-col gap-6 items-center max-w-4xl mx-auto h-full p-4">
-          <StoryListCard key={production._id} production={production} />
+          <StoryListCard
+            key={production._id}
+            production={production}
+            isFetching={isFetching}
+          />
         </div>
       ))}
     </DashboardLayout>

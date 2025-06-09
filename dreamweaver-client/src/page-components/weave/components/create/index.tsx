@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Flower as Flow, Wand2, Edit, Save, X, Plus } from "lucide-react";
 import { Wallet, Loader2, Notebook } from "lucide-react";
 import { DashboardLayout } from "../../../../components/Layout";
-
+import { useToast } from "../../../../components/Toast";
 import {
   useWeaveDream,
   useInitiateProduction,
@@ -14,6 +14,8 @@ import { useUpdateJournal } from "../../../../hooks/useJournal.";
 import { useGetProductionById } from "../../../../hooks/useProduction";
 import { useGetAllUsersJournals } from "../../../../hooks/useJournal.";
 import { JournalEntry } from "../../types";
+import DreamLoader from "../../../../components/Loader/DreamLoader";
+import { useNavigate } from "react-router-dom";
 
 export const WeaveStory = ({
   handleActiveTab,
@@ -28,6 +30,8 @@ export const WeaveStory = ({
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editContent, setEditContent] = useState<string>("");
 
+  const navigate = useNavigate();
+
   const {
     data: journals,
     isLoading,
@@ -36,16 +40,21 @@ export const WeaveStory = ({
   const { mutate: updateJournal } = useUpdateJournal();
   const { mutate: weaveDream } = useWeaveDream();
   const { mutate: initiateProducttion } = useInitiateProduction();
-  const { data: production, refetch: refetchProduction } = useGetProductionById(
+  const { refetch: refetchProduction } = useGetProductionById(
     productionId || ""
   );
   const { isConnected } = useAccount();
 
+  const hasAuthenticatedRef = useRef(false);
+
+  const { showInfo, showError } = useToast();
+
   useEffect(() => {
+    refetchJournal();
     if (journals && journals.length > 0 && !activeJournalId) {
-      setActiveJournalId(journals[journals.length - 1]._id);
+      setActiveJournalId(journals[0]._id);
     }
-  }, [journals]);
+  }, [journals, refetchJournal]);
   useEffect(() => {
     if (!isGeneratingStory) return;
 
@@ -77,7 +86,6 @@ export const WeaveStory = ({
   //   }
   // }, [production, isGeneratingStory]);
 
-
   const handleEditClick = (journal: JournalEntry, e: React.MouseEvent) => {
     e.stopPropagation();
     setActiveJournalId(journal._id);
@@ -106,13 +114,10 @@ export const WeaveStory = ({
   };
 
   const handleIntiateProduction = async (productionId: string) => {
-    console.log("start...");
     initiateProducttion(productionId, {
-      onSuccess: (data: ProductionResponse) => {
-        if (data.progress === 100) {
-          handleActiveTab && handleActiveTab("stroy");
-        }
-        console.log("Production initiated:", data);
+      onSuccess: () => {
+        showInfo("Story production initiated...");
+
         refetchProduction();
       },
       onError: (err: any) => {
@@ -129,17 +134,27 @@ export const WeaveStory = ({
       onSuccess: (data: ProductionResponse) => {
         if (data._id) {
           setProdutionId(data._id);
+          showInfo("Dream submitted for production...");
           handleIntiateProduction(data._id);
         }
       },
-      onError: (err: any) => {
-        console.error("Weaving failed:", err);
+      onError: () => {
+        showError("eaving failed");
         setIsGeneratingStory(false);
       },
     });
   };
 
   const activeJournal = journals?.find((j) => j._id === activeJournalId);
+
+  useEffect(() => {
+    if (isConnected) {
+      hasAuthenticatedRef.current = true;
+      if (hasAuthenticatedRef.current === true) {
+        refetchProduction();
+      }
+    }
+  });
 
   return (
     <DashboardLayout>
@@ -153,7 +168,7 @@ export const WeaveStory = ({
           </p>
         </div>
 
-         {isEditing && activeJournal && (
+        {isEditing && activeJournal && (
           <div className="w-full p-6 rounded-2xl bg-purple-950/50 border border-purple-500/30 animate-fadeIn mb-8">
             <div className="flex justify-between items-center mb-4">
               <h4 className="text-lg font-medium text-purple-200">
@@ -201,9 +216,10 @@ export const WeaveStory = ({
                 className="px-3 py-1.5 rounded-lg bg-purple-600/70 hover:bg-purple-500/80 transition-colors text-sm flex items-center gap-2"
                 onClick={() => {
                   if (!isConnected) {
-                    alert("Please connect your wallet first");
+                    showInfo("Please connect your walllet");
                     return;
                   }
+                  navigate("/journal");
                 }}
               >
                 <Plus size={16} />
@@ -213,7 +229,7 @@ export const WeaveStory = ({
 
             {isLoading ? (
               <div className="h-80 flex items-center justify-center rounded-lg bg-purple-900/10">
-                <Loader2 className="animate-spin text-purple-400" size={24} />
+                <DreamLoader message="Loading journal..." size="lg" />
               </div>
             ) : !isConnected ? (
               <div className="h-80 flex flex-col items-center justify-center bg-purple-900/10 rounded-xl border border-purple-500/10 p-6 text-center">
@@ -330,8 +346,6 @@ export const WeaveStory = ({
             </div>
           </div>
         </div>
-
-       
       </div>
     </DashboardLayout>
   );

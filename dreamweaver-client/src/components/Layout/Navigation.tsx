@@ -7,6 +7,7 @@ import {
   Sparkles,
   Wallet,
   LogOut,
+  User
 } from "lucide-react";
 import { useAuthUser } from "../../hooks/useAuth";
 import { useConnectModal } from "@tomo-inc/tomo-evm-kit";
@@ -73,7 +74,8 @@ const Navigation: React.FC<NavigationProps> = ({
     { id: "journal", icon: <Mic />, label: "Journal" },
     { id: "stories", icon: <Star />, label: "Stories" },
     { id: "weave", icon: <PenTool />, label: "Weave" },
-    { id: "profile", icon: <Images />, label: "Profile" },
+    { id: "art-gallery", icon: <Images />, label: "Art Gallery" },
+  { id: "profile", icon: <User />, label: "Profile" },
   ];
 
   return (

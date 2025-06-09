@@ -2,12 +2,14 @@ import { FC, useEffect, useState } from "react";
 import { BookOpen, Heart, Users, ImageOff } from "lucide-react";
 import { ProductionResponse } from "../../types";
 import { useNavigate } from "react-router-dom";
+import DreamLoader from "../../../../components/Loader/DreamLoader";
 
 interface StoryParams {
   production: ProductionResponse | undefined;
+  isFetching: boolean;
 }
 
-export const StoryListCard: FC<StoryParams> = ({ production }) => {
+export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
   const navigate = useNavigate();
 
   const [cid, setCid] = useState<string>();
@@ -45,6 +47,10 @@ export const StoryListCard: FC<StoryParams> = ({ production }) => {
       setCid(coverImage.ipfsHash);
     }
   }, []);
+
+  if (isFetching) {
+    return <DreamLoader message="Fetching stories..." size="lg" />;
+  }
 
   return (
     <div

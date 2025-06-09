@@ -5,6 +5,7 @@ import { useGetProfile } from "../../../../hooks/useAuth";
 import MintAndRegisterIP from "../MintAndRegisterIp";
 import { useAccount, useBalance } from "wagmi";
 import { useUpdateProduction } from "../../../../hooks/useProduction";
+import DreamLoader from "../../../../components/Loader/DreamLoader";
 
 import {
   Wallet,
@@ -82,6 +83,32 @@ export const ProfilePage = () => {
     monthlyGrowth: 18.5,
     amount: `${data?.formatted} ${data?.symbol}`,
   };
+
+  function extractIPFSHashes(data: ProductionResponse[]) {
+    const result = [] as any;
+
+    data?.forEach((item) => {
+      if (item.visuals && Array.isArray(item.visuals)) {
+        item.visuals.forEach((visual) => {
+          if (visual.generatedImages && Array.isArray(visual.generatedImages)) {
+            visual.generatedImages.forEach((generatedImage: any) => {
+              result.push({
+                _id: item._id,
+                id: visual.id,
+                description: visual.originalPrompt,
+                ipfsHash: generatedImage.ipfsHash,
+                publishStatus: item.ipRegistration?.status,
+              });
+            });
+          }
+        });
+      }
+    });
+
+    return result;
+  }
+
+  const ipfsHashesList = extractIPFSHashes(usersStory!);
 
   const stories: Story[] = [
     {
@@ -204,7 +231,7 @@ export const ProfilePage = () => {
   ];
 
   if (isProfileLoading || isStoriesLoading || isJournalsLoading) {
-    return <Spinner />;
+    return <DreamLoader message="Fetching profile..." size="lg" />;
   }
 
   if (!profile || !usersStory || !usersJournal) {
@@ -474,32 +501,147 @@ export const ProfilePage = () => {
                   </button>
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-6">
-                  {galleryImages.map((image) => (
-                    <div key={image.id} className="group relative">
-                      <div className="bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-200">
-                        <div className="aspect-[4/3] overflow-hidden">
-                          <img
-                            src={image.url}
-                            alt={image.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                          />
-                        </div>
-                        <div className="p-2 md:p-4">
-                          <h3 className="font-semibold text-white text-sm md:text-base mb-1 md:mb-2">
-                            {image.title}
-                          </h3>
-                          <div className="flex items-center justify-between">
-                            <span className="text-green-400 font-medium text-xs md:text-sm">
-                              {formatCurrency(image.earnings)}
-                            </span>
-                            <span className="text-xs text-gray-400">
-                              Earned
-                            </span>
+                  {ipfsHashesList.map((art: any) => {
+                    const imageUrl = `https://jade-peaceful-macaw-761.mypinata.cloud/ipfs/${art.ipfsHash}?pinataGatewayToken=BmZjUB5nCCxIeDdY6v_uM2RJhyqwnTKtGFnahd_IsPXD9He4pVRxPOcSvDfCpYwM`;
+
+                    // Function to download image
+                    const downloadImage = async () => {
+                      try {
+                        const response = await fetch(imageUrl);
+                        const blob = await response.blob();
+                        const downloadUrl = window.URL.createObjectURL(blob);
+                        const link = document.createElement("a");
+                        link.href = downloadUrl;
+                        link.download = `art-${art._id}.jpg`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        window.URL.revokeObjectURL(downloadUrl);
+                      } catch (error) {
+                        console.error("Error downloading image:", error);
+                      }
+                    };
+
+                    // Function to handle image enlargement
+                    const enlargeImage = () => {
+                      // You can implement a modal or lightbox here
+                      // For now, we'll just open the image in a new tab
+                      window.open(imageUrl, "_blank");
+                    };
+
+                    return (
+                      <div key={art._id} className="group relative">
+                        <div className="bg-white/5 rounded-xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-200">
+                          <div className="aspect-[4/3] overflow-hidden relative">
+                            <img
+                              src={imageUrl}
+                              alt={art.description || "Art image"}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                            />
+
+                            {/* Action buttons overlay */}
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3">
+                              <button
+                                onClick={downloadImage}
+                                className="bg-white/90 hover:bg-white text-black p-2 rounded-full transition-colors duration-200"
+                                title="Download"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                  <polyline points="7 10 12 15 17 10"></polyline>
+                                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                              </button>
+
+                              <button
+                                onClick={enlargeImage}
+                                className="bg-white/90 hover:bg-white text-black p-2 rounded-full transition-colors duration-200"
+                                title="Enlarge"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <circle cx="11" cy="11" r="8"></circle>
+                                  <line
+                                    x1="21"
+                                    y1="21"
+                                    x2="16.65"
+                                    y2="16.65"
+                                  ></line>
+                                  <line x1="11" y1="8" x2="11" y2="14"></line>
+                                  <line x1="8" y1="11" x2="14" y2="11"></line>
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="p-2 md:p-4">
+                            <div className="flex justify-between items-start mb-1 md:mb-2">
+                              <h3 className="font-semibold text-white text-sm md:text-base truncate flex-1">
+                                {art.description || "Untitled"}
+                              </h3>
+
+                              {art.publishStatus === "verified" ? (
+                                <span className="flex items-center gap-1 text-green-400 text-xs ml-2">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                  </svg>
+                                  IP Verified
+                                </span>
+                              ) : (
+                                <button
+                                  onClick={() => handleRegisterIP(art)}
+                                  className="bg-purple-600 hover:bg-purple-700 text-white px-2 py-1 rounded text-xs whitespace-nowrap ml-2"
+                                >
+                                  Register IP
+                                </button>
+                              )}
+                            </div>
+
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-gray-400">
+                                {new Date(art.createdAt).toLocaleDateString()}
+                              </span>
+                              <span className="text-xs text-gray-400">
+                                {art.earnings
+                                  ? `Earned: ${formatCurrency(art.earnings)}`
+                                  : "Not sold"}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -561,7 +703,9 @@ export const ProfilePage = () => {
                       <div className="text-xl md:text-2xl font-bold text-white mb-1">
                         {formatCurrency(profileData.totalEarnings)}
                       </div>
-                      <div className="text-green-300 text-sm">Total Revenue</div>
+                      <div className="text-green-300 text-sm">
+                        Total Revenue
+                      </div>
                     </div>
                     <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl p-3 md:p-4 border border-orange-500/30">
                       <div className="text-xl md:text-2xl font-bold text-white mb-1">
@@ -570,7 +714,9 @@ export const ProfilePage = () => {
                             (stories.length + galleryImages.length)
                         )}
                       </div>
-                      <div className="text-orange-300 text-sm">Avg per Item</div>
+                      <div className="text-orange-300 text-sm">
+                        Avg per Item
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -599,9 +745,3 @@ export const ProfilePage = () => {
     </div>
   );
 };
-
-const Spinner = () => (
-  <div className="flex justify-center items-center h-64">
-    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
-  </div>
-);
