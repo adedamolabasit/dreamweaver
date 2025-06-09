@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.ts",
-    "start:dev": "concurrently \"tsc --watch\" \"nodemon -q dist/server.ts\"",
-    "dev": "nodemon --exec ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "watch": "tsc --watch",
     "test": "jest"
   },
   "keywords": [],
