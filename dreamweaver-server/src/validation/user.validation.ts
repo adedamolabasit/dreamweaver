@@ -1,5 +1,10 @@
 import Joi from "joi";
-import { RegisterUserParams } from "../../types";
+// import { RegisterUserParams } from "../../types";
+
+export interface RegisterUserParams {
+  walletAddress: string;
+}
+
 
 export const validateUser = (payload: unknown): RegisterUserParams => {
   const schema = Joi.object({

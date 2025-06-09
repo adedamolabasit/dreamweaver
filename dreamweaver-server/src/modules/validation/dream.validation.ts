@@ -1,5 +1,14 @@
 import Joi from "joi";
-import { CreateJournalParams, UpdateJournalParams } from "../../types";
+// import { CreateJournalParams, UpdateJournalParams } from "../../types";
+
+export interface CreateJournalParams {
+  userId: string;
+  transcript: string;
+}
+
+export interface UpdateJournalParams {
+  transcript: string;
+}
 
 export const validateJournalEntry = (payload: unknown): CreateJournalParams => {
   const schema = Joi.object({

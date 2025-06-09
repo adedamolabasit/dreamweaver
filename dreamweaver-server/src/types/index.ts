@@ -1,3 +1,8 @@
+// src/types/index.ts
+
+/**
+ * Parameters for user operations
+ */
 export interface RegisterUserParams {
   walletAddress: string;
 }
@@ -11,12 +16,9 @@ export interface UpdateUserParams {
   };
 }
 
-
-export interface CreateJournalParams {
-  userId: string;
-  transcript: string;
-}
-
+/**
+ * Parameters for dream journal operations
+ */
 export interface CreateJournalParams {
   userId: string;
   transcript: string;
