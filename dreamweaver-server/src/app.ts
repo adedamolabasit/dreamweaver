@@ -11,7 +11,7 @@ const app = express();
 const allowedOrigins = [
   "https://dreamweaver-6bh5dngzp-adedamolabasits-projects.vercel.app",
   "https://dreamweaver-six.vercel.app",
-  "http://localhost:3000", 
+  "http://localhost:3000",
 ];
 
 app.use(
@@ -27,7 +27,7 @@ app.use(
       );
     },
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, 
+    credentials: true,
   })
 );
 
