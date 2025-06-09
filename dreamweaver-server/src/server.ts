@@ -4,7 +4,7 @@ import logger from "./utils/logger";
 import { startEventListeners } from "./workers/start";
 import { connectionOptions } from "./queues/config";
 
-const PORT = 7000;
+const PORT = process.env.PORT || 4000;
 
 async function startServer() {
   try {
