@@ -6,8 +6,19 @@ import { connectionOptions } from "./queues/config";
 
 const PORT: number = process.env.PORT ? parseInt(process.env.PORT, 10) : 4000;
 
+async function logMyIp() {
+  try {
+    const res = await fetch("https://api.ipify.org?format=json");
+    const { ip } = await res.json();
+    logger.info(`This service’s outbound IP is ${ip}`);
+  } catch (err) {
+    logger.error("Failed to fetch public IP:", err);
+  }
+}
+
 async function startServer() {
   try {
+    await logMyIp();
     await connectDB();
     startEventListeners();
 
