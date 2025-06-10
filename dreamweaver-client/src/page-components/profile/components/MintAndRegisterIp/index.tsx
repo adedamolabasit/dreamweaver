@@ -72,7 +72,7 @@ const MintAndRegisterIP: React.FC<MintDreamProps> = ({
 
   const image = getFirstSceneComicImage();
 
-  const cid = image.ipfsHash;
+  const cid = image?.ipfsHash;
 
   const imageUrl = `https://jade-peaceful-macaw-761.mypinata.cloud/ipfs/${cid}?pinataGatewayToken=ckardq1C_7H8MBVFx0g6R3zTQ6VRwDP8FyNGMvx_pOAcVrFmYFoBVDknjk4hN3Wm`;
 

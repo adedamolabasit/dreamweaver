@@ -84,7 +84,7 @@ export const ProfilePage = () => {
     amount: `${data?.formatted} ${data?.symbol}`,
   };
 
-  function extractIPFSHashes(data: ProductionResponse[]) {
+  const extractIPFSHashes = (data: ProductionResponse[]) => {
     const result = [] as any;
 
     data?.forEach((item) => {
