@@ -1,8 +1,20 @@
 import { FC, useEffect, useState } from "react";
-import { BookOpen, Heart, Users, ImageOff } from "lucide-react";
+import {
+  BookOpen,
+  Heart,
+  Users,
+  ImageOff,
+  BadgeCheck,
+  Globe,
+  ArrowRight,
+  X,
+} from "lucide-react";
 import { ProductionResponse } from "../../types";
 import { useNavigate } from "react-router-dom";
 import DreamLoader from "../../../../components/Loader/DreamLoader";
+import { client } from "../../../../storyservice/utils/config";
+import { useAccount } from "wagmi";
+import { useToast } from "../../../../components/Toast";
 
 interface StoryParams {
   production: ProductionResponse | undefined;
@@ -11,10 +23,12 @@ interface StoryParams {
 
 export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
   const navigate = useNavigate();
-
   const [cid, setCid] = useState<string>();
+  const [showLicenseModal, setShowLicenseModal] = useState(false);
+  const { story, analysis, visuals, ipRegistration } = production!;
+  const { address, isConnected } = useAccount();
 
-  const { story, analysis, visuals } = production!;
+  const { showInfo } = useToast();
 
   const getFirstSceneComicImage = (): any => {
     if (visuals) {
@@ -28,110 +42,236 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
     return null;
   };
 
-  const handleActiveStory = (productId: string) => {
-    if (!productId) {
-      console.warn("Missing productId!");
+  const handleReadStory = (productId: string) => {
+    if (!productId) return;
+    const currentScroll = window.scrollY;
+    sessionStorage.setItem("scrollPosition", currentScroll.toString());
+    navigate(`/${productId}`);
+  };
+
+  const handleshowLicenseModal = () => {
+    if (!isConnected && address) {
+      showInfo("Connect your wallet");
       return;
     }
 
-    const currentScroll = window.scrollY;
-    sessionStorage.setItem("scrollPosition", currentScroll.toString());
-
-    navigate(`/${productId}`);
+    setShowLicenseModal((prevState) => !prevState);
   };
 
   useEffect(() => {
     const coverImage = getFirstSceneComicImage();
-
-    if (coverImage) {
-      setCid(coverImage.ipfsHash);
-    }
+    if (coverImage) setCid(coverImage.ipfsHash);
   }, []);
 
-  if (isFetching) {
+  const MintLicense = async () => {
+    const response = await client.license.mintLicenseTokens({
+      licenseTermsId: production?.ipRegistration?.licenseTermsIds as string,
+      licensorIpId: production?.ipRegistration?.ipId as `0x${string}`,
+      receiver: address,
+      amount: 1,
+      maxMintingFee: BigInt(0), // disabled
+      maxRevenueShare: 100, // default
+      txOptions: { waitForTransaction: true },
+    });
+
+    console.log("License minted:", {
+      "Transaction Hash": response.txHash,
+      "License Token IDs": response.licenseTokenIds,
+    });
+  };
+
+  // Mock license data
+  const availableLicenses = [
+    {
+      id: "1",
+      type: "Personal Use",
+      terms: "For non-commercial reading and sharing",
+      price: "Free",
+      duration: "Permanent",
+    },
+    {
+      id: "2",
+      type: "Creator License",
+      terms: "For content creators and influencers",
+      price: "0.05 ETH",
+      duration: "1 Year",
+    },
+    {
+      id: "3",
+      type: "Commercial License",
+      terms: "For businesses and publishers",
+      price: "0.5 ETH",
+      duration: "1 Year",
+    },
+  ];
+
+  if (isFetching)
     return <DreamLoader message="Fetching stories..." size="lg" />;
-  }
 
   return (
-    <div
-      className="w-full space-y-6 cursor-pointer"
-      onClick={() => handleActiveStory(production?._id as string)}
-    >
-      <div className="p-6 rounded-2xl bg-gradient-to-br from-purple-900/20 to-blue-900/20 border border-purple-500/20">
-        <div className="flex flex-col md:flex-row items-start justify-between gap-4 mb-6">
-          <div>
-            <h2 className="text-2xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-purple-200 to-pink-200">
-              {story?.title}
-            </h2>
-            <div className="flex flex-wrap items-center gap-4 text-sm text-blue-200/70">
-              <div className="flex items-center gap-1">
-                <Users size={14} />
-                <span>{story?.characters?.length} Characters</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <BookOpen size={14} />
-                <span>{story?.scenes?.length} Scenes</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Heart size={14} className="text-pink-500" />
-                <span>Dream Story</span>
-              </div>
+    <div className="w-full bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-2xl border border-purple-500/20 overflow-hidden">
+      {/* Header with title and license status */}
+      <div className="p-5 pb-0 flex justify-between items-start">
+        <div>
+          <h2 className="text-2xl font-bold text-white">{story?.title}</h2>
+          {ipRegistration?.status === "verified" && (
+            <div className="flex items-center gap-1 mt-1 text-sm text-green-400">
+              <BadgeCheck size={16} />
+              <span>Licensed Content</span>
+              <Globe size={16} className="ml-2" />
+              <span>View License</span>
             </div>
-          </div>
+          )}
+        </div>
 
-          <div className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-200 text-sm whitespace-nowrap">
+        <div className="flex items-center gap-2">
+          <div className="px-3 py-1 rounded-full bg-purple-500/20 text-purple-200 text-sm">
             Dream Journal
           </div>
         </div>
+      </div>
 
-        <div className="w-full flex flex-col md:flex-row md: items-start h-auto md:h-72 gap-6 mb-4 ">
-          <div className="aspect-video h-full rounded-xl bg-gradient-to-br from-purple-900/20 to-blue-900/20 border border-purple-500/20 flex items-center justify-center w-full md:w-1/2 overflow-hidden">
-            {cid ? (
-              <img
-                src={`https://jade-peaceful-macaw-761.mypinata.cloud/ipfs/${cid}?pinataGatewayToken=ckardq1C_7H8MBVFx0g6R3zTQ6VRwDP8FyNGMvx_pOAcVrFmYFoBVDknjk4hN3Wm`}
-                alt="Cover Image"
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <div className="flex flex-col items-center justify-center text-white opacity-70">
-                <ImageOff className="w-12 h-12 mb-2" />
-                <p className="text-sm font-medium">Image Not Available</p>
+      {/* Main content */}
+      <div className="p-5 flex flex-col md:flex-row gap-6">
+        {/* Cover image */}
+        <div className="w-full md:w-1/3 aspect-[3/4] rounded-xl bg-gradient-to-br from-purple-900/30 to-blue-900/30 border border-purple-500/20 overflow-hidden">
+          {cid ? (
+            <img
+              src={`https://jade-peaceful-macaw-761.mypinata.cloud/ipfs/${cid}?pinataGatewayToken=BmZjUB5nCCxIeDdY6v_uM2RJhyqwnTKtGFnahd_IsPXD9He4pVRxPOcSvDfCpYwM`}
+              alt="Cover"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="h-full flex items-center justify-center text-white/50">
+              <ImageOff size={48} />
+            </div>
+          )}
+        </div>
+
+        {/* Story details */}
+        <div className="w-full md:w-2/3">
+          <div className="flex flex-wrap gap-3 mb-4 text-sm text-blue-200/80">
+            <span className="flex items-center gap-1">
+              <Users size={14} />
+              {story?.characters?.length} Characters
+            </span>
+            <span className="flex items-center gap-1">
+              <BookOpen size={14} />
+              {story?.scenes?.length} Scenes
+            </span>
+            <span className="flex items-center gap-1 text-pink-300">
+              <Heart size={14} />
+              Dream Story
+            </span>
+          </div>
+
+          <p className="text-blue-100/80 mb-4 line-clamp-3">
+            {story?.synopsis || "No synopsis available"}
+          </p>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            {analysis?.emotionalTone.map((tag, i) => (
+              <span
+                key={i}
+                className="px-2.5 py-1 rounded-full bg-blue-900/30 text-blue-200/80 text-xs"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={() => handleReadStory(production?._id as string)}
+              className="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2.5 rounded-lg flex items-center gap-2 transition-colors"
+            >
+              <BookOpen size={16} />
+              Read Story
+              <ArrowRight size={16} />
+            </button>
+            {ipRegistration?.status === "verified" && (
+              <div className="relative group inline-block">
+                <button
+                  onClick={handleshowLicenseModal}
+                  disabled={!isConnected}
+                  className="border border-purple-500/50 hover:border-purple-400/80 text-purple-300 hover:text-white px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors  disabled:cursor-not-allowed"
+                >
+                  <BadgeCheck size={16} />
+                  License Options
+                </button>
+
+                {!isConnected && (
+                  <span className="absolute left-1/2 transform -translate-x-1/2 top-full mt-2 w-max bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Connect your wallet to proceed
+                  </span>
+                )}
               </div>
             )}
           </div>
-
-          <div className="flex flex-col w-full md:w-1/2 gap-4 h-full overflow-auto no-scrollbar">
-            {story?.characters?.map((character, i) => (
-              <div
-                key={i}
-                className="p-3 rounded-lg bg-blue-900/20 border border-blue-500/10"
-              >
-                <h4 className="text-sm font-medium mb-1 text-blue-200">
-                  {character.name}
-                </h4>
-                <p className="text-xs text-blue-200/70 line-clamp-2">
-                  {character.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <p className="text-blue-100/80 text-sm leading-relaxed mb-4">
-          {story?.synopsis}
-        </p>
-
-        <div className="flex flex-wrap gap-2">
-          {analysis?.emotionalTone.map((tag, i) => (
-            <span
-              key={i}
-              className="px-3 py-1 rounded-full bg-blue-900/30 text-blue-200/80 text-xs"
-            >
-              {tag}
-            </span>
-          ))}
         </div>
       </div>
+
+      {/* License Modal */}
+      {showLicenseModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
+          <div className="relative max-w-md w-full bg-gray-900 rounded-xl border border-white/20 overflow-hidden">
+            <button
+              onClick={handleshowLicenseModal}
+              className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors"
+            >
+              <X size={24} />
+            </button>
+
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <BadgeCheck size={24} className="text-green-400" />
+                <div>
+                  <h2 className="text-xl font-bold text-white">
+                    License Options
+                  </h2>
+                  <p className="text-gray-400">{story?.title}</p>
+                </div>
+              </div>
+
+              <div className="space-y-4 mb-6">
+                {availableLicenses.map((license) => (
+                  <div
+                    key={license.id}
+                    className="p-4 rounded-lg bg-gray-800/50 border border-gray-700"
+                  >
+                    <h3 className="font-medium text-white mb-1">
+                      {license.type}
+                    </h3>
+                    <p className="text-sm text-gray-300 mb-2">
+                      {license.terms}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-400">
+                        {license.price} • {license.duration}
+                      </span>
+                      <button
+                        onClick={MintLicense}
+                        className="text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded"
+                      >
+                        Mint License
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="text-center text-sm text-gray-400">
+                <p>All licenses are secured on the blockchain</p>
+                <button className="text-purple-400 hover:text-purple-300 mt-2">
+                  View license terms
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
