@@ -15,10 +15,12 @@ import { ProductionResponse } from "../types";
 import { client } from "../../../storyservice/utils/config";
 
 import { useUpdateProduction } from "../../../hooks/useProduction";
-import { ProfileResp } from "../types";
 import { licenseFlavors } from "./MintAndRegisterIp/License/PilFlavours";
 import { parseEther } from "viem";
 import { ethers } from "ethers";
+import { useUpdateProfile } from "../../../hooks/useAuth";
+import { ProfileResp } from "../types";
+import { useToast } from "../../../components/Toast";
 
 interface MintDreamProps {
   story?: ProductionResponse;
@@ -39,9 +41,23 @@ export const RegisterLicense: React.FC<MintDreamProps> = ({
     "commercialUse"
   );
 
-  const { mutate: updateProduction } = useUpdateProduction();
+  const { mutate: updateProfile } = useUpdateProfile();
+  const { showError, showDream } = useToast();
 
   const provider = new ethers.JsonRpcProvider("https://aeneid.storyrpc.io");
+
+  const handleUpdateProfile = async (obj: { [key: string]: any }) => {
+    updateProfile(
+      { obj },
+      {
+        onSuccess: (data: any) => {
+          console.log(data, "ooo");
+          console.log("success");
+        },
+        onError: (err: any) => console.error("Update error:", err),
+      }
+    );
+  };
 
   type LicenseFlavor =
     | "nonCommercialSocialRemix"
@@ -53,53 +69,114 @@ export const RegisterLicense: React.FC<MintDreamProps> = ({
     mintingFee?: number,
     revShare?: number
   ) => {
-    switch (flavor) {
-      case "commercialUse":
-        if (mintingFee === undefined) {
-          throw new Error("mintingFee is required for Commercial Use flavor");
-        }
-        const commercialUsePILResponse =
-          await client.license.registerCommercialUsePIL({
-            currency: "0x1514000000000000000000000000000000000000",
-            defaultMintingFee: parseEther(mintingFee.toString()),
-            royaltyPolicyAddress: "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E",
-          });
+    if (flavor === "commercialUse" && mintingFee === undefined) {
+      throw new Error("mintingFee is required for Commercial Use flavor");
+    }
+    if (
+      flavor === "commercialRemix" &&
+      (mintingFee === undefined || revShare === undefined)
+    ) {
+      throw new Error(
+        "Both mintingFee and revShare are required for Commercial Remix flavor"
+      );
+    }
 
-        return commercialUsePILResponse;
+    try {
+      let response;
 
-      case "commercialRemix":
-        if (mintingFee === undefined || revShare === undefined) {
-          throw new Error(
-            "Both mintingFee and revShare are required for Commercial Remix flavor"
-          );
-        }
+      if (flavor === "commercialUse") {
+        const requestParams = {
+          currency:
+            "0x1514000000000000000000000000000000000000" as `0x${string}`,
+          royaltyPolicyAddress:
+            "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E" as `0x${string}`,
+          defaultMintingFee: parseEther(mintingFee!.toString()),
+        };
 
-        const registerCommercialRemixPILResponse =
-          await client.license.registerCommercialRemixPIL({
-            currency: "0x1514000000000000000000000000000000000000",
-            defaultMintingFee: parseEther("4"),
-            royaltyPolicyAddress: "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E",
-            commercialRevShare: 90,
-          });
+        console.log("Sending CommercialUse request:", requestParams);
+        response = await client.license.registerCommercialUsePIL(requestParams);
+      } else if (flavor === "commercialRemix") {
+        const requestParams = {
+          currency:
+            "0x1514000000000000000000000000000000000000" as `0x${string}`,
+          royaltyPolicyAddress:
+            "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E" as `0x${string}`,
+          defaultMintingFee: parseEther("72"),
+          // defaultMintingFee: parseEther(mintingFee!.toString()),
+          commercialRevShare: revShare!,
+        };
 
-        console.log(registerCommercialRemixPILResponse.licenseTermsId);
-
-        const tx = await provider.getTransaction(
-          registerCommercialRemixPILResponse.txHash as string
+        console.log("Sending CommercialRemix request:", requestParams);
+        response = await client.license.registerCommercialRemixPIL(
+          requestParams
         );
+        const updateResponse = await updateProfile({
+          obj: {
+            license: {
+              registeredLicense: [
+                [
+                  {
+                    licenseType:flavor,
+                    licenseTermId: response.licenseTermsId,
+                    transactionHash: response.txHash,
+                    isAvailable: true,
+                  },
+                ],
+              ],
+            },
+          },
+        });
 
-        // Get receipt (includes status, logs, gasUsed, etc.)
-        const receipt = await provider.getTransactionReceipt(
-          registerCommercialRemixPILResponse.txHash as string
-        );
-
-        console.log("Transaction:", tx);
-        console.log("Receipt:", receipt);
-
-        return registerCommercialRemixPILResponse;
-
-      default:
+        console.log("Profile update response:", updateResponse);
+      } else {
         throw new Error("Invalid license flavor selected");
+      }
+
+      console.log("Received response:", response);
+
+      if (!response?.txHash) {
+        throw new Error(
+          "No transaction hash received from the license registration"
+        );
+      }
+
+      // Update profile for commercialUse
+      // if (flavor === "commercialUse") {
+      //   const updateResponse = await updateProfile({
+      //     obj: {
+      //       license: {
+      //         registeredLicense: [
+      //           [
+      //             {
+      //               licenseTokenId: response.licenseTermsId,
+      //               transactionHash: response.txHash,
+      //               isAvailable: true,
+      //             },
+      //           ],
+      //         ],
+      //       },
+      //     },
+      //   });
+      //   console.log("Profile update response:", updateResponse);
+      // }
+
+      // Additional verification for commercialRemix
+      if (flavor === "commercialRemix") {
+        const [tx, receipt] = await Promise.all([
+          provider.getTransaction(response.txHash),
+          provider.getTransactionReceipt(response.txHash),
+        ]);
+        console.log("Transaction verification:", { tx, receipt });
+      }
+
+      showDream(`${flavor} license registered successfully`);
+      return response;
+    } catch (error) {
+      console.error("License registration failed:", error);
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to register license";
+      showError(errorMessage);
+      throw new Error(errorMessage);
     }
   };
 

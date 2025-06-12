@@ -5,6 +5,13 @@ export interface IUser extends Document {
   walletAddress: string;
   avatar?: string;
   license: {
+    registeredLicense: {
+      licenseType: string;
+      productionId: string;
+      licenseTermId: string;
+      transactionHash: string;
+      isAvailable: boolean;
+    }[];
     mintedLicense: {
       productionId: string;
       licenseTokenId: string;
@@ -39,12 +46,28 @@ const UserSchema = new mongoose.Schema<IUser>(
       trim: true,
     },
     license: {
-      mintedLicense: [
+      registeredLicense: [
         {
-          productionId: {
+          licenseType: {
             type: String,
             required: false,
           },
+          licenseTermsId: {
+            type: String,
+            required: false,
+          },
+          transactionHash: {
+            type: String,
+            required: false,
+          },
+          isAvailable: {
+            type: Boolean,
+            required: false,
+          },
+        },
+      ],
+      mintedLicense: [
+        {
           licenseTokenId: {
             type: String,
             required: false,

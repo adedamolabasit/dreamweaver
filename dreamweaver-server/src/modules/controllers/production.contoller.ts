@@ -44,6 +44,7 @@ export const updateDreamProduction: RequestHandler = async (req, res, next) => {
     const userId = req.user?.id as string;
     const productionId = req.params.productionId;
     const updateData = req.body;
+    console.log(updateData,"cc")
 
     const updatedProduction = await updateProduction({
       userId,

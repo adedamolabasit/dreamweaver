@@ -72,6 +72,9 @@ export const updateProfile: RequestHandler = async (req, res, next) => {
     const userId = req.user?.id as string;
     const updateData = req.body;
 
+    console.log(userId,"UserId")
+    console.log(updateData,"UpdatedData")
+
     const updatedProfile = await processUpdateProfile({
       userId,
       updateData,

@@ -10,6 +10,12 @@ export type ProductionStatus =
   | "inactive"
   | "failed";
 
+export type PilFlavoursType =
+  | "nonCommercialSocialRemix"
+  | "commercialUse"
+  | "commercialRemix"
+  | "creativeCommonAttribution";
+
 export interface ProductionResponse {
   _id: string;
   userId: string;
@@ -65,10 +71,17 @@ export interface ProductionResponse {
     }[];
   };
   ipRegistration?: {
-    ipId: string;
-    status: "verified" | "notVerified" | "pending";
-    licenseTermsIds: string;
-    tokenId: string;
+    ip: {
+      ipId: string;
+      status: "registered" | "notRegistered" | "pending";
+      licenseTermsIds: string;
+      tokenId: string;
+      fee: number;
+      revShare: number;
+      license: {
+        pilFlavors: PilFlavoursType;
+      };
+    }[];
   };
   publication: "draft" | "published";
   progress: number;
@@ -104,4 +117,24 @@ export interface GalleryImage {
   url: string;
   title: string;
   earnings: number;
+}
+
+export interface MintedLicense {
+  productionId: string;
+  licenseTermId: string;
+  transactionHash: string;
+  isAvailable: boolean;
+}
+
+export interface ProfileResp {
+  _id: string;
+  username: string;
+  walletAddress: string;
+  avatar?: string;
+  license: {
+    mintedLicense: MintedLicense[];
+  };
+  createdAt: Date;
+  updatedAt: Date;
+  lastSeen: Date;
 }

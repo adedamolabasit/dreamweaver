@@ -131,7 +131,8 @@ export const WeaveStory = ({
 
     setIsGeneratingStory(true);
     weaveDream(activeJournalId, {
-      onSuccess: (data: ProductionResponse) => {
+      // todo: ccheck here
+      onSuccess: (data: any) => {
         if (data._id) {
           setProdutionId(data._id);
           showInfo("Dream submitted for production...");

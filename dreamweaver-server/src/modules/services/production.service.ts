@@ -88,13 +88,21 @@ export const updateProduction = async ({
       delete updateData.play;
     }
 
+    if (updateData.ipRegistration) {
+      existingProduction.ipRegistration = {
+        ...existingProduction.ipRegistration,
+        ...updateData.ipRegistration,
+      };
+      delete updateData.ipRegistration;
+    }
+
     if (updateData.publication !== undefined) {
       existingProduction.publication = updateData.publication;
     }
 
-    if (updateData.ipRegistration !== undefined) {
-      existingProduction.ipRegistration = updateData.ipRegistration;
-    }
+    // if (updateData.ipRegistration !== undefined) {
+    //   existingProduction.ipRegistration = updateData.ipRegistration;
+    // }
 
     Object.assign(existingProduction, updateData);
 
