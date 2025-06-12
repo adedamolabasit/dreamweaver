@@ -4,6 +4,14 @@ export interface IUser extends Document {
   username: string;
   walletAddress: string;
   avatar?: string;
+  license: {
+    mintedLicense: {
+      productionId: string;
+      licenseTokenId: string;
+      transactionHash: string;
+      isAvailable: boolean;
+    }[];
+  };
   createdAt: Date;
   lastSeen: Date;
   updatedAt: Date;
@@ -18,7 +26,7 @@ const UserSchema = new mongoose.Schema<IUser>(
       trim: true,
       minlength: 3,
       maxlength: 30,
-      default:'weaver'
+      default: "weaver",
     },
     walletAddress: {
       type: String,
@@ -29,6 +37,28 @@ const UserSchema = new mongoose.Schema<IUser>(
       type: String,
       required: false,
       trim: true,
+    },
+    license: {
+      mintedLicense: [
+        {
+          productionId: {
+            type: String,
+            required: false,
+          },
+          licenseTokenId: {
+            type: String,
+            required: false,
+          },
+          transactionHash: {
+            type: String,
+            required: false,
+          },
+          isAvailable: {
+            type: Boolean,
+            required: false,
+          },
+        },
+      ],
     },
   },
   { timestamps: true }

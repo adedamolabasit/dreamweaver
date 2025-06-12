@@ -21,6 +21,15 @@ import { createCommercialRemixTerms } from "../../../../storyservice/utils/utils
 import { SPGNFTContractAddress } from "../../../../storyservice/utils/utils";
 import { useUpdateProduction } from "../../../../hooks/useProduction";
 import { ProfileResp } from "../../types";
+import { licenseFlavors } from "./License/PilFlavours";
+import {
+  commercialRemix,
+  creativeCommons,
+  nonCommercialSocialRemix,
+  commercialUseParams,
+} from "./License/PilFlavours";
+import { LicenseTerms } from "@story-protocol/core-sdk";
+import { parseEther } from "viem";
 
 interface MintDreamProps {
   story?: ProductionResponse;
@@ -38,9 +47,67 @@ const MintAndRegisterIP: React.FC<MintDreamProps> = ({
   const [mintingFee, setMintingFee] = useState(1);
   const [revShare, setRevShare] = useState(5);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedLicense, setSelectedLicense] = useState("limited");
+  const [selectedLicense, setSelectedLicense] = useState<LicenseFlavor | null>(
+    "commercialUse"
+  );
+  const selected = licenseFlavors.find(
+    (flavor) => flavor.type === selectedLicense
+  );
+
+  console.log(selectedLicense, "ppp>>");
 
   const { mutate: updateProduction } = useUpdateProduction();
+
+  type LicenseFlavor =
+    | "nonCommercialSocialRemix"
+    | "commercialUse"
+    | "commercialRemix";
+
+  const getLicenseFlavorTerms = async (
+    flavor: LicenseFlavor,
+    mintingFee?: number,
+    revShare?: number
+  ) => {
+    switch (flavor) {
+      case "nonCommercialSocialRemix":
+        return nonCommercialSocialRemix as LicenseTerms;
+
+      case "commercialUse":
+        if (mintingFee === undefined) {
+          throw new Error("mintingFee is required for Commercial Use flavor");
+        }
+        const commercialUsePILResponse =
+          await client.license.registerCommercialUsePIL({
+            currency: "0x1514000000000000000000000000000000000000",
+            defaultMintingFee: parseEther(mintingFee.toString()),
+            royaltyPolicyAddress: "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E",
+          });
+
+        return commercialUsePILResponse;
+
+      case "commercialRemix":
+        if (mintingFee === undefined || revShare === undefined) {
+          throw new Error(
+            "Both mintingFee and revShare are required for Commercial Remix flavor"
+          );
+        }
+
+        const registerCommercialRemixPILResponse =
+          await client.license.registerCommercialRemixPIL({
+            currency: "0x1514000000000000000000000000000000000000",
+            defaultMintingFee: parseEther("1"),
+            royaltyPolicyAddress: "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E",
+            commercialRevShare: 10,
+          });
+
+        console.log(registerCommercialRemixPILResponse);
+
+        return registerCommercialRemixPILResponse;
+
+      default:
+        throw new Error("Invalid license flavor selected");
+    }
+  };
 
   const handleMintFeeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value);
@@ -132,86 +199,88 @@ const MintAndRegisterIP: React.FC<MintDreamProps> = ({
     );
   };
 
-  const startMinting = async () => {
-    setIsLoading(true);
-    setMintingStage(1);
+  // const startMinting = async () => {
+  //   setIsLoading(true);
+  //   setMintingStage(1);
 
-    try {
-      const ipIpfsHash = await uploadJSONToIPFS(ipMetadata);
-      // const ipHash = createHash('sha256').update(JSON.stringify(ipMetadata)).digest('hex')
-      const nftIpfsHash = await uploadJSONToIPFS(nftMetadata);
-      // const nftHash = createHash('sha256').update(JSON.stringify(nftMetadata)).digest('hex')
+  //   try {
+  //     const ipIpfsHash = await uploadJSONToIPFS(ipMetadata);
+  //     // const ipHash = createHash('sha256').update(JSON.stringify(ipMetadata)).digest('hex')
+  //     const nftIpfsHash = await uploadJSONToIPFS(nftMetadata);
+  //     // const nftHash = createHash('sha256').update(JSON.stringify(nftMetadata)).digest('hex')
 
-      const response = await client.ipAsset.mintAndRegisterIpAssetWithPilTerms({
-        spgNftContract: SPGNFTContractAddress,
-        licenseTermsData: [
-          {
-            terms: createCommercialRemixTerms({
-              defaultMintingFee: 1,
-              commercialRevShare: 5,
-            }),
-          },
-        ],
-        ipMetadata: {
-          ipMetadataURI: `https://ipfs.io/ipfs/${ipIpfsHash}`,
-          // ipMetadataHash: `0x${ipHash}`,
-          nftMetadataURI: `https://ipfs.io/ipfs/${nftIpfsHash}`,
-          // nftMetadataHash: `0x${nftHash}`,
-        },
-        txOptions: { waitForTransaction: true },
-      });
+  //     console.log(getLicenseFlavorTerms(selectedLicense!, 1, 5), "kk");
+  //     const response = await client.ipAsset.mintAndRegisterIpAssetWithPilTerms({
+  //       spgNftContract: "0xc32A8a0FF3beDDDa58393d022aF433e78739FAbc",
+  //       licenseTermsData: [
+  //         {
+  //           terms: getLicenseFlavorTerms(selectedLicense!, 1, 5),
+  //         },
+  //       ],
+  //       ipMetadata: {
+  //         ipMetadataURI: `https://ipfs.io/ipfs/${ipIpfsHash}`,
+  //         // ipMetadataHash: `0x${ipHash}`,
+  //         nftMetadataURI: `https://ipfs.io/ipfs/${nftIpfsHash}`,
+  //         // nftMetadataHash: `0x${nftHash}`,
+  //       },
+  //       txOptions: { waitForTransaction: true },
+  //     });
 
-      console.log("Root IPA created:", {
-        "Transaction Hash": response.txHash,
-        "IPA ID": response.ipId,
-        "License Terms IDs": response.licenseTermsIds,
-      });
+  //     console.log("Root IPA created:", {
+  //       "Transaction Hash": response.txHash,
+  //       "IPA ID": response.ipId,
+  //       "License Terms IDs": response.licenseTermsIds,
+  //     });
 
-      console.log(story?._id, "popow");
-      const obj = {
-        ipRegistration: {
-          ipId: response.ipId,
-          status: "verified",
-          licenseTermsIds: response.licenseTermsIds?.toString(),
-          tokenId: response.tokenId?.toString(),
-        },
-      };
+  //     console.log(story?._id, "popow");
+  //     const obj = {
+  //       ipRegistration: {
+  //         ipId: response.ipId,
+  //         status: "verified",
+  //         licenseTermsIds: response.licenseTermsIds?.toString(),
+  //         tokenId: response.tokenId?.toString(),
+  //       },
+  //     };
 
-      await handleUpdateProduction(obj);
+  //     await handleUpdateProduction(obj);
 
-      setMintingStage(2);
-    } catch (error) {
-      console.error(
-        "Minting error:",
-        error instanceof Error ? error.message : "Unknown error"
-      );
-      setMintingStage(0);
-      alert(
-        `Minting failed: ${
-          error instanceof Error ? error.message : "Unknown error"
-        }`
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     setMintingStage(2);
+  //   } catch (error) {
+  //     console.error(
+  //       "Minting error:",
+  //       error instanceof Error ? error.message : "Unknown error"
+  //     );
+  //     setMintingStage(0);
+  //     alert(
+  //       `Minting failed: ${
+  //         error instanceof Error ? error.message : "Unknown error"
+  //       }`
+  //     );
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const LicenseOption = ({
     type,
     icon,
     description,
+    onClick,
+    selected,
   }: {
     type: string;
     icon: React.ReactNode;
     description: string;
+    onClick: () => void;
+    selected: boolean;
   }) => (
     <div
       className={`p-4 rounded-xl border-2 cursor-pointer ${
-        selectedLicense === type.toLowerCase()
+        selected
           ? "border-purple-500 bg-purple-900/20"
           : "border-gray-700 hover:border-gray-600"
       }`}
-      onClick={() => setSelectedLicense(type.toLowerCase())}
+      onClick={onClick}
     >
       <div className="flex items-start gap-3">
         <div className="p-2 rounded-lg bg-gray-800/50">{icon}</div>
@@ -329,31 +398,44 @@ const MintAndRegisterIP: React.FC<MintDreamProps> = ({
                 <FileText size={16} className="text-amber-400" />
                 License Type
               </label>
+
               <div className="grid grid-cols-1 gap-3">
-                <LicenseOption
-                  type="Open"
-                  icon={<Globe size={18} className="text-green-400" />}
-                  description="Anyone can remix with attribution"
-                />
-                <LicenseOption
-                  type="Limited"
-                  icon={<BadgeCheck size={18} className="text-purple-400" />}
-                  description="Approval required for commercial use"
-                />
-                <LicenseOption
-                  type="Exclusive"
-                  icon={<Shield size={18} className="text-blue-400" />}
-                  description="Only you retain commercial rights"
-                />
+                {licenseFlavors.map((flavor) => (
+                  <LicenseOption
+                    key={flavor.type}
+                    type={flavor.type}
+                    icon={flavor.icon}
+                    description={flavor.description}
+                    selected={selectedLicense === flavor.type}
+                    onClick={() =>
+                      setSelectedLicense(flavor.type as LicenseFlavor)
+                    }
+                  />
+                ))}
               </div>
+
+              {selected && (
+                <div className="mt-6 border-t border-gray-700 pt-4 text-sm text-gray-300">
+                  <h4 className="text-white font-semibold mb-2">
+                    License Properties
+                  </h4>
+                  <ul className="space-y-1">
+                    {Object.entries(selected.properties).map(([key, value]) => (
+                      <li key={key} className="flex justify-between">
+                        <span className="text-gray-400">{key}</span>
+                        <span className="text-white font-medium">{value}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
 
             <button
-              onClick={startMinting}
-              disabled={isLoading || !legalName}
+              onClick={() => getLicenseFlavorTerms(selectedLicense!, 1, 5)}
               className={`w-full py-3.5 rounded-xl font-medium flex items-center justify-center gap-2 ${
-                isLoading || !legalName
-                  ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+                isLoading || legalName
+                  ? "bg-gray-800 text-gray-500 "
                   : "bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-500 hover:to-blue-400 text-white"
               }`}
             >

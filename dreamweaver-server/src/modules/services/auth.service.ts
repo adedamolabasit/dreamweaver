@@ -1,9 +1,10 @@
-import { User } from "../../models/user.model";
+import { IUser, User } from "../../models/user.model";
 import logger from "../../utils/logger";
 import { RegisterUserParams, UpdateUserParams } from "../../types";
 import { generateJwt } from "../../utils/jwtGenerator";
 import { RandomUserGenerator } from "../../utils/avatarGenerator";
 import mongoose from "mongoose";
+import { NotFoundError } from "../../errors/httpError";
 
 export const processRegisterUser = async ({
   walletAddress,
@@ -40,7 +41,7 @@ export const getUserByWalletAddress = async (walletAddress: string) => {
   try {
     const user = await User.findOne({ walletAddress });
 
-    console.log(user,'user1')
+    console.log(user, "user1");
 
     return {
       user,
@@ -80,5 +81,42 @@ export const updateUserData = async ({
   } catch (error) {
     logger.error("User update failed:", error);
     throw new Error("Failed to update user");
+  }
+};
+
+export const processUpdateProfile = async ({
+  userId,
+  updateData,
+}: {
+  userId: string;
+  updateData: Partial<IUser>;
+}) => {
+  try {
+    const userIdObj = new mongoose.Types.ObjectId(userId);
+
+    const existingProfile = await User.findOne({
+      userId: userIdObj,
+    });
+
+    if (!existingProfile) {
+      throw new NotFoundError("Profile not found");
+    }
+
+    if (updateData.license) {
+      existingProfile.license = {
+        ...existingProfile.license,
+        ...updateData.license,
+      };
+      delete updateData.license;
+    }
+
+    Object.assign(existingProfile, updateData);
+
+    const updatedProduction = await existingProfile.save();
+
+    return updatedProduction;
+  } catch (error) {
+    logger.error("Profile update failed:", error);
+    throw new Error("Failed to update profile");
   }
 };

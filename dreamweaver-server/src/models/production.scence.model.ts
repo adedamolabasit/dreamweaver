@@ -14,6 +14,12 @@ export type ProductionStatus =
   | "inactive"
   | "failed";
 
+export type PilFlavoursType =
+  | "nonCommercialSocialRemix"
+  | "commercialUse"
+  | "commercialRemix"
+  | "creativeCommonAttribution";
+
 export interface IProduction extends Document {
   userId: mongoose.Types.ObjectId | IUser;
   dreamId: mongoose.Types.ObjectId | IDreamJournalEntry;
@@ -70,10 +76,17 @@ export interface IProduction extends Document {
     };
   };
   ipRegistration?: {
-    ipId: string;
-    status: "verified" | "notVerified" | "pending";
-    licenseTermsIds: string;
-    tokenId: string;
+    ip: {
+      ipId: string;
+      status: "registerd" | "notRegistered" | "pending";
+      licenseTermsIds: string;
+      tokenId: string;
+      fee: number;
+      revShare: number;
+      license: {
+        pilFlavors: PilFlavoursType;
+      };
+    }[];
   };
   publication: "draft" | "published";
   progress: number;
@@ -155,20 +168,37 @@ const ProductionSchema = new mongoose.Schema<IProduction>(
       },
     },
     ipRegistration: {
-      type: {
-        ipId: { type: String, required: true },
-        status: {
-          type: String,
-          enum: ["verified", "notVerified", "pending"],
-          required: true,
+      ip: [
+        {
+          type: {
+            ipId: { type: String, required: true },
+            status: {
+              type: String,
+              enum: ["verified", "notVerified", "pending"],
+              required: true,
+            },
+            licenseTermsIds: { type: String, required: true },
+            tokenId: { type: String, required: true },
+            fee: { type: Number, required: false },
+            revShare: { type: Number, required: false },
+            license: {
+              pilFlavors: {
+                type: String,
+                enum: [
+                  "nonCommercialSocialRemix",
+                  "commercialUse",
+                  "commercialRemix",
+                  "creativeCommonAttribution",
+                ],
+                required: false,
+              },
+            },
+          },
+          required: false,
+          default: null,
         },
-        licenseTermsIds: { type: String, required: true },
-        tokenId: { type: String, required: true },
-      },
-      required: false,
-      default: null,
+      ],
     },
-
     publication: {
       type: String,
       enum: ["draft", "published"],

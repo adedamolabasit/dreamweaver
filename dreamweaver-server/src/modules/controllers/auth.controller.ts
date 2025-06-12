@@ -9,6 +9,7 @@ import {
   getUserByWalletAddress,
   updateUserData,
   processGetProfile,
+  processUpdateProfile,
 } from "../services/auth.service";
 
 export const registerUser: RequestHandler = async (req, res, next) => {
@@ -37,13 +38,13 @@ export const getUser: RequestHandler = async (req, res, next) => {
 export const getProfile: RequestHandler = async (req, res, next) => {
   try {
     const userId = req.user?.id as string;
-   const { profile } = await processGetProfile(userId);
+    const { profile } = await processGetProfile(userId);
 
     console.log("Sending profile response:", profile); // Debug log
 
     res
       .status(200)
-      .json(responseHandler("Profile retrieved successfully", {profile}));
+      .json(responseHandler("Profile retrieved successfully", { profile }));
   } catch (error) {
     next(error);
   }
@@ -61,6 +62,24 @@ export const updateUser: RequestHandler = async (req, res, next) => {
     res
       .status(200)
       .json(responseHandler("User updated successfully", updatedUser));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateProfile: RequestHandler = async (req, res, next) => {
+  try {
+    const userId = req.user?.id as string;
+    const updateData = req.body;
+
+    const updatedProfile = await processUpdateProfile({
+      userId,
+      updateData,
+    });
+
+    res
+      .status(200)
+      .json(responseHandler("Profile updated successfully", updatedProfile));
   } catch (error) {
     next(error);
   }

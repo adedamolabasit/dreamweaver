@@ -6,6 +6,7 @@ import MintAndRegisterIP from "../MintAndRegisterIp";
 import { useAccount, useBalance } from "wagmi";
 import { useUpdateProduction } from "../../../../hooks/useProduction";
 import DreamLoader from "../../../../components/Loader/DreamLoader";
+import { RegisterLicense } from "../RegisterLicense";
 
 import {
   Wallet,
@@ -23,6 +24,13 @@ import {
   Clock,
   CheckCircle,
   AlertCircle,
+  Shield,
+  ShieldCheck,
+  PlusCircle,
+  ShieldPlus,
+  Key,
+  Copy,
+  Plus,
 } from "lucide-react";
 
 import { ProductionResponse } from "../../types";
@@ -56,6 +64,10 @@ export const ProfilePage = () => {
     setSelectedStory(story);
     setShowMintModal(true);
   };
+  // const handleRegisterIP = (story: ProductionResponse) => {
+  //   setSelectedStory(story);
+  //   setShowMintModal(true);
+  // };
 
   const handleChangePublication = async (
     storyId: string,
@@ -106,7 +118,7 @@ export const ProfilePage = () => {
     });
 
     return result;
-  }
+  };
 
   const ipfsHashesList = extractIPFSHashes(usersStory!);
 
@@ -234,6 +246,13 @@ export const ProfilePage = () => {
     return <DreamLoader message="Fetching profile..." size="lg" />;
   }
 
+  const defaultLicense = {
+    title: "Free Use License",
+    description: "Anyone can use this content freely with attribution.",
+  };
+
+  const [license, setLicense] = useState(defaultLicense);
+
   if (!profile || !usersStory || !usersJournal) {
     return (
       <div className="flex justify-center items-center min-h-screen text-center">
@@ -247,68 +266,92 @@ export const ProfilePage = () => {
     );
   }
 
+  const handleCreateLicense = () => {
+    setShowMintModal(true);
+  };
+
   return (
     <div className="flex flex-col items-center w-full px-4 md:px-6 lg:max-w-4xl lg:mx-auto">
       {/* Profile Header */}
       <div className="w-full bg-gradient-to-r from-transparent via-blue-300/30 to-transparent rounded-2xl p-4 md:p-8 mb-6 md:mb-8 border border-white/20">
         <div className="flex flex-col md:flex-row items-start gap-4 md:gap-8">
-          <div className="relative group mx-auto md:mx-0">
-            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden bg-gradient-to-br from-purple-400 to-blue-500 p-1">
-              <img
-                src=""
-                alt="Profile"
-                className="w-full h-full rounded-full object-cover"
-              />
-            </div>
-            <button className="absolute bottom-1 right-1 md:bottom-2 md:right-2 bg-purple-600 hover:bg-purple-700 p-1 md:p-2 rounded-full text-white transition-all duration-200 shadow-lg">
-              <Camera size={14} className="md:size-4" />
-            </button>
-          </div>
+          <div className="flex-1 w-full space-y-6 px-4 py-6">
+            {/* Header with username and actions */}
+            <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <h1 className="text-3xl font-bold text-white">
+                  {profileData.username}
+                </h1>
+                <button
+                  className="text-purple-400 hover:text-purple-300 transition"
+                  aria-label="Edit profile"
+                >
+                  <Edit3 size={20} />
+                </button>
+              </div>
 
-          <div className="flex-1 space-y-3 md:space-y-4 w-full">
-            <div className="flex items-center gap-2 justify-center md:justify-start">
-              <h1 className="text-2xl md:text-3xl font-bold text-white text-center md:text-left">
-                {profileData.username}
-              </h1>
-              <button className="text-purple-400 hover:text-purple-300 transition-colors">
-                <Edit3 size={18} className="md:size-5" />
+              {/* Primary action button */}
+              <button
+                onClick={handleCreateLicense}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors"
+              >
+                <Plus size={18} />
+                Create License
               </button>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-2 md:gap-4 items-center md:items-start">
-              <div className="flex items-center gap-2 text-gray-300 text-sm md:text-base">
-                <Wallet size={14} className="md:size-4" />
-                <span className="font-mono truncate max-w-[180px] md:max-w-none">
+            {/* Wallet and Stats */}
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              {/* Wallet address with logo/icon */}
+              <div className="flex items-center gap-2 bg-gray-800/60 px-3 py-2 rounded-lg hover:bg-gray-800/80 transition-colors">
+                <div className="bg-purple-500/20 p-1 rounded-full">
+                  <Wallet size={16} className="text-purple-400" />
+                </div>
+                <span className="font-mono text-gray-300 truncate max-w-[180px]">
                   {profileData.walletAddress}
                 </span>
+                <button className="text-gray-400 hover:text-gray-300 transition-colors">
+                  <Copy size={14} />
+                </button>
               </div>
-              <div className="flex items-center gap-2 text-gray-300 text-sm md:text-base">
-                <Wallet size={14} className="md:size-4" />
-                <span className="font-mono">{profileData.amount}</span>
+
+              {/* Balance */}
+              <div className="flex items-center gap-2 bg-gray-800/60 px-3 py-2 rounded-lg hover:bg-gray-800/80 transition-colors">
+                <div className="bg-green-500/20 p-1 rounded-full">
+                  <DollarSign size={16} className="text-green-400" />
+                </div>
+                <span className="font-mono text-gray-300">
+                  {profileData.amount}
+                </span>
+              </div>
+
+              {/* Add more stats as needed */}
+              <div className="flex items-center gap-2 bg-gray-800/60 px-3 py-2 rounded-lg hover:bg-gray-800/80 transition-colors">
+                <div className="bg-blue-500/20 p-1 rounded-full">
+                  <Key size={16} className="text-blue-400" />
+                </div>
+                <span className="text-gray-300">{0} Licenses</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl p-3 md:p-4 border border-green-500/30">
-                <div className="flex items-center gap-2 mb-1 md:mb-2">
-                  <DollarSign size={16} className="text-green-400 md:size-5" />
-                  <span className="text-green-400 font-semibold text-sm md:text-base">
-                    Total Earnings
-                  </span>
+            {/* Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="rounded-xl p-5 bg-gradient-to-br from-emerald-600/20 to-green-600/10 border border-emerald-500/30">
+                <div className="flex items-center gap-2 text-green-400 mb-2">
+                  <DollarSign size={18} />
+                  <span className="font-semibold">Total Earnings</span>
                 </div>
-                <div className="text-xl md:text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white">
                   {formatCurrency(profileData.totalEarnings)}
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl p-3 md:p-4 border border-blue-500/30">
-                <div className="flex items-center gap-2 mb-1 md:mb-2">
-                  <TrendingUp size={16} className="text-blue-400 md:size-5" />
-                  <span className="text-blue-400 font-semibold text-sm md:text-base">
-                    Monthly Growth
-                  </span>
+              <div className="rounded-xl p-5 bg-gradient-to-br from-purple-500/20 to-blue-500/10 border border-blue-400/30">
+                <div className="flex items-center gap-2 text-blue-400 mb-2">
+                  <TrendingUp size={18} />
+                  <span className="font-semibold">Monthly Growth</span>
                 </div>
-                <div className="text-xl md:text-2xl font-bold text-white">
+                <div className="text-2xl font-bold text-white">
                   +{profileData.monthlyGrowth}%
                 </div>
               </div>
@@ -733,7 +776,7 @@ export const ProfilePage = () => {
               <DreamyBackground />
             </div>
             <div className="relative z-10">
-              <MintAndRegisterIP
+              <RegisterLicense
                 story={selectedStory}
                 profile={profile}
                 onClose={() => setShowMintModal(false)}
