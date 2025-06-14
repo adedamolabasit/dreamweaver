@@ -85,28 +85,33 @@ export const updateUserData = async ({
 };
 
 export const processUpdateProfile = async ({
-  userId,
+  walletAddress,
   updateData,
 }: {
-  userId: string;
+  walletAddress: string;
   updateData: Partial<IUser>;
 }) => {
   try {
-    const userIdObj = new mongoose.Types.ObjectId(userId);
-
     const existingProfile = await User.findOne({
-      userId: userIdObj,
+      walletAddress,
     });
 
     if (!existingProfile) {
       throw new NotFoundError("Profile not found");
     }
 
-    if (updateData.license) {
-      existingProfile.license = {
-        ...existingProfile.license,
-        ...updateData.license,
-      };
+    console.log(updateData.license?.registeredLicense, "mmm");
+
+    if (updateData.license?.registeredLicense) {
+      const newLicenses = Array.isArray(updateData.license.registeredLicense)
+        ? updateData.license.registeredLicense
+        : [updateData.license.registeredLicense];
+
+      existingProfile.license.registeredLicense = [
+        ...(existingProfile.license.registeredLicense ?? []),
+        ...(newLicenses as typeof existingProfile.license.registeredLicense),
+      ];
+
       delete updateData.license;
     }
 

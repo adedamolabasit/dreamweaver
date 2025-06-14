@@ -8,12 +8,31 @@ export interface JournalEntry {
   };
 }
 
+export interface MintedLicense {
+  productionId: string;
+  licenseTermId: string;
+  licenseTye: string;
+  transactionHash: string;
+  isAvailable: boolean;
+}
+
+export interface RegisteredLicense {
+  productionId: string;
+  licenseTermId: string;
+  transactionHash: string;
+  isAvailable: boolean;
+}
+
 export interface ProfileResp {
   user: {
     _id: string;
     username: string;
     walletAddress: string | `0x${string}`;
     avatar: string;
+    license: {
+      registeredLicense: RegisteredLicense[];
+      mintedLicense: MintedLicense[];
+    };
     createdAt: string;
     updatedAt: string;
     __v: number;

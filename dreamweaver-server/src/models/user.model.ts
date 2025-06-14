@@ -7,7 +7,6 @@ export interface IUser extends Document {
   license: {
     registeredLicense: {
       licenseType: string;
-      productionId: string;
       licenseTermId: string;
       transactionHash: string;
       isAvailable: boolean;

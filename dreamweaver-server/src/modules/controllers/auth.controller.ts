@@ -69,14 +69,11 @@ export const updateUser: RequestHandler = async (req, res, next) => {
 
 export const updateProfile: RequestHandler = async (req, res, next) => {
   try {
-    const userId = req.user?.id as string;
+    const { walletAddress } = req.params;
     const updateData = req.body;
 
-    console.log(userId,"UserId")
-    console.log(updateData,"UpdatedData")
-
     const updatedProfile = await processUpdateProfile({
-      userId,
+      walletAddress,
       updateData,
     });
 

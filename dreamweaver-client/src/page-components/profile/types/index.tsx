@@ -90,17 +90,17 @@ export interface ProductionResponse {
   updatedAt?: Date;
 }
 
-export interface ProfileResp {
-  user: {
-    _id: string;
-    username: string;
-    walletAddress: string | `0x${string}`;
-    avatar: string;
-    createdAt: string;
-    updatedAt: string;
-    __v: number;
-  };
-}
+// export interface ProfileResp {
+//   user: {
+//     _id: string;
+//     username: string;
+//     walletAddress: string | `0x${string}`;
+//     avatar: string;
+//     createdAt: string;
+//     updatedAt: string;
+//     __v: number;
+//   };
+// }
 
 export interface Story {
   id: string;
@@ -126,15 +126,26 @@ export interface MintedLicense {
   isAvailable: boolean;
 }
 
+export interface RegisteredLicense {
+  productionId: string;
+  licenseType: string;
+  licenseTermId: string;
+  transactionHash: string;
+  isAvailable: boolean;
+}
+
 export interface ProfileResp {
-  _id: string;
-  username: string;
-  walletAddress: string;
-  avatar?: string;
-  license: {
-    mintedLicense: MintedLicense[];
+  user: {
+    _id: string;
+    username: string;
+    walletAddress: string;
+    avatar?: string;
+    license: {
+      registeredLicense: RegisteredLicense[];
+      mintedLicense: MintedLicense[];
+    };
+    createdAt: Date;
+    updatedAt: Date;
+    lastSeen: Date;
   };
-  createdAt: Date;
-  updatedAt: Date;
-  lastSeen: Date;
 }

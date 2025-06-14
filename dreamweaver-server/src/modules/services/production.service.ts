@@ -153,7 +153,7 @@ export const processGetUserProduction = async (userId: string) => {
 export const processGetAllProduction = async () => {
   try {
     return await Production.find({
-      status: "completed",
+      status: "complete",
     }).sort({ createdAt: -1 });
   } catch (error) {
     logger.error("Failed to get all productions: ", error);

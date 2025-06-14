@@ -12,9 +12,13 @@ import {
 import { ProductionResponse } from "../../types";
 import { useNavigate } from "react-router-dom";
 import DreamLoader from "../../../../components/Loader/DreamLoader";
-import { client } from "../../../../storyservice/utils/config";
 import { useAccount } from "wagmi";
 import { useToast } from "../../../../components/Toast";
+import { useStoryClient } from "../../../../client/storyClient";
+import axios from "axios";
+import { extractMintingParams } from "../../functions";
+import apiClient from "../../../../api/apiClient";
+import { fetchLicenseTerms } from "../../../../api/authApi";
 
 interface StoryParams {
   production: ProductionResponse | undefined;
@@ -27,6 +31,7 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
   const [showLicenseModal, setShowLicenseModal] = useState(false);
   const { story, analysis, visuals, ipRegistration } = production!;
   const { address, isConnected } = useAccount();
+  const client = useStoryClient();
 
   const { showInfo } = useToast();
 
@@ -63,47 +68,57 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
     if (coverImage) setCid(coverImage.ipfsHash);
   }, []);
 
-  const MintLicense = async () => {
-    const response = await client.license.mintLicenseTokens({
-      licenseTermsId: production?.ipRegistration?.licenseTermsIds as string,
-      licensorIpId: production?.ipRegistration?.ipId as `0x${string}`,
-      receiver: address,
-      amount: 1,
-      maxMintingFee: BigInt(0), // disabled
-      maxRevenueShare: 100, // default
-      txOptions: { waitForTransaction: true },
-    });
+  const transformLicenseData = (ipList: any[]) => {
+    return ipList.map((item) => {
+      const pil = item.license?.pilFlavors;
 
-    console.log("License minted:", {
-      "Transaction Hash": response.txHash,
-      "License Token IDs": response.licenseTokenIds,
+      let type = "Unknown";
+      let terms = "N/A";
+      let price = item.fee === 0 ? "Free" : `${item.fee} ETH`;
+      let duration = "Permanent"; // assume based on your schema
+
+      if (pil?.includes("nonCommercial")) {
+        type = "Personal Use";
+        terms = "For non-commercial reading and sharing";
+      } else if (pil?.includes("commercial")) {
+        type = "Commercial License";
+        terms = "For businesses and publishers";
+      }
+
+      return {
+        id: item._id,
+        type,
+        terms,
+        price,
+        duration,
+        licenseId: item.licenseTermsIds,
+        licesorIpId: item.ipId,
+        fee: item.fee,
+      };
     });
   };
 
-  // Mock license data
-  const availableLicenses = [
-    {
-      id: "1",
-      type: "Personal Use",
-      terms: "For non-commercial reading and sharing",
-      price: "Free",
-      duration: "Permanent",
-    },
-    {
-      id: "2",
-      type: "Creator License",
-      terms: "For content creators and influencers",
-      price: "0.05 ETH",
-      duration: "1 Year",
-    },
-    {
-      id: "3",
-      type: "Commercial License",
-      terms: "For businesses and publishers",
-      price: "0.5 ETH",
-      duration: "1 Year",
-    },
-  ];
+  const ipLicenses = transformLicenseData(production?.ipRegistration?.ip || []);
+
+  const handleMintLicense = async (license: any) => {
+    const licenseResponse = await fetchLicenseTerms(license.licenseId);
+
+    console.log(licenseResponse, "ll");
+
+    const params = extractMintingParams(licenseResponse);
+
+    console.log(params, "pp");
+
+    const response = await client?.license?.mintLicenseTokens({
+      licenseTermsId: license.licenseId,
+      licensorIpId: license.licesorIpId,
+      receiver: address,
+      amount: 1,
+      maxMintingFee: params ? BigInt(params.mintingFee) : BigInt(0),
+      maxRevenueShare: 100,
+    });
+    console.log("Simulated transaction:", response);
+  };
 
   if (isFetching)
     return <DreamLoader message="Fetching stories..." size="lg" />;
@@ -114,7 +129,7 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
       <div className="p-5 pb-0 flex justify-between items-start">
         <div>
           <h2 className="text-2xl font-bold text-white">{story?.title}</h2>
-          {ipRegistration?.status === "verified" && (
+          {ipRegistration?.ip[0]?.status === "registered" && (
             <div className="flex items-center gap-1 mt-1 text-sm text-green-400">
               <BadgeCheck size={16} />
               <span>Licensed Content</span>
@@ -191,7 +206,7 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
               Read Story
               <ArrowRight size={16} />
             </button>
-            {ipRegistration?.status === "verified" && (
+            {ipRegistration?.ip[0]?.status === "registered" && (
               <div className="relative group inline-block">
                 <button
                   onClick={handleshowLicenseModal}
@@ -235,34 +250,45 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
                 </div>
               </div>
 
-              <div className="space-y-4 mb-6">
-                {availableLicenses.map((license) => (
-                  <div
-                    key={license.id}
-                    className="p-4 rounded-lg bg-gray-800/50 border border-gray-700"
-                  >
-                    <h3 className="font-medium text-white mb-1">
-                      {license.type}
-                    </h3>
-                    <p className="text-sm text-gray-300 mb-2">
-                      {license.terms}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs text-gray-400">
-                        {license.price} • {license.duration}
-                      </span>
-                      <button
-                        onClick={MintLicense}
-                        className="text-sm bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded"
-                      >
-                        Mint License
-                      </button>
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-white">
+                  Registered Licenses
+                </h3>
+                <div className="space-y-3">
+                  {ipLicenses.map((license) => (
+                    <div
+                      key={license.id}
+                      className="p-4 rounded-lg bg-gray-800/50 border border-gray-700"
+                    >
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-white font-medium">
+                          {license.type}
+                        </span>
+                        <span className="text-sm text-purple-400">
+                          {license.price}
+                        </span>
+                      </div>
+                      <div className="text-sm text-gray-300">
+                        {license.terms}
+                      </div>
+                      <div className="text-xs text-gray-400 mt-1">
+                        Duration: {license.duration}
+                      </div>
+
+                      <div className="mt-4">
+                        <button
+                          onClick={() => handleMintLicense(license)}
+                          className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm"
+                        >
+                          Mint License
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              <div className="text-center text-sm text-gray-400">
+              <div className="text-center text-sm text-gray-400 mt-6">
                 <p>All licenses are secured on the blockchain</p>
                 <button className="text-purple-400 hover:text-purple-300 mt-2">
                   View license terms

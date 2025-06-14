@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Star,
   ArrowRight,
-  Shield,
   Sparkles,
   X,
   User,
@@ -10,23 +9,16 @@ import {
   DollarSign,
   FileText,
   Layers,
-  Globe,
   BadgeCheck,
 } from "lucide-react";
 import { ProductionResponse } from "../../types";
 import { IpMetadata } from "@story-protocol/core-sdk";
-import { uploadJSONToIPFS } from "../../../../storyservice/utils/functions/uploadToIpfs";
 import { client } from "../../../../storyservice/utils/config";
-import { createCommercialRemixTerms } from "../../../../storyservice/utils/utils";
-import { SPGNFTContractAddress } from "../../../../storyservice/utils/utils";
 import { useUpdateProduction } from "../../../../hooks/useProduction";
 import { ProfileResp } from "../../types";
 import { licenseFlavors } from "./License/PilFlavours";
 import {
-  commercialRemix,
-  creativeCommons,
   nonCommercialSocialRemix,
-  commercialUseParams,
 } from "./License/PilFlavours";
 import { LicenseTerms } from "@story-protocol/core-sdk";
 import { parseEther } from "viem";

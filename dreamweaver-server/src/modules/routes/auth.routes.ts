@@ -14,6 +14,6 @@ router.post("/register", registerUser);
 router.get("/:walletAddress", getUser);
 router.get("/profile", authenticatedUser, getProfile);
 router.patch("/:walletAddress", updateUser);
-router.patch("/profile", authenticatedUser, updateProfile);
+router.patch("/profile/:walletAddress", authenticatedUser, updateProfile);
 
 export default router;

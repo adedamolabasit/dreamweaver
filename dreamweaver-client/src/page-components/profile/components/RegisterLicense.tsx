@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { ProductionResponse } from "../types";
 import { client } from "../../../storyservice/utils/config";
+import { useAccount, useBalance } from "wagmi";
 
 import { useUpdateProduction } from "../../../hooks/useProduction";
 import { licenseFlavors } from "./MintAndRegisterIp/License/PilFlavours";
@@ -43,21 +44,9 @@ export const RegisterLicense: React.FC<MintDreamProps> = ({
 
   const { mutate: updateProfile } = useUpdateProfile();
   const { showError, showDream } = useToast();
+  const { address } = useAccount();
 
   const provider = new ethers.JsonRpcProvider("https://aeneid.storyrpc.io");
-
-  const handleUpdateProfile = async (obj: { [key: string]: any }) => {
-    updateProfile(
-      { obj },
-      {
-        onSuccess: (data: any) => {
-          console.log(data, "ooo");
-          console.log("success");
-        },
-        onError: (err: any) => console.error("Update error:", err),
-      }
-    );
-  };
 
   type LicenseFlavor =
     | "nonCommercialSocialRemix"
@@ -90,18 +79,44 @@ export const RegisterLicense: React.FC<MintDreamProps> = ({
             "0x1514000000000000000000000000000000000000" as `0x${string}`,
           royaltyPolicyAddress:
             "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E" as `0x${string}`,
-          defaultMintingFee: parseEther(mintingFee!.toString()),
+          defaultMintingFee: parseEther('11'),
+          // defaultMintingFee: parseEther(mintingFee!.toString()),
         };
 
         console.log("Sending CommercialUse request:", requestParams);
         response = await client.license.registerCommercialUsePIL(requestParams);
+
+        console.log(response.licenseTermsId, "resppp");
+
+        const licenseData = {
+          licenseType: flavor,
+          licenseTermId: response.licenseTermsId,
+          transactionHash: response.txHash,
+          isAvailable: true,
+          timestamp: new Date().toISOString(), // Add timestamp for tracking
+          mintingFee: mintingFee,
+          revShare: revShare,
+        };
+
+        const updateResponse = await updateProfile({
+          walletAddress: address as string,
+          obj: {
+            license: {
+              registeredLicense: {
+                ...licenseData, // Use flavor as key for better organization
+              },
+            },
+          },
+        });
+
+        console.log("Profile update response:", updateResponse);
       } else if (flavor === "commercialRemix") {
         const requestParams = {
           currency:
             "0x1514000000000000000000000000000000000000" as `0x${string}`,
           royaltyPolicyAddress:
             "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E" as `0x${string}`,
-          defaultMintingFee: parseEther("72"),
+          defaultMintingFee: parseEther("64"),
           // defaultMintingFee: parseEther(mintingFee!.toString()),
           commercialRevShare: revShare!,
         };
@@ -110,19 +125,26 @@ export const RegisterLicense: React.FC<MintDreamProps> = ({
         response = await client.license.registerCommercialRemixPIL(
           requestParams
         );
+
+        console.log(response.licenseTermsId, "resppp");
+
+        const licenseData = {
+          licenseType: flavor,
+          licenseTermId: response.licenseTermsId,
+          transactionHash: response.txHash,
+          isAvailable: true,
+          timestamp: new Date().toISOString(), // Add timestamp for tracking
+          mintingFee: mintingFee,
+          revShare: revShare,
+        };
+
         const updateResponse = await updateProfile({
+          walletAddress: address as string,
           obj: {
             license: {
-              registeredLicense: [
-                [
-                  {
-                    licenseType:flavor,
-                    licenseTermId: response.licenseTermsId,
-                    transactionHash: response.txHash,
-                    isAvailable: true,
-                  },
-                ],
-              ],
+              registeredLicense: {
+                ...licenseData, // Use flavor as key for better organization
+              },
             },
           },
         });
@@ -140,7 +162,6 @@ export const RegisterLicense: React.FC<MintDreamProps> = ({
         );
       }
 
-      // Update profile for commercialUse
       // if (flavor === "commercialUse") {
       //   const updateResponse = await updateProfile({
       //     obj: {

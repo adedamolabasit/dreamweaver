@@ -15,7 +15,7 @@ export const useAuthUser = () => {
 
 export const useGetProfile = (walletAddress: string) => {
   return useQuery<ProfileResp, Error>({
-    queryKey: ["all-journals"],
+    queryKey: ["get-profile"],
     queryFn: () => fetchUserProfile(walletAddress),
   });
 };
@@ -23,8 +23,13 @@ export const useGetProfile = (walletAddress: string) => {
 export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ obj }: { obj: { [key: string]: any } }) =>
-      updateprofile(obj),
+    mutationFn: ({
+      walletAddress,
+      obj,
+    }: {
+      walletAddress: string;
+      obj: { [key: string]: any };
+    }) => updateprofile(walletAddress, obj),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["update-profile"] });
     },

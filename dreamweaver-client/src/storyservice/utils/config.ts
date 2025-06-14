@@ -12,6 +12,7 @@ import {
   WalletClient,
 } from "viem";
 import { privateKeyToAccount, Address, Account } from "viem/accounts";
+import { useWalletClient } from "wagmi";
 
 type NetworkType = "aeneid" | "mainnet";
 
@@ -67,9 +68,11 @@ export const networkInfo = {
     networkConfigs[network].rpcProviderUrl,
 };
 
+
 export const account: Account = privateKeyToAccount(
   `0x${import.meta.env.VITE_WALLET_PRIVATE_KEY}` as Address
 );
+
 
 const config: StoryConfig = {
   account,
@@ -84,6 +87,7 @@ const baseConfig = {
   transport: http(networkInfo.rpcProviderUrl),
 } as const;
 export const publicClient = createPublicClient(baseConfig);
+
 export const walletClient = createWalletClient({
   ...baseConfig,
   account,

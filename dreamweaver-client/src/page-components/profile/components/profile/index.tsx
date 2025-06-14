@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetAllUsersProductions } from "../../../../hooks/useProduction";
 import { useGetAllUsersJournals } from "../../../../hooks/useJournal.";
 import { useGetProfile } from "../../../../hooks/useAuth";
@@ -26,6 +26,9 @@ import {
   Copy,
   Plus,
 } from "lucide-react";
+import { extractIpIdsWithMetadata } from "../../functions";
+import { fetchEarningsForIPs } from "../../functions";
+import { IPEarning } from "../../functions";
 
 import { ProductionResponse } from "../../types";
 import DreamyBackground from "../../../../components/Background/DreamyBackground";
@@ -54,14 +57,23 @@ export const ProfilePage = () => {
   const { data: profile, isLoading: isProfileLoading } = useGetProfile(
     address as string
   );
+
+  const registeredLicense = profile?.user?.license?.registeredLicense;
+
+  console.log(registeredLicense, "llll");
+
   const { mutate: updateProduction } = useUpdateProduction();
 
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
   const [showLicenseModal, setShowLisenseModal] = useState(false);
+  const [showAttachLicenseModal, setShowAttachLisenseModal] = useState(false);
   const [selectedStory, setSelectedStory] = useState<
     ProductionResponse | undefined
   >();
   const [productId, setProductId] = useState<string>();
+  const [ipEarnings, setIpEarnings] = useState<IPEarning[]>([]);
+
+  console.log(usersStory, "ppp");
 
   const handleReadStory = (productId: string) => {
     setProductId(productId), setShowStory((prevState) => !prevState);
@@ -70,16 +82,11 @@ export const ProfilePage = () => {
   const handleRegisterIP = (story: ProductionResponse) => {
     setSelectedStory(story);
     setShowRegistrationModal(true);
-    console.log(story, "kdkq");
-    console.log(showRegistrationModal);
   };
+
   const handleRegisterLisense = () => {
     setShowLisenseModal(true);
   };
-  // const handleRegisterIP = (story: ProductionResponse) => {
-  //   setSelectedStory(story);
-  //   setShowMintModal(true);
-  // };
 
   const handleChangePublication = async (
     storyId: string,
@@ -101,8 +108,8 @@ export const ProfilePage = () => {
   };
 
   const profileData = {
-    username: profile?.username,
-    walletAddress: profile?.walletAddress,
+    username: profile?.user?.username,
+    walletAddress: profile?.user?.walletAddress,
     totalEarnings: 12847.32,
     monthlyGrowth: 18.5,
     amount: `${data?.formatted} ${data?.symbol}`,
@@ -122,6 +129,7 @@ export const ProfilePage = () => {
                 description: visual.originalPrompt,
                 ipfsHash: generatedImage.ipfsHash,
                 publishStatus: item.publication,
+                licenses: registeredLicense || [], // Add licenses array
               });
             });
           }
@@ -131,6 +139,18 @@ export const ProfilePage = () => {
 
     return result;
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const properties = extractIpIdsWithMetadata(
+        usersStory as ProductionResponse[]
+      );
+      const earnings = await fetchEarningsForIPs(properties, address as `0x${string}`);
+      setIpEarnings(earnings);
+    };
+
+    fetchData();
+  }, [usersStory]);
 
   const ipfsHashesList = extractIPFSHashes(usersStory as ProductionResponse[]);
 
@@ -144,6 +164,7 @@ export const ProfilePage = () => {
       ipStatus: "registered",
       publishStatus: "published",
       earnings: 2847.5,
+      // licenses: registeredLicense,
     },
     {
       id: "2",
@@ -154,6 +175,7 @@ export const ProfilePage = () => {
       ipStatus: "pending",
       publishStatus: "draft",
       earnings: 0,
+      // licenses: [],
     },
     {
       id: "3",
@@ -164,6 +186,7 @@ export const ProfilePage = () => {
       ipStatus: "registered",
       publishStatus: "published",
       earnings: 1523.75,
+      // licenses: ["Standard License"],
     },
   ];
 
@@ -254,10 +277,6 @@ export const ProfilePage = () => {
     { id: "earnings", label: "IP Earnings", icon: <TrendingUp size={18} /> },
   ];
 
-  if (isProfileLoading || isStoriesLoading || isJournalsLoading) {
-    return <DreamLoader message="Fetching profile..." size="lg" />;
-  }
-
   if (!profile || !usersStory || !usersJournal) {
     return (
       <div className="flex justify-center items-center min-h-screen text-center">
@@ -280,11 +299,9 @@ export const ProfilePage = () => {
         />
       ) : (
         <div className="flex flex-col items-center w-full px-4 md:px-6 lg:max-w-4xl lg:mx-auto">
-          {/* Profile Header */}
           <div className="w-full bg-gradient-to-r from-transparent via-blue-300/30 to-transparent rounded-2xl p-4 md:p-8 mb-6 md:mb-8 border border-white/20">
             <div className="flex flex-col md:flex-row items-start gap-4 md:gap-8">
               <div className="flex-1 w-full space-y-6 px-4 py-6">
-                {/* Header with username and actions */}
                 <div className="flex flex-col md:flex-row items-start justify-between gap-4">
                   <div className="flex items-center gap-3">
                     <h1 className="text-3xl font-bold text-white">
@@ -297,8 +314,6 @@ export const ProfilePage = () => {
                       <Edit3 size={20} />
                     </button>
                   </div>
-
-                  {/* Primary action button */}
                   <button
                     onClick={handleRegisterLisense}
                     className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition-colors"
@@ -308,9 +323,7 @@ export const ProfilePage = () => {
                   </button>
                 </div>
 
-                {/* Wallet and Stats */}
                 <div className="flex flex-wrap items-center gap-4 text-sm">
-                  {/* Wallet address with logo/icon */}
                   <div className="flex items-center gap-2 bg-gray-800/60 px-3 py-2 rounded-lg hover:bg-gray-800/80 transition-colors">
                     <div className="bg-purple-500/20 p-1 rounded-full">
                       <Wallet size={16} className="text-purple-400" />
@@ -323,7 +336,6 @@ export const ProfilePage = () => {
                     </button>
                   </div>
 
-                  {/* Balance */}
                   <div className="flex items-center gap-2 bg-gray-800/60 px-3 py-2 rounded-lg hover:bg-gray-800/80 transition-colors">
                     <div className="bg-green-500/20 p-1 rounded-full">
                       <DollarSign size={16} className="text-green-400" />
@@ -332,17 +344,8 @@ export const ProfilePage = () => {
                       {profileData.amount}
                     </span>
                   </div>
-
-                  {/* Add more stats as needed */}
-                  <div className="flex items-center gap-2 bg-gray-800/60 px-3 py-2 rounded-lg hover:bg-gray-800/80 transition-colors">
-                    <div className="bg-blue-500/20 p-1 rounded-full">
-                      <Key size={16} className="text-blue-400" />
-                    </div>
-                    <span className="text-gray-300">{0} Licenses</span>
-                  </div>
                 </div>
 
-                {/* Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="rounded-xl p-5 bg-gradient-to-br from-emerald-600/20 to-green-600/10 border border-emerald-500/30">
                     <div className="flex items-center gap-2 text-green-400 mb-2">
@@ -462,6 +465,7 @@ export const ProfilePage = () => {
                       {usersStory?.map((story) => {
                         const ipStatus = story.ipRegistration?.ip?.[0]?.status;
                         const isRegistered = ipStatus === "registered";
+                        const licenseCount = registeredLicense?.length || 0;
 
                         return (
                           <div
@@ -519,9 +523,18 @@ export const ProfilePage = () => {
                                     <option value="published">Published</option>
                                   </select>
                                 </div>
+
+                                {registeredLicense &&
+                                  registeredLicense?.length > 0 && (
+                                    <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-purple-500/20 text-purple-300">
+                                      <Key size={12} />
+                                      {licenseCount} license
+                                      {licenseCount !== 1 ? "s" : ""}
+                                    </div>
+                                  )}
                               </div>
 
-                              <div className="flex  gap-4">
+                              <div className="flex gap-4">
                                 <button
                                   className={`p-1.5 px-3 md:p-2 md:px-4 rounded-lg font-medium text-xs md:text-sm ${"border border-purple-600 text-white"}`}
                                   onClick={() =>
@@ -530,18 +543,12 @@ export const ProfilePage = () => {
                                 >
                                   View
                                 </button>
+
                                 <button
-                                  disabled={isRegistered}
-                                  className={`p-1.5 px-3 md:p-2 md:px-4 rounded-lg font-medium text-xs md:text-sm ${
-                                    isRegistered
-                                      ? "bg-green-600 cursor-not-allowed text-white"
-                                      : "bg-blue-600 hover:bg-blue-700 text-white"
-                                  }`}
-                                  onClick={() => handleRegisterIP(story)} // Pass full object here
+                                  className="p-1.5 px-3 md:p-2 md:px-4 rounded-lg font-medium text-xs md:text-sm bg-blue-600 hover:bg-blue-700 text-white"
+                                  onClick={() => handleRegisterIP(story)}
                                 >
-                                  {isRegistered
-                                    ? "IP Registered"
-                                    : "Register IP"}
+                                  Register IP
                                 </button>
                               </div>
                             </div>
@@ -567,7 +574,6 @@ export const ProfilePage = () => {
                       {ipfsHashesList.map((art: any) => {
                         const imageUrl = `https://jade-peaceful-macaw-761.mypinata.cloud/ipfs/${art.ipfsHash}?pinataGatewayToken=BmZjUB5nCCxIeDdY6v_uM2RJhyqwnTKtGFnahd_IsPXD9He4pVRxPOcSvDfCpYwM`;
 
-                        // Function to download image
                         const downloadImage = async () => {
                           try {
                             const response = await fetch(imageUrl);
@@ -586,10 +592,7 @@ export const ProfilePage = () => {
                           }
                         };
 
-                        // Function to handle image enlargement
                         const enlargeImage = () => {
-                          // You can implement a modal or lightbox here
-                          // For now, we'll just open the image in a new tab
                           window.open(imageUrl, "_blank");
                         };
 
@@ -603,7 +606,6 @@ export const ProfilePage = () => {
                                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                                 />
 
-                                {/* Action buttons overlay */}
                                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3">
                                   <button
                                     onClick={downloadImage}
@@ -738,34 +740,36 @@ export const ProfilePage = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
                       <div className="lg:col-span-2 space-y-3 md:space-y-4">
                         <h3 className="text-lg font-semibold text-white">
-                          Earnings by Content
+                          Earnings by IP
                         </h3>
-                        {[
-                          ...stories,
-                          ...galleryImages.map((img) => ({
-                            id: img.id,
-                            name: img.title,
-                            earnings: img.earnings,
-                            type: "Image",
-                          })),
-                        ]
-                          .sort((a, b) => b.earnings - a.earnings)
+                        {ipEarnings
+                          .sort((a: any, b: any) => b.earnings - a.earnings)
                           .map((item) => (
                             <div
-                              key={item.id}
+                              key={item.ipId}
                               className="bg-white/5 rounded-xl p-3 md:p-4 border border-white/10 flex items-center justify-between"
                             >
-                              <div>
-                                <h4 className="font-medium text-white text-sm md:text-base">
-                                  {item.name}
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-medium text-white text-sm md:text-base truncate">
+                                  {item.title}
                                 </h4>
-                                <span className="text-xs text-gray-400">
-                                  {"Story"}
-                                </span>
+                                <div className="flex gap-2">
+                                  <span className="text-xs text-gray-400">
+                                    {new Date(
+                                      item.createdAt
+                                    ).toLocaleDateString()}
+                                  </span>
+                                  <span className="text-xs text-gray-400 truncate max-w-[100px] md:max-w-[200px]">
+                                    {item.ipId}
+                                  </span>
+                                </div>
                               </div>
-                              <div className="text-right">
+                              <div className="text-right pl-2">
                                 <div className="font-bold text-green-400 text-sm md:text-base">
                                   {formatCurrency(item.earnings)}
+                                </div>
+                                <div className="text-xs text-gray-400">
+                                  {item.earnings > 0 ? "Active" : "No earnings"}
                                 </div>
                               </div>
                             </div>
@@ -778,29 +782,36 @@ export const ProfilePage = () => {
                         </h3>
                         <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 rounded-xl p-3 md:p-4 border border-purple-500/30">
                           <div className="text-xl md:text-2xl font-bold text-white mb-1">
-                            {stories.length + galleryImages.length}
+                            {ipEarnings.length}
                           </div>
                           <div className="text-purple-300 text-sm">
-                            Total Items
+                            Registered IPs
                           </div>
                         </div>
                         <div className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl p-3 md:p-4 border border-green-500/30">
                           <div className="text-xl md:text-2xl font-bold text-white mb-1">
-                            {formatCurrency(profileData.totalEarnings)}
+                            {formatCurrency(
+                              ipEarnings.reduce(
+                                (sum, item) => sum + item.earnings,
+                                0
+                              )
+                            )}
                           </div>
                           <div className="text-green-300 text-sm">
-                            Total Revenue
+                            Total Earnings
                           </div>
                         </div>
                         <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl p-3 md:p-4 border border-orange-500/30">
                           <div className="text-xl md:text-2xl font-bold text-white mb-1">
                             {formatCurrency(
-                              profileData.totalEarnings /
-                                (stories.length + galleryImages.length)
+                              ipEarnings.reduce(
+                                (sum, item) => sum + item.earnings,
+                                0
+                              ) / (ipEarnings.length || 1)
                             )}
                           </div>
                           <div className="text-orange-300 text-sm">
-                            Avg per Item
+                            Avg per IP
                           </div>
                         </div>
                       </div>
@@ -810,6 +821,25 @@ export const ProfilePage = () => {
               </div>
             </div>
           </div>
+
+          {/* License Selection Modal */}
+          {showAttachLicenseModal && selectedStory && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+              <div className="relative rounded-2xl w-full max-w-md bg-gray-900 border border-white/20 p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-bold text-white">
+                    Attach License to {selectedStory.story?.title}
+                  </h3>
+                  <button
+                    onClick={() => setShowAttachLisenseModal(false)}
+                    className="text-gray-400 hover:text-white"
+                  >
+                    &times;
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {showLicenseModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
@@ -827,12 +857,10 @@ export const ProfilePage = () => {
               </div>
             </div>
           )}
+
           {showRegistrationModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
               <div className="relative no-scrollbar rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-gray-900">
-                <div className="absolute inset-0 z-0">
-                  {/* <DreamyBackground /> */}
-                </div>
                 <div className="relative z-10">
                   <RegisterIpAsset
                     story={selectedStory}
