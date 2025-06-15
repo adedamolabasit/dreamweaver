@@ -23,21 +23,13 @@ export function extractMintingParams(licenseResponse: any) {
 }
 
 export const transformLicenseData = (licenseList: any[]) => {
+  console.log(licenseList,"licenselist...")
+
   return licenseList.map((license) => {
     let type = `Custom License (ID: ${license.licenseTermsId})`;
     let terms = "Terms vary by agreement";
-    let price = "Free";
+    let price = "";
 
-    if (["1862", "1866"].includes(license.licenseTermsId)) {
-      type = `Commercial License (ID: ${license.licenseTermsId})`;
-      terms = "For commercial use and monetization";
-      price = license.licensingConfig?.mintingFee
-        ? `${license.licensingConfig.mintingFee} IP`
-        : "Free";
-    } else if (license.licenseTermsId === "386") {
-      type = `Personal Use (ID: ${license.licenseTermsId})`;
-      terms = "For non-commercial reading and sharing";
-    }
 
     return {
       id: license.id,

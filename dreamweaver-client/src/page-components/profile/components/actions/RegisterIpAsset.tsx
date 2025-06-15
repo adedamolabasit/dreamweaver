@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { uploadJSONToIPFS } from "../../../../storyservice/utils/functions/uploadToIpfs";
+import { uploadJSONToIPFS } from "../../../../pinata";
 import { IpMetadata } from "@story-protocol/core-sdk";
 import { ProductionResponse } from "../../types";
 import { ProfileResp } from "../../types";
@@ -175,12 +175,8 @@ export const RegisterIpAsset: React.FC<RegisterIPProps> = ({
             ipMetadataURI: `https://ipfs.io/ipfs/${ipIpfsHash}`,
             nftMetadataURI: `https://ipfs.io/ipfs/${nftIpfsHash}`,
           },
-
         }
       );
-
-
-      console.log(response, "llkk");
 
       const newIpEntry = {
         ipId: response?.ipId as `0x${string}`,

@@ -40,6 +40,7 @@ export const ArtGallery = () => {
   };
 
   const ipfsHashesList = extractIPFSHashes(publishedProductions!);
+  const shuffledIpfsList = [...ipfsHashesList].sort(() => Math.random() - 0.5);
 
   const openModal = (art: any) => {
     setSelectedArt(art);
@@ -86,7 +87,7 @@ export const ArtGallery = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ipfsHashesList.map((art: any) => {
+            {shuffledIpfsList.map((art: any) => {
               const imageUrl = `https://jade-peaceful-macaw-761.mypinata.cloud/ipfs/${art.ipfsHash}?pinataGatewayToken=BmZjUB5nCCxIeDdY6v_uM2RJhyqwnTKtGFnahd_IsPXD9He4pVRxPOcSvDfCpYwM`;
 
               return (

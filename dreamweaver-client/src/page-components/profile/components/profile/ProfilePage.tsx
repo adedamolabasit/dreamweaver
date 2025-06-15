@@ -17,8 +17,8 @@ import {
   AlertCircle,
   Copy,
   Plus,
-  Coins,
-  ArrowDownToLine,
+  Sparkles,
+  ChevronDown,
 } from "lucide-react";
 
 // Custom Hook Imports
@@ -26,16 +26,17 @@ import { useGetAllUsersProductions } from "../../../../hooks/useProduction";
 import { useGetAllUsersJournals } from "../../../../hooks/useJournal.";
 import { useGetProfile } from "../../../../hooks/useAuth";
 import { useUpdateProduction } from "../../../../hooks/useProduction";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "../../../../components/Toast";
 
 // Component Imports
 import DreamLoader from "../../../../components/Loader/DreamLoader";
 import { DashboardLayout } from "../../../../components/Layout";
 import { StatCard } from "../card/StatCard";
-import { useToast } from "../../../../components/Toast";
 import { StoryView } from "./view/StoryView";
 
 // Action Imports
-import { RegisterLicense } from "../actions/RegisterLicense";
+import { RegisterLicense } from "../actions/AttachLicense";
 import { RegisterIpAsset } from "../actions/RegisterIpAsset";
 import ClaimRevenue from "../actions/claimRevenue";
 
@@ -54,8 +55,6 @@ export const ProfilePage = () => {
     ProductionResponse | undefined
   >();
   const [productId, setProductId] = useState<string>();
-  const [showClaimable, setShowClaimable] = useState(false);
-
   // Refs
   const hasAuthenticatedRef = useRef(false);
 
@@ -69,6 +68,12 @@ export const ProfilePage = () => {
   const { data: usersJournal } = useGetAllUsersJournals();
   const { data: profile } = useGetProfile(address as string);
   const { mutate: updateProduction } = useUpdateProduction();
+  const { showDream } = useToast();
+
+  const totalStory = usersStory?.length;
+  const totalJournal = usersJournal?.length;
+
+  const navigate = useNavigate();
 
   // Derived Data
   const registeredLicense = profile?.user?.license?.registeredLicense;
@@ -80,11 +85,9 @@ export const ProfilePage = () => {
     amount: `${data?.formatted} ${data?.symbol}`,
   };
 
-  // Toast
-  const { showError, showDream } = useToast();
-
   // Tab Configuration
   const tabs = [
+    { id: "dashboard", label: "Dashboard", icon: <Sparkles size={18} /> },
     { id: "stories", label: "Stories", icon: <FileText size={18} /> },
     { id: "gallery", label: "Gallery", icon: <Image size={18} /> },
     { id: "journal", label: "Journal", icon: <BookOpen size={18} /> },
@@ -158,16 +161,6 @@ export const ProfilePage = () => {
   const ipfsHashesList = extractIPFSHashes(usersStory as ProductionResponse[]);
 
   // Event Handlers
-  const handleClaimRevenue = async () => {
-    try {
-      showDream("Revenue claimed successfully!");
-      setShowClaimable(false);
-    } catch (error) {
-      console.error("Claim failed:", error);
-      showError("Failed to claim revenue. Please try again.");
-    }
-  };
-
   const handleReadStory = (productId: string) => {
     setProductId(productId), setShowStory((prevState) => !prevState);
   };
@@ -208,6 +201,11 @@ export const ProfilePage = () => {
     );
   };
 
+  const handleCopy = async (text: string) => {
+    await navigator.clipboard.writeText(text);
+    showDream("Wallet address copied!"); // Optional: if you use toast notifications
+  };
+
   // Effects
   useEffect(() => {
     if (isConnected) {
@@ -215,6 +213,12 @@ export const ProfilePage = () => {
       if (hasAuthenticatedRef.current === true) {
         refetchUserStory();
       }
+    }
+  });
+
+  useEffect(() => {
+    if (activeTab === "dashboard") {
+      navigate("../stories");
     }
   });
 
@@ -278,9 +282,14 @@ export const ProfilePage = () => {
                       <Wallet size={16} className="text-purple-400" />
                     </div>
                     <span className="font-mono text-gray-300 truncate max-w-[180px]">
-                      {profileData.walletAddress}
+                      {profileData?.walletAddress || "unknown"}
                     </span>
-                    <button className="text-gray-400 hover:text-gray-300 transition-colors">
+                    <button
+                      className="text-gray-400 hover:text-gray-300 transition-colors"
+                      onClick={() =>
+                        handleCopy(profileData?.walletAddress || "unknown")
+                      }
+                    >
                       <Copy size={14} />
                     </button>
                   </div>
@@ -300,59 +309,21 @@ export const ProfilePage = () => {
                   <StatCard
                     icon={<BookOpen size={18} />}
                     label="Total Stories"
-                    value={3}
+                    value={totalStory as number}
                     color="emerald"
                   />
                   <StatCard
                     icon={<FileText size={18} />}
                     label="Total Journals"
-                    value={6}
+                    value={totalJournal as number}
                     color="sky"
                   />
                   <StatCard
                     icon={<Image size={18} />}
                     label="Total Arts"
-                    value={7}
+                    value={ipfsHashesList.length}
                     color="indigo"
                   />
-                  <div className="relative group rounded-xl p-5 bg-gradient-to-br from-yellow-500/20 to-orange-500/10 border border-yellow-400/30 hover:border-yellow-400/50 transition-all">
-                    <div className="flex justify-between items-start">
-                      <div className="flex items-center gap-2">
-                        <div className="p-2 bg-yellow-500/20 rounded-lg">
-                          <Coins size={20} className="text-yellow-400" />
-                        </div>
-                        <div>
-                          <h3 className="font-medium text-yellow-100">
-                            Claimable Revenue
-                          </h3>
-                          <div className="text-2xl font-bold text-white mt-1">
-                            {showClaimable ? formatCurrency(4) : "••••"}
-                          </div>
-                        </div>
-                      </div>
-
-                      {showClaimable ? (
-                        <button
-                          onClick={handleClaimRevenue}
-                          className="absolute bottom-4 right-4 bg-yellow-600 hover:bg-yellow-500 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1"
-                        >
-                          <ArrowDownToLine size={16} />
-                          Claim
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => setShowClaimable(true)}
-                          className="absolute bottom-4 right-4 bg-yellow-600/80 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1"
-                        >
-                          <Eye size={16} />
-                          Reveal
-                        </button>
-                      )}
-                    </div>
-                    <div className="absolute inset-0 overflow-hidden rounded-xl pointer-events-none">
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-yellow-400/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -403,7 +374,7 @@ export const ProfilePage = () => {
                   <div className="space-y-4 md:space-y-6">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
                       <h2 className="text-xl md:text-2xl font-bold text-white">
-                        Journal Entries
+                        My Journal Entries
                       </h2>
                       <button className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors flex items-center gap-2 text-sm md:text-base">
                         <Edit3 size={14} className="md:size-4" />
@@ -463,15 +434,6 @@ export const ProfilePage = () => {
                                   {story.story?.synopsis}
                                 </p>
                               </div>
-
-                              <div className="text-right">
-                                <div className="text-base md:text-lg font-bold text-green-400 mb-1">
-                                  {formatCurrency(10)}
-                                </div>
-                                <div className="text-xs md:text-sm text-gray-400">
-                                  Earnings
-                                </div>
-                              </div>
                             </div>
 
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3 text-xs md:text-sm">
@@ -489,10 +451,10 @@ export const ProfilePage = () => {
                                   IP: {ipStatus || "not registered"}
                                 </div>
 
-                                <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-gray-700 text-white">
+                                <div className="relative flex items-center gap-1 px-3 py-1 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/30 backdrop-blur-sm group">
                                   {getStatusIcon(story.publication)}
                                   <select
-                                    className="bg-transparent text-white outline-none text-xs md:text-sm"
+                                    className="bg-transparent text-white outline-none text-xs md:text-sm appearance-none pr-6 cursor-pointer hover:text-amber-100 transition-colors"
                                     value={story.publication}
                                     onChange={(e) =>
                                       handleChangePublication(
@@ -501,28 +463,32 @@ export const ProfilePage = () => {
                                       )
                                     }
                                   >
-                                    <option value="draft">Draft</option>
-                                    <option value="published">Published</option>
+                                    <option
+                                      value="draft"
+                                      className="bg-gray-800 text-white"
+                                    >
+                                      Draft
+                                    </option>
+                                    <option
+                                      value="published"
+                                      className="bg-gray-800 text-white"
+                                    >
+                                      Published
+                                    </option>
                                   </select>
+                                  <ChevronDown className="absolute right-2 text-purple-300/70 group-hover:text-amber-300 transition-colors w-3 h-3" />
                                 </div>
                               </div>
 
                               <div className="flex gap-4">
-                                <button
-                                  className={`p-1.5 px-3 md:p-2 md:px-4 rounded-lg font-medium text-xs md:text-sm ${"border border-yellow-600 text-white"}`}
-                                  onClick={() => handleRevenueclaim(story)}
-                                >
-                                  Claim Revenue
-                                </button>
-
-                                <button
-                                  className={`p-1.5 px-3 md:p-2 md:px-4 rounded-lg font-medium text-xs md:text-sm ${"border border-purple-600 text-white"}`}
-                                  onClick={() =>
-                                    handleReadStory(story._id as string)
-                                  }
-                                >
-                                  View Your Story
-                                </button>
+                                {story?.ipRegistration?.ip?.length! > 0 && (
+                                  <button
+                                    className={`p-1.5 px-3 md:p-2 md:px-4 rounded-lg font-medium text-xs md:text-sm ${"border border-yellow-600 text-white"}`}
+                                    onClick={() => handleRevenueclaim(story)}
+                                  >
+                                    Claim Revenue
+                                  </button>
+                                )}
 
                                 {story?.ipRegistration?.ip?.length! > 0 ? (
                                   <button
@@ -539,6 +505,15 @@ export const ProfilePage = () => {
                                     Register IP
                                   </button>
                                 )}
+
+                                <button
+                                  className={`p-1.5 px-3 md:p-2 md:px-4 rounded-lg font-medium text-xs md:text-sm ${"border border-purple-600 text-white"}`}
+                                  onClick={() =>
+                                    handleReadStory(story._id as string)
+                                  }
+                                >
+                                  View Your Story
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -552,7 +527,7 @@ export const ProfilePage = () => {
                   <div className="space-y-4 md:space-y-6">
                     <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
                       <h2 className="text-xl md:text-2xl font-bold text-white">
-                        Art Gallery
+                        My Art Gallery
                       </h2>
                       <button className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg transition-colors flex items-center gap-2 text-sm md:text-base">
                         <Upload size={14} className="md:size-4" />
@@ -687,14 +662,7 @@ export const ProfilePage = () => {
                                       </svg>
                                       IP Verified
                                     </span>
-                                  ) : (
-                                    <button
-                                      onClick={() => handleRegisterIP(art)}
-                                      className="bg-purple-600 hover:bg-purple-700 text-white px-2 py-1 rounded text-xs whitespace-nowrap ml-2"
-                                    >
-                                      Register IP
-                                    </button>
-                                  )}
+                                  ) : null}
                                 </div>
 
                                 <div className="flex items-center justify-between">
@@ -708,7 +676,7 @@ export const ProfilePage = () => {
                                       ? `Earned: ${formatCurrency(
                                           art.earnings
                                         )}`
-                                      : "Not sold"}
+                                      : ""}
                                   </span>
                                 </div>
                               </div>

@@ -11,7 +11,7 @@ import {
   Gift,
 } from "lucide-react";
 import { ProductionResponse } from "../../types";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DreamLoader from "../../../../components/Loader/DreamLoader";
 import { useAccount } from "wagmi";
 import { useToast } from "../../../../components/Toast";
@@ -283,15 +283,6 @@ export const StoryListCard: FC<StoryParams> = ({
               )}
             </div>
           </div>
-          <div className="mt-12">
-            <div className="flex items-center gap-2 mt-1 text-sm text-blue-200/80">
-              Author:{" "}
-              <span className="capitalize text-pink-300">
-                {" "}
-                {author || "Anonymous"}
-              </span>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -315,12 +306,25 @@ export const StoryListCard: FC<StoryParams> = ({
                   <p className="text-gray-400">{story?.title}</p>
                 </div>
               </div>
-              (
+
               <>
                 <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-white">
-                    Available Licenses
-                  </h3>
+                  <div className="flex justify-between">
+                    <h3 className="text-lg font-semibold text-white">
+                      Available Licenses
+                    </h3>
+                    <span className="text-purple-400 cursor-pointe text-lg">
+                      <a
+                        href={`https://aeneid.explorer.story.foundation/ipa/${ipRegistration?.ip[0].ipId}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-purple-400 hover:underline"
+                      >
+                        View
+                      </a>
+                    </span>
+                  </div>
+
                   <div className="space-y-3">
                     {licenses.map((license) => (
                       <div
@@ -330,9 +334,6 @@ export const StoryListCard: FC<StoryParams> = ({
                         <div className="flex justify-between items-center mb-2">
                           <span className="text-white font-medium">
                             {license.type}
-                          </span>
-                          <span className="text-sm text-purple-400">
-                            {license.price}
                           </span>
                         </div>
                         <div className="text-sm text-gray-300">
@@ -366,7 +367,6 @@ export const StoryListCard: FC<StoryParams> = ({
                   </div>
                 </div>
               </>
-              )
             </div>
           </div>
         </div>
@@ -389,9 +389,6 @@ export const StoryListCard: FC<StoryParams> = ({
                   <h2 className="text-xl font-bold text-white">
                     Tip the Author
                   </h2>
-                  <p className="text-gray-400">
-                    Show your appreciation for {author || "the author"}
-                  </p>
                 </div>
               </div>
 

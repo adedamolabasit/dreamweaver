@@ -6,7 +6,6 @@ import { Loader2, X } from "lucide-react";
 import { useAccount } from "wagmi";
 import { useToast } from "../../../../components/Toast";
 
-
 interface ClaimRevenueParams {
   story?: ProductionResponse;
   onClose?: () => void;
@@ -16,9 +15,9 @@ export const ClaimRevenue: FC<ClaimRevenueParams> = ({ story, onClose }) => {
   const client = useStoryClient();
   const [isClaiming, setIsClaiming] = useState(false);
   const [claimedAmount, setClaimedAmount] = useState<any>(0);
-  const { showDream, showError, showInfo } = useToast();
+  const { showDream, showInfo } = useToast();
 
-  const ipId = "0x1d1E43b76994039e2d2f7e38Ea553aE5Cc2AD622";
+  const ipId = story?.ipRegistration?.ip[0]?.ipId;
 
   const { address } = useAccount();
 
@@ -30,8 +29,8 @@ export const ClaimRevenue: FC<ClaimRevenueParams> = ({ story, onClose }) => {
       setClaimedAmount(0);
 
       const response = await client?.royalty.claimAllRevenue({
-        ancestorIpId: ipId,
-        claimer: ipId,
+        ancestorIpId: ipId as `0x${string}`,
+        claimer: ipId as `0x${string}`,
         currencyTokens: [WIP_TOKEN_ADDRESS],
         childIpIds: [],
         royaltyPolicies: [],
@@ -53,7 +52,6 @@ export const ClaimRevenue: FC<ClaimRevenueParams> = ({ story, onClose }) => {
 
   return (
     <div className="relative w-full max-w-md mx-auto p-6 bg-gray-900 border border-white/10 rounded-2xl shadow-md space-y-4 text-white">
-      {/* Close Button (Top-right) */}
       {onClose && (
         <button
           onClick={onClose}
@@ -64,17 +62,14 @@ export const ClaimRevenue: FC<ClaimRevenueParams> = ({ story, onClose }) => {
         </button>
       )}
 
-      {/* Header */}
       <div className="pr-6">
         {" "}
-        {/* Add padding to prevent overlap with X button */}
         <h2 className="text-xl font-semibold">Claim Revenue</h2>
         <p className="text-sm text-gray-400 mt-1">
           Claim earnings from your registered IP
         </p>
       </div>
 
-      {/* IP ID Display */}
       <div className="space-y-2">
         <label className="text-sm text-gray-400 block">IP Asset</label>
         <div className="font-mono text-sm bg-gray-800 px-4 py-3 rounded-lg break-all">
@@ -82,7 +77,6 @@ export const ClaimRevenue: FC<ClaimRevenueParams> = ({ story, onClose }) => {
         </div>
       </div>
 
-      {/* Claimed Amount Display */}
       {claimedAmount > 0 && (
         <div className="space-y-2">
           <label className="text-sm text-gray-400 block">Claimed Amount</label>
@@ -92,7 +86,6 @@ export const ClaimRevenue: FC<ClaimRevenueParams> = ({ story, onClose }) => {
         </div>
       )}
 
-      {/* Claim Button */}
       <button
         onClick={handleClaim}
         disabled={isClaiming || !ipId}
@@ -114,7 +107,6 @@ export const ClaimRevenue: FC<ClaimRevenueParams> = ({ story, onClose }) => {
         )}
       </button>
 
-      {/* Status Messages */}
       {!ipId && (
         <p className="text-sm text-red-400 text-center mt-2">
           This story is not registered as an IP asset

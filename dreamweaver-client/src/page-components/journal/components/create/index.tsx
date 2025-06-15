@@ -154,7 +154,7 @@ const SomniRec: React.FC = () => {
     return <DreamLoader message="Adding your dream to journal..." size="lg" />;
 
   return (
-    <div className="w-full flex flex-col items-center max-w-4xl mx-auto h-full p-4">
+    <div className="w-full flex flex-col items-center max-w-4xl mx-auto h-full p-4 mb-24">
       <div className="text-center mb-8">
         <h2 className="text-3xl md:text-4xl font-semibold mb-3 tracking-wide">
           SomniRec

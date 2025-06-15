@@ -7,7 +7,6 @@ import {
   useWeaveDream,
   useInitiateProduction,
 } from "../../../../hooks/useProduction";
-import { ProductionResponse } from "../../types";
 import { useAccount } from "wagmi";
 import moment from "moment";
 import { useUpdateJournal } from "../../../../hooks/useJournal.";
@@ -17,11 +16,7 @@ import { JournalEntry } from "../../types";
 import DreamLoader from "../../../../components/Loader/DreamLoader";
 import { useNavigate } from "react-router-dom";
 
-export const WeaveStory = ({
-  handleActiveTab,
-}: {
-  handleActiveTab?: (tab: string) => void;
-}) => {
+export const WeaveStory = ({}: { handleActiveTab?: (tab: string) => void }) => {
   const [isGeneratingStory, setIsGeneratingStory] = useState<boolean>(false);
   const [storyGenerated, setStoryGenerated] = useState<boolean>(false);
   const [productionId, setProdutionId] = useState<string | undefined>("");
@@ -65,26 +60,8 @@ export const WeaveStory = ({
     return () => clearInterval(intervalId);
   }, [isGeneratingStory, refetchProduction]);
 
-  let progressText = "Weaving your dream";
-
-  // useEffect(() => {
-  //   if (!isGeneratingStory) return;
-
-  //   const progress = production?.progress || 0;
-  //   progressText = "Initiating weaving";
-
-  //   if (progress >= 100) {
-  //     progressText = "Done";
-  //   } else if (progress >= 92) {
-  //     progressText = "Generating visuals";
-  //   } else if (progress >= 67) {
-  //     progressText = "Crafting story";
-  //   } else if (progress >= 38) {
-  //     progressText = "Interpreting dream";
-  //   } else if (progress >= 25) {
-  //     progressText = "Generating archetype";
-  //   }
-  // }, [production, isGeneratingStory]);
+  let progressText =
+    "Weaving your dream — this takes about 2 minutes. You can leave this page; your story will appear in your profile shortly.";
 
   const handleEditClick = (journal: JournalEntry, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -159,7 +136,7 @@ export const WeaveStory = ({
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col items-center max-w-4xl mx-auto">
+      <div className="flex flex-col items-center max-w-4xl mx-auto mb-24">
         <div className="text-center mb-8 animate-fadeIn">
           <h2 className="text-3xl md:text-4xl font-semibold mb-3 tracking-wide">
             Dream Weaver
