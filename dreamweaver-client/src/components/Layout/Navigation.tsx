@@ -85,12 +85,12 @@ const Navigation: React.FC<NavigationProps> = ({
 
         <div className="relative w-full py-4 px-2 sm:px-6 flex items-center justify-between">
           <header className="flex items-center gap-2 z-10">
-            <Sparkles className="text-amber-300" />
+            <Sparkles width={40} className="text-amber-300 " />
             <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-wider">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
                 DreamWeaver
               </span>
-              <span className="text-blue-200"> Protocol</span>
+              <span className="text-blue-200"> AI</span>
             </h1>
           </header>
 

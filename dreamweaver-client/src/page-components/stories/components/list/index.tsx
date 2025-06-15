@@ -11,7 +11,7 @@ import {
   Gift,
 } from "lucide-react";
 import { ProductionResponse } from "../../types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import DreamLoader from "../../../../components/Loader/DreamLoader";
 import { useAccount } from "wagmi";
 import { useToast } from "../../../../components/Toast";
@@ -172,8 +172,13 @@ export const StoryListCard: FC<StoryParams> = ({
     }
   };
 
-  if (isFetching)
-    return <DreamLoader message="Fetching stories..." size="lg" />;
+  if (isFetching || !production) {
+    return <DreamLoader message="Hold on... Fetching your stories" size="lg" />;
+  }
+
+  if (!production) {
+    return <DreamLoader message="Hold on... Fetching your stories" size="lg" />;
+  }
 
   return (
     <div className="w-full bg-gradient-to-br from-purple-900/20 to-blue-900/20 rounded-2xl border border-purple-500/20 overflow-hidden">
