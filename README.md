@@ -130,5 +130,3 @@ The Story Client is configured and initialized in the frontend inside:
 📁 [`dreamweaver-client/src/api/storyApi.ts`](https://github.com/adedamolabasit/dreamweaver/blob/main/dreamweaver-client/src/api/storyApi.ts)
 
 ---
-
-Let me know if you want to add visual examples or flow diagrams for how the on-chain registration and monetization works!
