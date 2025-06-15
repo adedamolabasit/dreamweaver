@@ -14,7 +14,6 @@ import Profile from "./page-components/profile/components";
 import NotFoundPage from "./page-components/notFound";
 import { ToastProvider } from "./components/Toast";
 import { ArtGallery } from "./page-components/stories/components/list/ArtGallery";
-import { Helmet } from "react-helmet-async";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,20 +34,6 @@ const config = getDefaultConfig({
 function App() {
   return (
     <>
-      <Helmet>
-        <title>My Dream App</title>
-        <meta
-          name="description"
-          content="Craft and protect your creative dreams on-chain."
-        />
-        <meta property="og:title" content="My Dream App" />
-        <meta
-          property="og:description"
-          content="Create and license your stories with ease."
-        />
-        <meta property="og:image" content="https://yourcdn.com/preview.jpg" />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Helmet>
 
       <ToastProvider>
         <WagmiProvider config={config}>
