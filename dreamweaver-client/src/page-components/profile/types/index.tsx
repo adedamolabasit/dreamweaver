@@ -90,18 +90,6 @@ export interface ProductionResponse {
   updatedAt?: Date;
 }
 
-// export interface ProfileResp {
-//   user: {
-//     _id: string;
-//     username: string;
-//     walletAddress: string | `0x${string}`;
-//     avatar: string;
-//     createdAt: string;
-//     updatedAt: string;
-//     __v: number;
-//   };
-// }
-
 export interface Story {
   id: string;
   name: string;

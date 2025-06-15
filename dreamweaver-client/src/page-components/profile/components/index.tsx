@@ -1,4 +1,4 @@
-import { ProfilePage } from "./profile";
+import { ProfilePage } from "./profile/ProfilePage";
 import { DashboardLayout } from "../../../components/Layout";
 
 function Profile() {

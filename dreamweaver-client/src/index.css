@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-} */
-
 @keyframes pulse-glow {
   0%, 100% {
     box-shadow: 0 0 15px 0 rgba(168, 85, 247, 0.4);

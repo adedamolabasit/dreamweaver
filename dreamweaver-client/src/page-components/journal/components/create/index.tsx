@@ -4,6 +4,7 @@ import { useCreateJournal } from "../../../../hooks/useJournal.";
 import { useToast } from "../../../../components/Toast";
 import DreamLoader from "../../../../components/Loader/DreamLoader";
 import { useNavigate } from "react-router-dom";
+import { useAccount } from "wagmi";
 
 const SomniRec: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -18,6 +19,8 @@ const SomniRec: React.FC = () => {
   const { mutate: creatJournal, isPending } = useCreateJournal();
 
   const { showDream, showError } = useToast();
+
+  const { isConnected } = useAccount();
 
   const navigate = useNavigate();
 
@@ -226,25 +229,36 @@ const SomniRec: React.FC = () => {
                   "Your transcription will appear here..."}
               </p>
             </div>
-
-            {transcript && !isRecording && (
-              <button
-                onClick={handleSubmit}
-                disabled={isPending}
-                className="flex items-center justify-center gap-2 w-full py-3 bg-purple-700 hover:bg-purple-600 rounded-lg transition-colors disabled:opacity-50"
-              >
-                {isProcessing ? (
-                  <>
-                    <Loader2 size={18} className="animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  <>
-                    <Send size={18} />
-                    Save to Journal
-                  </>
-                )}
-              </button>
+            {isConnected ? (
+              transcript && !isRecording ? (
+                <button
+                  onClick={handleSubmit}
+                  disabled={isPending}
+                  className="flex items-center justify-center gap-2 w-full py-3 bg-purple-700 hover:bg-purple-600 rounded-lg transition-colors disabled:opacity-50"
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={18} />
+                      Save to Journal
+                    </>
+                  )}
+                </button>
+              ) : (
+                <div className="flex items-center justify-center gap-2 w-full py-3 bg-purple-700 rounded-lg opacity-50 cursor-not-allowed">
+                  {isRecording
+                    ? "Recording in progress..."
+                    : "Speak something to save"}
+                </div>
+              )
+            ) : (
+              <div className="flex items-center justify-center gap-2 w-full py-3 bg-purple-700 rounded-lg opacity-50 cursor-not-allowed">
+                Please connect your wallet
+              </div>
             )}
           </div>
         )}

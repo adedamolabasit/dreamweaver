@@ -1,5 +1,5 @@
 import React from "react";
-import { BookOpen, Camera, Info } from "lucide-react";
+import { BookOpen, Camera } from "lucide-react";
 import { Visual, Story, ComicBookDisplayProps } from "../../types";
 
 const defaultStory: Story = {

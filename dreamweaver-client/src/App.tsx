@@ -35,9 +35,9 @@ function App() {
   return (
     <ToastProvider>
       <WagmiProvider config={config}>
-        <UserProvider>
-          <QueryClientProvider client={queryClient}>
-            <TomoEVMKitProvider>
+        <QueryClientProvider client={queryClient}>
+          <TomoEVMKitProvider>
+            <UserProvider>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/journal" element={<Journal />} />
@@ -48,9 +48,9 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
-            </TomoEVMKitProvider>
-          </QueryClientProvider>
-        </UserProvider>
+            </UserProvider>
+          </TomoEVMKitProvider>
+        </QueryClientProvider>
       </WagmiProvider>
     </ToastProvider>
   );

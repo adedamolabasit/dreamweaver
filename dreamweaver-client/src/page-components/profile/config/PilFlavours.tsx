@@ -1,6 +1,8 @@
 import { Check, X, CheckCheck, Globe } from "lucide-react";
 import { parseEther } from "viem";
 import { RegisterCommercialUsePILRequest } from "@story-protocol/core-sdk";
+import { zeroAddress } from "viem";
+import { LicenseTerms } from "@story-protocol/core-sdk";
 
 const commonTerms = {
   transferable: true,
@@ -59,6 +61,7 @@ export const licenseFlavors = [
     type: "commercialUse",
     icon: <Check size={18} className="text-green-400" />,
     description: "Commercial use allowed, but no derivatives.",
+    default: true,
     properties: {
       "Commercial Use": "Yes",
       "Derivatives Allowed": "No",
@@ -74,6 +77,7 @@ export const licenseFlavors = [
     type: "commercialRemix",
     icon: <CheckCheck size={18} className="text-blue-400" />,
     description: "Commercial use and remixing allowed with revenue share.",
+    default: false,
     properties: {
       "Commercial Use": "Yes",
       "Derivatives Allowed": "Yes",
@@ -86,3 +90,36 @@ export const licenseFlavors = [
     },
   },
 ];
+
+interface LicenseTermsInput {
+  mintingFee?: bigint;
+  revShare?: number;
+}
+
+export const createLicenseTerms = ({
+  mintingFee = 0n,
+  revShare = 0,
+}: LicenseTermsInput): LicenseTerms => {
+  return {
+    defaultMintingFee: mintingFee,
+    currency: "0x1514000000000000000000000000000000000000",
+    royaltyPolicy: "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E",
+    transferable: false,
+    expiration: 0n,
+
+    commercialUse: true,
+    commercialAttribution: false,
+    commercializerChecker: zeroAddress,
+    commercializerCheckerData: "0x",
+    commercialRevShare: revShare,
+    commercialRevCeiling: 0n,
+
+    derivativesAllowed: false,
+    derivativesAttribution: false,
+    derivativesApproval: false,
+    derivativesReciprocal: false,
+    derivativeRevCeiling: 0n,
+
+    uri: "",
+  };
+};

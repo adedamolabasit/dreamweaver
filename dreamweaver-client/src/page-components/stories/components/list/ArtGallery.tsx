@@ -102,7 +102,6 @@ export const ArtGallery = () => {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                       />
 
-                      {/* Action buttons overlay */}
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3">
                         <button
                           onClick={(e) => {
@@ -168,7 +167,7 @@ export const ArtGallery = () => {
                             : "Unknown date"}
                         </span>
 
-                        {art.publishStatus === "verified" ? (
+                        {art.publishStatus === "registered" ? (
                           <span className="flex items-center gap-1 text-green-400 text-xs">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

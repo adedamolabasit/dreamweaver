@@ -13,13 +13,11 @@ interface SpeechRecognition extends EventTarget {
   abort(): void;
   onresult: (event: SpeechRecognitionEvent) => void;
   onerror: (event: SpeechRecognitionErrorEvent) => void;
-  // Add other methods/properties you need
 }
 
 interface SpeechRecognitionEvent {
   results: SpeechRecognitionResultList;
   resultIndex: number;
-  // Add other properties you need
 }
 
 interface SpeechRecognitionErrorEvent extends Event {

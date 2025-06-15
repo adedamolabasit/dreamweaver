@@ -17,18 +17,26 @@ import { useAccount } from "wagmi";
 import { useToast } from "../../../../components/Toast";
 import { useStoryClient } from "../../../../client/storyClient";
 import { extractMintingParams } from "../../functions";
-import { fetchLicenseTerms } from "../../../../api/storyApi";
+import {
+  fetchLicenseTerms,
+  fetchLicenseTermForIP,
+} from "../../../../api/storyApi";
 import { useGetProfileById } from "../../../../hooks/useAuth";
 import { zeroAddress, parseEther } from "viem";
 import { WIP_TOKEN_ADDRESS } from "@story-protocol/core-sdk";
-import { ZeroAddress } from "ethers";
+import { transformLicenseData } from "../../functions";
 
 interface StoryParams {
   production: ProductionResponse | undefined;
   isFetching: boolean;
+  handleRefetch: () => void;
 }
 
-export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
+export const StoryListCard: FC<StoryParams> = ({
+  production,
+  isFetching,
+  handleRefetch,
+}) => {
   const navigate = useNavigate();
   const [cid, setCid] = useState<string>();
   const [showLicenseModal, setShowLicenseModal] = useState(false);
@@ -38,6 +46,9 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
   const { address, isConnected } = useAccount();
   const client = useStoryClient();
   const [author, setAuthor] = useState<string | undefined>(undefined);
+  const [isTipping, setIsTipping] = useState(false);
+  const [licenses, setLicenses] = useState<any[]>([]);
+  const [mintingLicenseId, setMintingLicenseId] = useState<string | null>(null);
 
   const { data: profile } = useGetProfileById(production?.userId!);
 
@@ -63,6 +74,8 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
   };
 
   const handleshowLicenseModal = () => {
+    handleRefetch;
+
     if (!isConnected && address) {
       showInfo("Connect your wallet");
       return;
@@ -90,6 +103,8 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
       return;
     }
 
+    setIsTipping(true);
+
     try {
       await client?.royalty?.payRoyaltyOnBehalf({
         receiverIpId: ipId,
@@ -100,6 +115,7 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
 
       showInfo(`Tip of ${amount} sent to the author!`);
       setTipAmount("");
+      setIsTipping(false);
       setShowTipModal(false);
     } catch (error) {
       showError("Failed to send tip: " + (error as Error).message);
@@ -117,51 +133,43 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
     }
   }, [profile]);
 
-  const transformLicenseData = (ipList: any[]) => {
-    return ipList.map((item) => {
-      const pil = item.license?.pilFlavors;
-
-      let type = "Unknown";
-      let terms = "N/A";
-      let price = item.fee === 0 ? "Free" : `${item.fee} IP`;
-      let duration = "Permanent";
-
-      if (pil?.includes("nonCommercial")) {
-        type = "Personal Use";
-        terms = "For non-commercial reading and sharing";
-      } else if (pil?.includes("commercial")) {
-        type = "Commercial License";
-        terms = "For businesses and publishers";
+  useEffect(() => {
+    const fetchLicenses = async () => {
+      if (!production?.ipRegistration?.ip[0]?.ipId) {
+        return;
       }
 
-      return {
-        id: item._id,
-        type,
-        terms,
-        price,
-        duration,
-        licenseId: item.licenseTermsIds,
-        licesorIpId: item.ipId,
-        fee: item.fee,
-      };
-    });
-  };
+      try {
+        const ipLicenses = await fetchLicenseTermForIP(
+          production.ipRegistration.ip[0].ipId
+        );
+        const transformed = transformLicenseData(ipLicenses.data);
+        setLicenses(transformed);
+      } catch (error) {
+        console.error("Failed to fetch licenses:", error);
+      }
+    };
 
-  const ipLicenses = transformLicenseData(production?.ipRegistration?.ip || []);
+    fetchLicenses();
+  }, [production, showLicenseModal]);
 
   const handleMintLicense = async (license: any) => {
-    const licenseResponse = await fetchLicenseTerms(license.licenseId);
-
-    const params = extractMintingParams(licenseResponse);
-
-    await client?.license?.mintLicenseTokens({
-      licenseTermsId: license.licenseId,
-      licensorIpId: license.licesorIpId,
-      receiver: address,
-      amount: 1,
-      maxMintingFee: params ? BigInt(params.mintingFee) : BigInt(0),
-      maxRevenueShare: 100,
-    });
+    setMintingLicenseId(license.id);
+    try {
+      const licenseResponse = await fetchLicenseTerms(license.licenseId);
+      const params = extractMintingParams(licenseResponse);
+      await client?.license?.mintLicenseTokens({
+        licenseTermsId: license.licenseId,
+        licensorIpId: ipRegistration?.ip[0]?.ipId as `0x${string}`,
+        amount: 1,
+        maxMintingFee: params?.mintingFee
+          ? BigInt(params.mintingFee)
+          : BigInt(0),
+        maxRevenueShare: 100,
+      });
+    } finally {
+      setMintingLicenseId(null);
+    }
   };
 
   if (isFetching)
@@ -190,9 +198,7 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
         </div>
       </div>
 
-      {/* Main content */}
       <div className="p-5 flex flex-col md:flex-row gap-6">
-        {/* Cover image */}
         <div className="w-full md:w-1/3 aspect-[3/4] rounded-xl bg-gradient-to-br from-purple-900/30 to-blue-900/30 border border-purple-500/20 overflow-hidden">
           {cid ? (
             <img
@@ -207,7 +213,6 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
           )}
         </div>
 
-        {/* Story details */}
         <div className="flex flex-col w-full md:w-2/3">
           <div className="">
             <div className="flex flex-wrap gap-3 mb-4 text-sm text-blue-200/80">
@@ -229,7 +234,6 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
               {story?.synopsis || "No synopsis available"}
             </p>
 
-            {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-6">
               {analysis?.emotionalTone.map((tag, i) => (
                 <span
@@ -241,7 +245,6 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
               ))}
             </div>
 
-            {/* Action buttons */}
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => handleReadStory(production?._id as string)}
@@ -269,13 +272,15 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
                   )}
                 </div>
               )}
-              <button
-                onClick={handleTipAuthor}
-                className="border border-pink-500/50 hover:border-pink-400/80 text-pink-300 hover:text-white px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors"
-              >
-                <Gift size={16} />
-                Tip Author
-              </button>
+              {ipRegistration?.ip?.length! > 0 && (
+                <button
+                  onClick={handleTipAuthor}
+                  className="border border-pink-500/50 hover:border-pink-400/80 text-pink-300 hover:text-white px-4 py-2.5 rounded-lg flex items-center gap-2 transition-colors"
+                >
+                  <Gift size={16} />
+                  Tip Author
+                </button>
+              )}
             </div>
           </div>
           <div className="mt-12">
@@ -290,7 +295,6 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
         </div>
       </div>
 
-      {/* License Modal */}
       {showLicenseModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
           <div className="relative max-w-md w-full bg-gray-900 rounded-xl border border-white/20 overflow-hidden">
@@ -311,57 +315,63 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
                   <p className="text-gray-400">{story?.title}</p>
                 </div>
               </div>
+              (
+              <>
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-white">
+                    Available Licenses
+                  </h3>
+                  <div className="space-y-3">
+                    {licenses.map((license) => (
+                      <div
+                        key={license.id}
+                        className="p-4 rounded-lg bg-gray-800/50 border border-gray-700"
+                      >
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="text-white font-medium">
+                            {license.type}
+                          </span>
+                          <span className="text-sm text-purple-400">
+                            {license.price}
+                          </span>
+                        </div>
+                        <div className="text-sm text-gray-300">
+                          {license.terms}
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1">
+                          Duration: {license.duration}
+                        </div>
 
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-white">
-                  Registered Licenses
-                </h3>
-                <div className="space-y-3">
-                  {ipLicenses.map((license) => (
-                    <div
-                      key={license.id}
-                      className="p-4 rounded-lg bg-gray-800/50 border border-gray-700"
-                    >
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-white font-medium">
-                          {license.type}
-                        </span>
-                        <span className="text-sm text-purple-400">
-                          {license.price}
-                        </span>
+                        <div className="mt-4">
+                          <button
+                            onClick={async () => {
+                              try {
+                                await handleMintLicense(license);
+                                handleshowLicenseModal();
+                                showInfo("License minted successfully!");
+                              } catch (error) {
+                                showError("Failed to mint license");
+                              }
+                            }}
+                            disabled={mintingLicenseId === license.id}
+                            className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                          >
+                            {mintingLicenseId === license.id
+                              ? "Minting..."
+                              : "Mint License"}
+                          </button>
+                        </div>
                       </div>
-                      <div className="text-sm text-gray-300">
-                        {license.terms}
-                      </div>
-                      <div className="text-xs text-gray-400 mt-1">
-                        Duration: {license.duration}
-                      </div>
-
-                      <div className="mt-4">
-                        <button
-                          onClick={() => handleMintLicense(license)}
-                          className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm"
-                        >
-                          Mint License
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              <div className="text-center text-sm text-gray-400 mt-6">
-                <p>All licenses are secured on the blockchain</p>
-                <button className="text-purple-400 hover:text-purple-300 mt-2">
-                  View license terms
-                </button>
-              </div>
+              </>
+              )
             </div>
           </div>
         </div>
       )}
 
-      {/* Tip Modal */}
       {showTipModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4">
           <div className="relative max-w-md w-full bg-gray-900 rounded-xl border border-white/20 overflow-hidden">
@@ -388,7 +398,7 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm text-gray-300 mb-2">
-                    Amount (ETH)
+                    Amount (IP)
                   </label>
                   <input
                     type="number"
@@ -407,11 +417,11 @@ export const StoryListCard: FC<StoryParams> = ({ production, isFetching }) => {
                         tipAmount
                       )
                     }
-                    disabled={!tipAmount}
+                    disabled={!tipAmount || isTipping}
                     className="w-full bg-pink-600 hover:bg-pink-700 text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Gift size={16} />
-                    Send Tip
+                    {isTipping ? "Tipping..." : "Send Tip"}
                   </button>
                 </div>
               </div>

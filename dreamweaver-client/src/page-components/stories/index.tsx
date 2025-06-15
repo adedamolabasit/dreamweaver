@@ -4,7 +4,15 @@ import { useGetAllProductions } from "../../hooks/useProduction";
 import { ProductionResponse } from "./types";
 
 function Stories() {
-  const { data: productions, isFetching } = useGetAllProductions();
+  const {
+    data: productions,
+    isFetching,
+    refetch: refetchProduction,
+  } = useGetAllProductions();
+
+  const handleRefetch = () => {
+    refetchProduction();
+  };
 
   const publishedProductions = productions?.filter(
     (production: ProductionResponse) => production.publication === "published"
@@ -18,6 +26,7 @@ function Stories() {
             key={production._id}
             production={production}
             isFetching={isFetching}
+            handleRefetch={handleRefetch}
           />
         </div>
       ))}

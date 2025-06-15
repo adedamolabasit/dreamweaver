@@ -12,7 +12,6 @@ import {
   WalletClient,
 } from "viem";
 import { privateKeyToAccount, Address, Account } from "viem/accounts";
-import { useWalletClient } from "wagmi";
 
 type NetworkType = "aeneid" | "mainnet";
 
@@ -72,7 +71,6 @@ export const networkInfo = {
 export const account: Account = privateKeyToAccount(
   `0x${import.meta.env.VITE_WALLET_PRIVATE_KEY}` as Address
 );
-
 
 const config: StoryConfig = {
   account,
