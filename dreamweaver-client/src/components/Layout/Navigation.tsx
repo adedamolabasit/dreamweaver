@@ -88,7 +88,7 @@ const Navigation: React.FC<NavigationProps> = ({
             <Sparkles width={40} className="text-amber-300 " />
             <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold tracking-wider">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-300">
-                DreamWeaver
+                Dreamweaver
               </span>
               <span className="text-blue-200"> AI</span>
             </h1>
