@@ -1,4 +1,4 @@
-# Dreamweaver.Ai
+# Dreamweaver.AI
 
 **An AI-powered creative tool that transforms subconscious dream-inspired words into unique stories and artworks, with the ability to register and monetize creations as on-chain intellectual property.**
 
@@ -77,3 +77,58 @@ A list of core technologies and libraries used in the project.
 - **BullMQ / Bull** – (if used) Redis-backed queue system for background jobs
 - **OpenAI API** – For generating dream-based stories, interpretations, and images (text + vision models)
 - **Mongoose** for MongoDB object modeling
+
+
+## 🪙 Sponsor Technology Usage
+
+### 🔐 Tomo Wallet Integration
+
+Tomo Wallet is integrated into the frontend to enable secure blockchain-based user authentication and transaction authorization.
+
+- **User Authentication**: Users connect their wallets via Tomo Wallet, which initiates a session with the backend using JWT. This session allows persistent identity across the application.
+- **Transaction Authorization**: Connected wallets are also used to sign and authorize transactions, such as on-chain IP registration and claiming rewards.
+
+📁 **Code Reference**:  
+See [`dreamweaver-client/src/App.tsx`](https://github.com/adedamolabasit/dreamweaver/blob/main/dreamweaver-client/src/App.tsx) for Tomo Wallet configuration and session setup.
+
+### 📚 Story SDK Integration
+
+The **Story SDK** is a core part of the application's Web3 functionality, enabling users to register and monetize their dream-inspired creative content as intellectual property on-chain.
+
+#### 🧠 Key Use Cases:
+
+- **Register IP & Attach License**  
+  Users can register their dream-generated content as on-chain IP and attach license terms to it.  
+  📁 See [dreamweaver-client/src/page-components/profile/components/actions/RegisterIpAsset.tsx](https://github.com/adedamolabasit/dreamweaver/blob/main/dreamweaver-client/src/page-components/profile/components/actions/RegisterIpAsset.tsx)
+
+- **Claim Royalties**  
+  Users can claim earnings generated from licensed IP content.  
+  📁 See [`dreamweaver-client/src/page-components/profile/components/actions/claimRevenue.tsx`](https://github.com/adedamolabasit/dreamweaver/blob/main/dreamweaver-client/src/page-components/profile/components/actions/claimRevenue.tsx)
+
+- **Mint an IP**  
+  Allows minting a blockchain token that represents a registered intellectual property.  
+  📁 See [`dreamweaver-client/src/page-components/stories/components/list/index.tsx`](https://github.com/adedamolabasit/dreamweaver/blob/main/dreamweaver-client/src/page-components/stories/components/list/index.tsx)
+
+- **Attach license to an IP**  
+  To attach a lisense to an existing IP. 
+  📁 See [`dreamweaver-client/src/page-components/profile/components/actions/AttachLicense.tsx`](https://github.com/adedamolabasit/dreamweaver/blob/main/dreamweaver-client/src/page-components/profile/components/actions/AttachLicense.tsx)
+
+- **Tip a Creator**  
+  Enables supporters to send tips to dream creators through Story’s protocol.  
+  📁 See [`dreamweaver-client/src/page-components/stories/components/list/index.tsx`](https://github.com/adedamolabasit/dreamweaver/blob/main/dreamweaver-client/src/page-components/stories/components/list/index.tsx)
+
+- **Fetch All License Terms for an IP**  
+  Uses the Story REST API to retrieve available license terms for a given IP.  
+  📁 See [`dreamweaver-client/src/api/storyApi.ts`](https://github.com/your-username/dreamweaver/blob/main/server/services/story-api.ts)
+
+- **Get License Term Details by ID**  
+  Retrieves the details of a specific license term by its ID.  
+  📁 See [`dreamweaver-client/src/api/storyApi.ts`](https://github.com/adedamolabasit/dreamweaver/blob/main/dreamweaver-client/src/api/storyApi.ts)
+
+🔧 **SDK Initialization**  
+The Story Client is configured and initialized in the frontend inside:  
+📁 [`dreamweaver-client/src/api/storyApi.ts`](https://github.com/adedamolabasit/dreamweaver/blob/main/dreamweaver-client/src/api/storyApi.ts)
+
+---
+
+Let me know if you want to add visual examples or flow diagrams for how the on-chain registration and monetization works!
