@@ -12,6 +12,7 @@ const allowedOrigins = [
   "https://dreamweaver-6bh5dngzp-adedamolabasits-projects.vercel.app",
   "https://dreamweaver-six.vercel.app",
   "http://localhost:5173",
+  "dreamweaver-og7tdji0o-adedamolabasits-projects.vercel.app"
 ];
 
 app.use(

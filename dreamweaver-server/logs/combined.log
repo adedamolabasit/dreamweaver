@@ -24006,3 +24006,14 @@
 {"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-06-15T20:54:57.450Z"}
 {"level":"info","message":"Server running on port 5000","timestamp":"2025-06-15T20:54:57.455Z"}
 {"level":"info","message":"Environment: development","timestamp":"2025-06-15T20:54:57.455Z"}
+{"level":"info","message":"Disconnecting Redis client...","timestamp":"2025-06-15T21:35:51.309Z"}
+{"level":"info","message":"Redis disconnected","timestamp":"2025-06-15T21:35:51.559Z"}
+{"level":"info","message":"This service’s outbound IP is 102.89.23.200","timestamp":"2025-06-15T21:35:56.003Z"}
+{"level":"info","message":"Connecting to MongoDB with URI:","timestamp":"2025-06-15T21:35:56.006Z"}
+{"level":"info","message":"MongoDB connected successfully","timestamp":"2025-06-15T21:36:00.320Z"}
+{"level":"info","message":"All QueueEvent listeners initialized","timestamp":"2025-06-15T21:36:00.321Z"}
+{"level":"info","message":"Queue event listeners started successfully","timestamp":"2025-06-15T21:36:00.322Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2025-06-15T21:36:00.325Z"}
+{"level":"info","message":"Environment: development","timestamp":"2025-06-15T21:36:00.325Z"}
+{"level":"info","message":"Disconnecting Redis client...","timestamp":"2025-06-15T21:37:59.728Z"}
+{"level":"info","message":"Redis disconnected","timestamp":"2025-06-15T21:37:59.970Z"}
