@@ -8,30 +8,13 @@ import { errorHandler } from "./middleware/error.middleware";
 
 const app = express();
 
-const allowedOrigins = [
-  "https://dreamweaver-6bh5dngzp-adedamolabasits-projects.vercel.app",
-  "https://dreamweaver-six.vercel.app",
-  "http://localhost:5173",
-  "dreamweaver-og7tdji0o-adedamolabasits-projects.vercel.app"
-];
-
 app.use(
   cors({
-    origin: (incomingOrigin, callback) => {
-      if (!incomingOrigin) return callback(null, true);
-      if (allowedOrigins.includes(incomingOrigin)) {
-        return callback(null, true);
-      }
-      callback(
-        new Error(`CORS policy: Origin ${incomingOrigin} not allowed`),
-        false
-      );
-    },
+    origin: true, 
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
-
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
