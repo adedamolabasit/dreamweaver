@@ -40,7 +40,19 @@ export const getProfile: RequestHandler = async (req, res, next) => {
     const userId = req.user?.id as string;
     const { profile } = await processGetProfile(userId);
 
-    console.log("Sending profile response:", profile); // Debug log
+    res
+      .status(200)
+      .json(responseHandler("Profile retrieved successfully", { profile }));
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getProfileById: RequestHandler = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const { profile } = await processGetProfile(id);
 
     res
       .status(200)
@@ -49,6 +61,7 @@ export const getProfile: RequestHandler = async (req, res, next) => {
     next(error);
   }
 };
+
 export const updateUser: RequestHandler = async (req, res, next) => {
   try {
     const { walletAddress } = req.params;

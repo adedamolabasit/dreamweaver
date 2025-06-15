@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useGetAllUsersProductions } from "../../../../hooks/useProduction";
 import { useGetAllUsersJournals } from "../../../../hooks/useJournal.";
 import { useGetProfile } from "../../../../hooks/useAuth";
@@ -29,51 +29,48 @@ import {
 import { extractIpIdsWithMetadata } from "../../functions";
 import { fetchEarningsForIPs } from "../../functions";
 import { IPEarning } from "../../functions";
-
+import { fetchEarningsByIpId } from "../../functions";
 import { ProductionResponse } from "../../types";
 import DreamyBackground from "../../../../components/Background/DreamyBackground";
-import { Story, GalleryImage } from "../../types";
-import { useNavigate } from "react-router-dom";
 import { StoryView } from "./view";
+import { client } from "../../../../storyservice/utils/config";
+import { DashboardLayout } from "../../../../components/Layout";
 
 export const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("journal");
   const [showStory, setShowStory] = useState(false);
+  const hasAuthenticatedRef = useRef(false);
 
-  const { address } = useAccount();
-  const navigate = useNavigate();
+  const { isConnected, address } = useAccount();
 
   const { data } = useBalance({
     address,
   });
 
-  const {
-    data: usersStory,
-    isLoading: isStoriesLoading,
-    refetch: refetchUserStory,
-  } = useGetAllUsersProductions();
-  const { data: usersJournal, isLoading: isJournalsLoading } =
-    useGetAllUsersJournals();
-  const { data: profile, isLoading: isProfileLoading } = useGetProfile(
-    address as string
-  );
+  const { data: usersStory, refetch: refetchUserStory } =
+    useGetAllUsersProductions();
+
+  const { data: usersJournal } = useGetAllUsersJournals();
+
+  const { data: profile } = useGetProfile(address as string);
 
   const registeredLicense = profile?.user?.license?.registeredLicense;
-
-  console.log(registeredLicense, "llll");
 
   const { mutate: updateProduction } = useUpdateProduction();
 
   const [showRegistrationModal, setShowRegistrationModal] = useState(false);
+
   const [showLicenseModal, setShowLisenseModal] = useState(false);
+
   const [showAttachLicenseModal, setShowAttachLisenseModal] = useState(false);
+
   const [selectedStory, setSelectedStory] = useState<
     ProductionResponse | undefined
   >();
-  const [productId, setProductId] = useState<string>();
-  const [ipEarnings, setIpEarnings] = useState<IPEarning[]>([]);
 
-  console.log(usersStory, "ppp");
+  const [productId, setProductId] = useState<string>();
+
+  const [ipEarnings, setIpEarnings] = useState<IPEarning[]>([]);
 
   const handleReadStory = (productId: string) => {
     setProductId(productId), setShowStory((prevState) => !prevState);
@@ -129,7 +126,7 @@ export const ProfilePage = () => {
                 description: visual.originalPrompt,
                 ipfsHash: generatedImage.ipfsHash,
                 publishStatus: item.publication,
-                licenses: registeredLicense || [], // Add licenses array
+                licenses: registeredLicense || [],
               });
             });
           }
@@ -145,7 +142,10 @@ export const ProfilePage = () => {
       const properties = extractIpIdsWithMetadata(
         usersStory as ProductionResponse[]
       );
-      const earnings = await fetchEarningsForIPs(properties, address as `0x${string}`);
+      const earnings = await fetchEarningsForIPs(
+        properties,
+        address as `0x${string}`
+      );
       setIpEarnings(earnings);
     };
 
@@ -154,80 +154,14 @@ export const ProfilePage = () => {
 
   const ipfsHashesList = extractIPFSHashes(usersStory as ProductionResponse[]);
 
-  const stories: Story[] = [
-    {
-      id: "1",
-      name: "The Digital Renaissance",
-      description:
-        "A story about the intersection of art and technology in the modern world, exploring how digital creativity is reshaping our understanding of artistic expression.",
-      timeCreated: "2024-01-15T10:30:00Z",
-      ipStatus: "registered",
-      publishStatus: "published",
-      earnings: 2847.5,
-      // licenses: registeredLicense,
-    },
-    {
-      id: "2",
-      name: "Echoes of Tomorrow",
-      description:
-        "A futuristic tale examining the evolution of human consciousness in an AI-driven society.",
-      timeCreated: "2024-01-10T14:22:00Z",
-      ipStatus: "pending",
-      publishStatus: "draft",
-      earnings: 0,
-      // licenses: [],
-    },
-    {
-      id: "3",
-      name: "Canvas of Dreams",
-      description:
-        "An exploration of the subconscious mind through vivid imagery and metaphorical storytelling.",
-      timeCreated: "2024-01-08T09:15:00Z",
-      ipStatus: "registered",
-      publishStatus: "published",
-      earnings: 1523.75,
-      // licenses: ["Standard License"],
-    },
-  ];
-
-  const galleryImages: GalleryImage[] = [
-    {
-      id: "1",
-      url: "https://images.pexels.com/photos/1109543/pexels-photo-1109543.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
-      title: "Abstract Harmony",
-      earnings: 234.5,
-    },
-    {
-      id: "2",
-      url: "https://images.pexels.com/photos/1762851/pexels-photo-1762851.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
-      title: "Digital Landscape",
-      earnings: 567.25,
-    },
-    {
-      id: "3",
-      url: "https://images.pexels.com/photos/1083822/pexels-photo-1083822.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
-      title: "Neon Dreams",
-      earnings: 892.1,
-    },
-    {
-      id: "4",
-      url: "https://images.pexels.com/photos/1070527/pexels-photo-1070527.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
-      title: "Urban Poetry",
-      earnings: 445.75,
-    },
-    {
-      id: "5",
-      url: "https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
-      title: "Cosmic Flow",
-      earnings: 678.9,
-    },
-    {
-      id: "6",
-      url: "https://images.pexels.com/photos/1323550/pexels-photo-1323550.jpeg?auto=compress&cs=tinysrgb&w=300&h=200&fit=crop",
-      title: "Ethereal Glow",
-      earnings: 324.4,
-    },
-  ];
+  useEffect(() => {
+    if (isConnected) {
+      hasAuthenticatedRef.current = true;
+      if (hasAuthenticatedRef.current === true) {
+        refetchUserStory();
+      }
+    }
+  });
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -278,15 +212,25 @@ export const ProfilePage = () => {
   ];
 
   if (!profile || !usersStory || !usersJournal) {
+    // Wallet is not connected
+    if (!isConnected || !address) {
+      return (
+        <DashboardLayout>
+          <div className="h-80 flex flex-col items-center justify-center bg-purple-900/10 rounded-xl border border-purple-500/10 p-6 text-center">
+            <Wallet className="text-purple-400 mb-3" size={24} />
+            <p className="text-purple-200/80 mb-4">
+              Connect your wallet to see profile
+            </p>
+          </div>
+        </DashboardLayout>
+      );
+    }
+
+    // Still loading data
     return (
-      <div className="flex justify-center items-center min-h-screen text-center">
-        <div className="text-white space-y-4">
-          <p className="text-xl font-semibold">No data found.</p>
-          <p className="text-gray-400">
-            Please create some stories or journals to see them here.
-          </p>
-        </div>
-      </div>
+      <DashboardLayout>
+        <DreamLoader message="Fetching Arts..." size="lg" />
+      </DashboardLayout>
     );
   }
 
@@ -391,7 +335,6 @@ export const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Desktop Tabs */}
           <div className="hidden md:block w-full rounded-2xl mb-6 md:mb-8 border border-white/20">
             <div className="flex flex-wrap border-b border-white/10">
               {tabs.map((tab) => (
@@ -411,7 +354,6 @@ export const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Content Area */}
           <div className="w-full pb-20 md:pb-0">
             <div className="rounded-2xl mb-6 md:mb-8 border border-white/20">
               <div className="p-4 md:p-6">

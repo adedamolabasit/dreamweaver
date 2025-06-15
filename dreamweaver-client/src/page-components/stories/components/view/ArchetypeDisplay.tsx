@@ -58,13 +58,13 @@ const ArchetypeDisplay: React.FC<ArchetypeDisplayProps> = ({ data }) => {
       <div className="mb-6">
         <h3 className="text-xl font-medium mb-4">Symbol Interpretations</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {data.symbolMeanings.map((symbol, index) => (
+          {data?.symbols?.map((symbol, index) => (
             <div
               key={index}
               className="p-4 rounded-lg bg-blue-900/20 border border-blue-500/10"
             >
               <h4 className="text-blue-300 font-medium text-sm mb-1">
-                {symbol.symbol}
+                {symbol.name}
               </h4>
               <p className="text-blue-100/70 text-xs">{symbol.meaning}</p>
             </div>

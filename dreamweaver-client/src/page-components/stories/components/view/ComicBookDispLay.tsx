@@ -138,61 +138,6 @@ const ComicBookDisplay: React.FC<ComicBookDisplayProps> = ({
           )}
         </div>
       </div>
-
-      <div className="rounded-lg overflow-hidden border border-blue-500/20">
-        <div className="p-4 bg-blue-900/20 flex items-center">
-          <Info className="mr-2 text-blue-300" size={18} />
-          <h3 className="text-lg font-medium">Story Path</h3>
-        </div>
-        <div className="p-5 bg-gradient-to-br from-blue-900/10 to-purple-900/10">
-          <div className="relative">
-            <div className="absolute left-3 top-0 bottom-0 w-1 bg-blue-500/20 rounded-full"></div>
-
-            {safeStory.scenes && safeStory.scenes.length > 0 ? (
-              safeStory.scenes.map((scene, index) => (
-                <div key={index} className="flex mb-8 relative z-10">
-                  <div className="mr-6">
-                    <div
-                      className={`w-7 h-7 rounded-full flex items-center justify-center ${
-                        index === 0
-                          ? "bg-blue-500"
-                          : "bg-blue-900/50 border border-blue-500/30"
-                      }`}
-                    >
-                      <span className="text-xs">{index + 1}</span>
-                    </div>
-                  </div>
-
-                  <div
-                    className={`flex-1 p-3 rounded-lg ${
-                      index === 0
-                        ? "bg-blue-900/30 border border-blue-500/30"
-                        : "bg-blue-900/20 border border-blue-500/10"
-                    }`}
-                  >
-                    <p className="text-sm">
-                      {index === 0
-                        ? "Beginning: "
-                        : index === safeStory.scenes!.length - 1
-                        ? "Resolution: "
-                        : `Development ${index}: `}
-                      <span className="text-blue-200/80">
-                        {scene.description?.substring(0, 100) ||
-                          "No description available"}
-                        ...
-                      </span>
-                    </p>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="text-center py-4 text-blue-100/60">
-                No story path available
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

@@ -14,7 +14,6 @@ export const processRegisterUser = async ({
 
     if (!user) {
       const profile = RandomUserGenerator.generateUser();
-      console.log(profile, "profile");
       user = await User.create({
         walletAddress,
         username: profile.username,
@@ -54,7 +53,20 @@ export const getUserByWalletAddress = async (walletAddress: string) => {
 
 export const processGetProfile = async (userId: string) => {
   try {
-    const profile = await User.findById(userId).lean(); // returns plain object
+    const profile = await User.findById(userId).lean();
+    return { profile };
+  } catch (error) {
+    logger.error("Error fetching profile:", error);
+    throw new Error("Failed to fetch profile");
+  }
+};
+
+export const processGetProfileById = async (id: string) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      throw new NotFoundError("Journal not found");
+    }
+    const profile = await User.findById(id).lean();
     return { profile };
   } catch (error) {
     logger.error("Error fetching profile:", error);

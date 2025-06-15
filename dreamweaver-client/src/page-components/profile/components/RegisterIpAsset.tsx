@@ -37,8 +37,8 @@ export const RegisterIpAsset: React.FC<RegisterIPProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [mintingStage, setMintingStage] = useState(0);
   const [selectedLicense, setSelectedLicense] = useState<string>("");
-  const [commercialRevShare, setCommercialRevShare] = useState<number>(10); // Default 10% for commercial licenses
-  const [mintingFee, setMintingFee] = useState<number>(0); // Default 0 WIP tokens
+  const [commercialRevShare, setCommercialRevShare] = useState<number>(10);
+  const [mintingFee, setMintingFee] = useState<number>(0);
   const { showError, showDream } = useToast();
 
   const client = useStoryClient();

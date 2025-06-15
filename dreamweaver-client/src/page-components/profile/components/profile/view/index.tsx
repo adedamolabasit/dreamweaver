@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useGetProductionById } from "../../../../../hooks/useProduction";
 import { Sparkles, Scroll, Wand2, ArrowLeft } from "lucide-react";
-import ComicBookDisplay from "./ComicBookDispLay";
+import ComicBookDisplay from "./ComicBookStory";
 import ArchetypeDisplay from "./ArchetypeDisplay";
 import InterpretationDisplay from "./InterpretationDisplay";
-import { Visual } from "../../../../stories/types";
+import { InterpretationData, Visual } from "../../../../stories/types";
 import { DashboardLayout } from "../../../../../components/Layout";
+import { ArchetypeData } from "../../../../stories/types";
 
 import {
   sampleArchetypeData,
@@ -159,10 +160,10 @@ export const StoryView = ({
                   />
                 )}
                 {activeView === "archetypes" && (
-                  <ArchetypeDisplay data={sampleArchetypeData} />
+                  <ArchetypeDisplay data={production?.analysis as ArchetypeData} />
                 )}
                 {activeView === "interpretation" && (
-                  <InterpretationDisplay data={sampleInterpretationData} />
+                  <InterpretationDisplay data={production?.interpretation as InterpretationData} />
                 )}
               </div>
             </div>

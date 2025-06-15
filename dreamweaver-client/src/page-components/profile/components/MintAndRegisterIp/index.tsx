@@ -16,10 +16,8 @@ import { IpMetadata } from "@story-protocol/core-sdk";
 import { client } from "../../../../storyservice/utils/config";
 import { useUpdateProduction } from "../../../../hooks/useProduction";
 import { ProfileResp } from "../../types";
-import { licenseFlavors } from "./License/PilFlavours";
-import {
-  nonCommercialSocialRemix,
-} from "./License/PilFlavours";
+import { licenseFlavors } from "../../config/PilFlavours";
+import { nonCommercialSocialRemix } from "../../config/PilFlavours";
 import { LicenseTerms } from "@story-protocol/core-sdk";
 import { parseEther } from "viem";
 
@@ -190,68 +188,6 @@ const MintAndRegisterIP: React.FC<MintDreamProps> = ({
       }
     );
   };
-
-  // const startMinting = async () => {
-  //   setIsLoading(true);
-  //   setMintingStage(1);
-
-  //   try {
-  //     const ipIpfsHash = await uploadJSONToIPFS(ipMetadata);
-  //     // const ipHash = createHash('sha256').update(JSON.stringify(ipMetadata)).digest('hex')
-  //     const nftIpfsHash = await uploadJSONToIPFS(nftMetadata);
-  //     // const nftHash = createHash('sha256').update(JSON.stringify(nftMetadata)).digest('hex')
-
-  //     console.log(getLicenseFlavorTerms(selectedLicense!, 1, 5), "kk");
-  //     const response = await client.ipAsset.mintAndRegisterIpAssetWithPilTerms({
-  //       spgNftContract: "0xc32A8a0FF3beDDDa58393d022aF433e78739FAbc",
-  //       licenseTermsData: [
-  //         {
-  //           terms: getLicenseFlavorTerms(selectedLicense!, 1, 5),
-  //         },
-  //       ],
-  //       ipMetadata: {
-  //         ipMetadataURI: `https://ipfs.io/ipfs/${ipIpfsHash}`,
-  //         // ipMetadataHash: `0x${ipHash}`,
-  //         nftMetadataURI: `https://ipfs.io/ipfs/${nftIpfsHash}`,
-  //         // nftMetadataHash: `0x${nftHash}`,
-  //       },
-  //       txOptions: { waitForTransaction: true },
-  //     });
-
-  //     console.log("Root IPA created:", {
-  //       "Transaction Hash": response.txHash,
-  //       "IPA ID": response.ipId,
-  //       "License Terms IDs": response.licenseTermsIds,
-  //     });
-
-  //     console.log(story?._id, "popow");
-  //     const obj = {
-  //       ipRegistration: {
-  //         ipId: response.ipId,
-  //         status: "verified",
-  //         licenseTermsIds: response.licenseTermsIds?.toString(),
-  //         tokenId: response.tokenId?.toString(),
-  //       },
-  //     };
-
-  //     await handleUpdateProduction(obj);
-
-  //     setMintingStage(2);
-  //   } catch (error) {
-  //     console.error(
-  //       "Minting error:",
-  //       error instanceof Error ? error.message : "Unknown error"
-  //     );
-  //     setMintingStage(0);
-  //     alert(
-  //       `Minting failed: ${
-  //         error instanceof Error ? error.message : "Unknown error"
-  //       }`
-  //     );
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   const LicenseOption = ({
     type,

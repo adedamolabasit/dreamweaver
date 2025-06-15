@@ -1,13 +1,17 @@
 import OpenAI from "openai";
 
+export interface SymbolInterpretation {
+  name: string;
+  meaning: string;
+  frequency: number;
+  archetypeConnections?: string[];
+  emotionalSignificance?: string;
+}
+
 export interface ArchetypeAnalysis {
   primaryArchetype: string;
   secondaryArchetypes: string[];
-  symbols: {
-    name: string;
-    meaning: string;
-    frequency: number;
-  }[];
+  symbols: SymbolInterpretation[];
   emotionalTone: string[];
   potentialConflicts: string[];
 }
@@ -31,18 +35,22 @@ const JUNGIAN_ARCHETYPES = [
 
 const createPrompt: PromptTemplates = {
   "symbol-extraction": ({ transcript }) => `
-    Analyze this dream transcript and extract symbolic elements:
+    Analyze this dream transcript and extract symbolic elements with frequencies (1-5 scale):
 
     ${transcript}
 
     Output JSON with:
-    - symbols (array of objects with name, possibleMeanings)
+    - symbols (array of objects with name, meaning, frequency)
     - recurringThemes
     - emotionalTones
 
     Format:
     {
-      "symbols": [{ "name": string, "possibleMeanings": string[] }],
+      "symbols": [{
+        "name": string,
+        "meaning": string,
+        "frequency": number
+      }],
       "recurringThemes": string[],
       "emotionalTones": string[]
     }
@@ -50,15 +58,18 @@ const createPrompt: PromptTemplates = {
     Respond only with raw JSON. Do not include markdown formatting or triple backticks.
   `,
 
-  "archetype-matching": ({ symbols, archetypes }) => `
-    Match these dream symbols to Jungian archetypes:
+  "archetype-matching": ({ symbols, archetypes, themes, emotions }) => `
+    Match these dream symbols to Jungian archetypes and enhance interpretations:
+    
     Symbols: ${JSON.stringify(symbols)}
+    Themes: ${themes?.join(", ") || "none"}
+    Emotions: ${emotions?.join(", ") || "none"}
     Available Archetypes: ${archetypes.join(", ")}
 
     Output JSON with:
     - primaryArchetype (most dominant)
     - secondaryArchetypes (other significant matches)
-    - symbolMeanings (detailed interpretations)
+    - symbols (enhanced with archetypeConnections and emotionalSignificance)
     - emotionalTone
     - potentialConflicts
 
@@ -66,7 +77,13 @@ const createPrompt: PromptTemplates = {
     {
       "primaryArchetype": string,
       "secondaryArchetypes": string[],
-      "symbolMeanings": [{ "symbol": string, "meaning": string }],
+      "symbols": [{
+        "name": string,
+        "meaning": string,
+        "frequency": number,
+        "archetypeConnections": string[],
+        "emotionalSignificance": string
+      }],
       "emotionalTone": string[],
       "potentialConflicts": string[]
     }
@@ -88,6 +105,7 @@ export const analyzeArchetypes = async (
   });
 
   try {
+    // First pass: extract symbols with basic information
     const extractionPrompt = createPrompt["symbol-extraction"]({ transcript });
     const extractionResponse = await openai.chat.completions.create({
       model: "gpt-4-turbo",
@@ -96,11 +114,14 @@ export const analyzeArchetypes = async (
     });
 
     const extractedText = extractionResponse.choices[0].message.content!;
-    const rawSymbols = JSON.parse(extractJSON(extractedText));
+    const { symbols, recurringThemes, emotionalTones } = JSON.parse(extractJSON(extractedText));
 
+    // Second pass: enhance symbols with archetypal connections
     const archetypePrompt = createPrompt["archetype-matching"]({
-      symbols: rawSymbols.symbols,
+      symbols,
       archetypes: JUNGIAN_ARCHETYPES,
+      themes: recurringThemes,
+      emotions: emotionalTones,
     });
 
     const archetypeResponse = await openai.chat.completions.create({
@@ -110,7 +131,15 @@ export const analyzeArchetypes = async (
     });
 
     const archetypeText = archetypeResponse.choices[0].message.content!;
-    return JSON.parse(extractJSON(archetypeText));
+    const finalAnalysis: ArchetypeAnalysis = JSON.parse(extractJSON(archetypeText));
+
+    // Ensure all symbols have frequency data
+    finalAnalysis.symbols = finalAnalysis.symbols.map(symbol => ({
+      ...symbol,
+      frequency: symbol.frequency || 1, // Default to 1 if missing
+    }));
+
+    return finalAnalysis;
   } catch (error) {
     console.error("Archetype analysis failed:", error);
     throw new Error("Failed to analyze archetypes");
@@ -134,9 +163,15 @@ export const getArchetypeDescription = (archetype: string): string => {
 };
 
 export const calculateSymbolImpact = (
-  symbols: { frequency: number }[]
+  symbols: SymbolInterpretation[]
 ): number => {
-  return (
-    symbols.reduce((sum, symbol) => sum + symbol.frequency, 0) / symbols.length
-  );
+  if (!symbols?.length) return 0;
+  return symbols.reduce((sum, symbol) => sum + (symbol.frequency || 1), 0) / symbols.length;
+};
+
+export const getSymbolInterpretation = (
+  symbolName: string,
+  analysis: ArchetypeAnalysis
+): SymbolInterpretation | undefined => {
+  return analysis.symbols.find(s => s.name.toLowerCase() === symbolName.toLowerCase());
 };

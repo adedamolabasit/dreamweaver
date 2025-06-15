@@ -27,15 +27,11 @@ const DreamLoader: React.FC<DreamLoaderProps> = ({
       <div
         className={`relative ${containerSizes[size]} flex items-center justify-center`}
       >
-        {/* Outer rotating ring */}
         <div className="absolute inset-0 rounded-full border-2 border-purple-500/30 border-t-purple-400 animate-spin"></div>
 
-        {/* Middle pulsing ring */}
         <div className="absolute inset-2 rounded-full border border-blue-400/40 animate-pulse"></div>
 
-        {/* Inner content */}
         <div className="relative flex items-center justify-center">
-          {/* Floating elements */}
           <div
             className="absolute -top-2 -left-2 text-purple-300 animate-bounce"
             style={{ animationDelay: "0s" }}
@@ -55,18 +51,15 @@ const DreamLoader: React.FC<DreamLoaderProps> = ({
             <Star size={10} />
           </div>
 
-          {/* Central icon */}
           <div className="text-purple-400 animate-pulse">
             <Moon className={sizeClasses[size]} />
           </div>
 
-          {/* Floating cloud */}
           <div className="absolute top-1 right-2 text-blue-200/60 animate-float">
             <Cloud size={14} />
           </div>
         </div>
 
-        {/* Dreamy particles */}
         <div className="absolute inset-0 overflow-hidden rounded-full">
           {[...Array(6)].map((_, i) => (
             <div

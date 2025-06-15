@@ -26,7 +26,7 @@ export const ArtGallery = () => {
                 id: visual.id,
                 description: visual.originalPrompt,
                 ipfsHash: generatedImage.ipfsHash,
-                publishStatus: item.ipRegistration?.status,
+                publishStatus: item?.ipRegistration?.ip[0]?.status,
                 createdAt: item.createdAt,
                 style: generatedImage.style,
               });
@@ -68,7 +68,12 @@ export const ArtGallery = () => {
     }
   };
 
-  if (isFetching) return <DreamLoader message="Fetching Arts..." size="lg" />;
+  if (isFetching)
+    return (
+      <DashboardLayout>
+        <DreamLoader message="Fetching Arts..." size="lg" />;
+      </DashboardLayout>
+    );
 
   return (
     <DashboardLayout>

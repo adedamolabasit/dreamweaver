@@ -202,7 +202,7 @@ const ProductionSchema = new mongoose.Schema<IProduction>(
     publication: {
       type: String,
       enum: ["draft", "published"],
-      default: "draft",
+      default: "published",
       required: true,
     },
 

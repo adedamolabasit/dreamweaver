@@ -1,28 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useGetProductionById } from "../../../../hooks/useProduction";
 import { Sparkles, Scroll, Wand2, ArrowLeft } from "lucide-react";
 import ComicBookDisplay from "./ComicBookDispLay";
-import ArchetypeDisplay from "./ArchetypeDisplay";
-import InterpretationDisplay from "./InterpretationDisplay";
 import { Visual } from "../../types";
 import { useParams } from "react-router-dom";
 import { DashboardLayout } from "../../../../components/Layout";
 import { useNavigate } from "react-router-dom";
-
-import {
-  sampleArchetypeData,
-  sampleInterpretationData,
-} from "../../../../api/mock/sampleData";
+import DreamLoader from "../../../../components/Loader/DreamLoader";
 
 export const StoryView = () => {
   const { id } = useParams<{ id: string }>();
 
   const navigate = useNavigate();
 
-  const [activeView, setActiveView] = useState<
-    "story" | "archetypes" | "interpretation"
-  >("story");
-  const { data: production } = useGetProductionById(id as string);
+  const [activeView, setActiveView] = useState<"story">("story");
+  const { data: production, isLoading } = useGetProductionById(id as string);
 
   const getComicBookImageForScene = (index: number) => {
     if (!production?.visuals) return null;
@@ -57,7 +49,12 @@ export const StoryView = () => {
     }, 100);
   };
 
-  if (!id) return <div>Loading....</div>;
+  if (!id || isLoading)
+    return (
+      <DashboardLayout>
+        <DreamLoader message="Fetching story..." size="lg" />;
+      </DashboardLayout>
+    );
 
   return (
     <DashboardLayout>
@@ -70,15 +67,6 @@ export const StoryView = () => {
             <ArrowLeft size={20} />
             <span>Back</span>
           </button>
-        </div>
-
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-semibold mb-3 tracking-wide">
-            Dream Analysis
-          </h2>
-          <p className="text-blue-100/80 max-w-2xl font-light">
-            Your story, symbols, and interpretations revealed.
-          </p>
         </div>
 
         <div className="w-full p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/5 mb-12">
@@ -128,9 +116,8 @@ export const StoryView = () => {
           <div className="w-full mb-10">
             <div className="p-4 bg-gradient-to-r from-purple-900/30 to-blue-900/30 backdrop-blur-sm rounded-xl border border-purple-500/20 mb-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-2xl font-medium">Dream Analysis Results</h3>
                 <div className="flex space-x-2">
-                  {["story", "archetypes", "interpretation"].map((view) => {
+                  {["story"].map((view) => {
                     const isActive = activeView === view;
                     const Icon =
                       view === "story"
@@ -169,12 +156,6 @@ export const StoryView = () => {
                     }
                   />
                 )}
-                {activeView === "archetypes" && (
-                  <ArchetypeDisplay data={sampleArchetypeData} />
-                )}
-                {activeView === "interpretation" && (
-                  <InterpretationDisplay data={sampleInterpretationData} />
-                )}
               </div>
             </div>
           </div>
@@ -183,71 +164,3 @@ export const StoryView = () => {
     </DashboardLayout>
   );
 };
-
-interface Props {
-  text: string;
-}
-
-const TextToSpeechButton: React.FC<Props> = ({ text }) => {
-  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
-  const [selectedVoice, setSelectedVoice] =
-    useState<SpeechSynthesisVoice | null>(null);
-
-  useEffect(() => {
-    const loadVoices = () => {
-      const availableVoices = speechSynthesis.getVoices();
-      setVoices(availableVoices);
-      if (availableVoices.length > 0 && !selectedVoice) {
-        setSelectedVoice(availableVoices[0]);
-      }
-    };
-
-    if (speechSynthesis.onvoiceschanged !== undefined) {
-      speechSynthesis.onvoiceschanged = loadVoices;
-    }
-
-    loadVoices();
-  }, []);
-
-  const speakText = () => {
-    if ("speechSynthesis" in window && selectedVoice) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.voice = selectedVoice;
-      utterance.lang = selectedVoice.lang;
-
-      utterance.pitch = 0.4;
-      utterance.rate = 0.75;
-      utterance.volume = 1;
-
-      speechSynthesis.speak(utterance);
-    }
-  };
-
-  return (
-    <div className="space-y-4">
-      <select
-        value={selectedVoice?.name}
-        onChange={(e) => {
-          const newVoice = voices.find((v) => v.name === e.target.value);
-          setSelectedVoice(newVoice || null);
-        }}
-        className="p-2 border rounded"
-      >
-        {voices.map((voice, index) => (
-          <option key={index} value={voice.name}>
-            {voice.name} ({voice.lang})
-          </option>
-        ))}
-      </select>
-
-      <button
-        onClick={speakText}
-        className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-      >
-        🔊 Speak
-      </button>
-    </div>
-  );
-};
-
-export default TextToSpeechButton;

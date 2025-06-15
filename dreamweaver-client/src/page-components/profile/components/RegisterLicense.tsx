@@ -16,7 +16,7 @@ import { client } from "../../../storyservice/utils/config";
 import { useAccount, useBalance } from "wagmi";
 
 import { useUpdateProduction } from "../../../hooks/useProduction";
-import { licenseFlavors } from "./MintAndRegisterIp/License/PilFlavours";
+import { licenseFlavors } from "../config/PilFlavours";
 import { parseEther } from "viem";
 import { ethers } from "ethers";
 import { useUpdateProfile } from "../../../hooks/useAuth";

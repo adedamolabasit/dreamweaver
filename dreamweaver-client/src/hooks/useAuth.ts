@@ -1,5 +1,10 @@
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { registerUser, fetchUserProfile, updateprofile } from "../api/authApi";
+import {
+  registerUser,
+  fetchUserProfile,
+  updateprofile,
+  fetchUserProfileById,
+} from "../api/authApi";
 
 import { ProfileResp } from "../page-components/profile/types";
 
@@ -17,6 +22,14 @@ export const useGetProfile = (walletAddress: string) => {
   return useQuery<ProfileResp, Error>({
     queryKey: ["get-profile"],
     queryFn: () => fetchUserProfile(walletAddress),
+  });
+};
+
+export const useGetProfileById = (id: string) => {
+  return useQuery<{ profile: { username: string } }, Error>({
+    queryKey: ["get-profile-id"],
+    queryFn: () => fetchUserProfileById(id),
+    enabled: !!id,
   });
 };
 

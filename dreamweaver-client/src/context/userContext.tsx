@@ -1,12 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
-interface User {
-  id: string;
-  walletAddress: string;
-  isAuthenticated: boolean;
-}
-
 interface UserContextType {
   token: string | null;
   setUserToken: (token: string) => void;

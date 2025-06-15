@@ -16,7 +16,6 @@ export type PilFlavoursType =
   | "commercialRemix"
   | "creativeCommonAttribution";
 
-
 export interface ProductionResponse {
   _id: string;
   userId: string;
@@ -129,9 +128,10 @@ export interface ComicBookDisplayProps {
 export interface ArchetypeData {
   primaryArchetype: string;
   secondaryArchetypes: string[];
-  symbolMeanings: {
-    symbol: string;
+  symbols: {
+    name: string;
     meaning: string;
+    frequency: number;
   }[];
   emotionalTone: string[];
   potentialConflicts: string[];
