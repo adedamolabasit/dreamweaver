@@ -50,7 +50,7 @@ export function VideoDetail() {
 
   // Simulate video progress
   React.useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: any;
     if (isPlaying) {
       interval = setInterval(() => {
         setCurrentTime(prev => {
@@ -66,7 +66,7 @@ export function VideoDetail() {
   }, [isPlaying, duration]);
 
   return (
-    <div className="pt-20 min-h-screen">
+    <div className="pt-20 min-h-screen pb-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -21,7 +21,7 @@ export function Navigation() {
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-3 mr-10"> {/* Added margin-right here */}
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl blur opacity-75"></div>
               <div className="relative p-3 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl">
@@ -36,7 +36,7 @@ export function Navigation() {
             </div>
           </Link>
           
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-1"> {/* Reduced space between nav items */}
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.path;
@@ -44,7 +44,7 @@ export function Navigation() {
               return (
                 <Link key={item.path} to={item.path} className="relative group">
                   <motion.div
-                    className={`flex items-center space-x-3 px-6 py-3 rounded-xl transition-all duration-300 ${
+                    className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-300 ${
                       isActive
                         ? 'glass-strong text-white shadow-lg'
                         : 'text-white/70 hover:text-white hover:glass'
@@ -53,7 +53,7 @@ export function Navigation() {
                     whileTap={{ scale: 0.95 }}
                   >
                     <Icon className="h-5 w-5" />
-                    <span className="font-medium">{item.label}</span>
+                    <span className="font-medium text-sm">{item.label}</span> {/* Smaller text */}
                   </motion.div>
                   {isActive && (
                     <motion.div
@@ -66,9 +66,9 @@ export function Navigation() {
             })}
 
             {/* Content Dropdown */}
-            <div className="relative group">
+            <div className="relative group ml-1"> {/* Added small left margin */}
               <motion.div
-                className={`flex items-center space-x-3 px-6 py-3 rounded-xl transition-all duration-300 cursor-pointer ${
+                className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-300 cursor-pointer ${
                   isContentPage
                     ? 'glass-strong text-white shadow-lg'
                     : 'text-white/70 hover:text-white hover:glass'
@@ -76,7 +76,7 @@ export function Navigation() {
                 whileHover={{ scale: 1.05, y: -2 }}
               >
                 <Image className="h-5 w-5" />
-                <span className="font-medium">Explore</span>
+                <span className="font-medium text-sm">Explore</span> {/* Smaller text */}
                 <svg className="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
@@ -139,7 +139,7 @@ export function Navigation() {
           </div>
 
           <div className="md:hidden">
-            <button className="text-white/70 hover:text-white glass p-3 rounded-xl">
+            <button className="text-white/70 hover:text-white glass p-2 rounded-xl"> {/* Smaller padding */}
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>

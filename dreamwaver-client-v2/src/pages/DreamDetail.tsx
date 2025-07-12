@@ -59,7 +59,7 @@ When I finally began to descend, I found myself floating gently down toward what
   ];
 
   return (
-    <div className="pt-20 min-h-screen">
+    <div className="pt-20 min-h-screen pb-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

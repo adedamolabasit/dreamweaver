@@ -33,7 +33,7 @@ export function HomePage() {
   ];
 
   return (
-    <div className="pt-20">
+    <div className="">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -305,7 +305,7 @@ export function HomePage() {
             </p>
             <Link to="/dashboard">
               <motion.button
-                className="bg-white text-indigo-900 px-16 py-6 rounded-2xl font-bold text-xl hover:bg-blue-50 transition-colors shadow-2xl"
+                className="bg-white text-indigo-900 px-16 py-6 mt-12 rounded-2xl font-bold text-xl hover:bg-blue-50 transition-colors shadow-2xl"
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
               >

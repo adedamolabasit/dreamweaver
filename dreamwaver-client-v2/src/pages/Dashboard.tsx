@@ -94,7 +94,7 @@ export function Dashboard() {
   const commonSounds = ['music', 'voices', 'nature', 'silence', 'mechanical', 'water', 'wind', 'animals'];
 
   return (
-    <div className="pt-24 min-h-screen">
+    <div className="pt-24 min-h-screen pb-20">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

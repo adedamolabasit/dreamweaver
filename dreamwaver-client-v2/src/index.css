@@ -1,9 +1,12 @@
+/* Font imports must come first */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+/* Then Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
+/* Then your custom CSS */
 * {
   font-family: 'Inter', sans-serif;
 }
@@ -55,25 +58,6 @@ body {
 @keyframes twinkle {
   0%, 100% { opacity: 0.3; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.2); }
-}
-
-/* Shooting stars */
-.shooting-star {
-  position: absolute;
-  height: 2px;
-  background: linear-gradient(90deg, #ffffff, transparent);
-  animation: shoot 3s linear infinite;
-}
-
-@keyframes shoot {
-  0% {
-    transform: translateX(-100px) translateY(100px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(300px) translateY(-100px);
-    opacity: 0;
-  }
 }
 
 /* Aurora effect */
@@ -130,30 +114,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #764ba2, #667eea);
-}
-
-/* Floating particles */
-.particle {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 50%;
-  pointer-events: none;
-  animation: float-particle 15s linear infinite;
-}
-
-@keyframes float-particle {
-  0% {
-    transform: translateY(100vh) translateX(0px) rotate(0deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100px) translateX(100px) rotate(360deg);
-    opacity: 0;
-  }
 }
