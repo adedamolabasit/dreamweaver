@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Heart, MessageCircle, Share2, Eye, Filter, TrendingUp, Clock, Star } from 'lucide-react';
+import { Heart, MessageCircle, Share2, Eye, Filter, TrendingUp, Clock, Star, ChevronDown } from 'lucide-react';
 
 export function Community() {
   const [activeTab, setActiveTab] = useState<'all' | 'comics' | 'videos'>('all');
@@ -115,18 +115,23 @@ export function Community() {
               </div>
 
               {/* Sort Options */}
-              <div className="flex items-center space-x-2">
-                <Filter className="h-4 w-4 text-white/50" />
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-dream-400"
-                >
-                  <option value="trending" className="bg-gray-800">Trending</option>
-                  <option value="recent" className="bg-gray-800">Most Recent</option>
-                  <option value="popular" className="bg-gray-800">Most Popular</option>
-                </select>
-              </div>
+       <div className="flex items-center space-x-2">
+  <Filter className="h-4 w-4 text-white/50" />
+  <div className="relative">
+    <select
+      value={sortBy}
+      onChange={(e) => setSortBy(e.target.value as any)}
+      className="appearance-none bg-white/10 border border-white/20 rounded-lg pl-3 pr-8 py-2 text-white text-sm focus:outline-none focus:border-dream-400"
+    >
+      <option value="trending" className="bg-gray-800">Trending</option>
+      <option value="recent" className="bg-gray-800">Most Recent</option>
+      <option value="popular" className="bg-gray-800">Most Popular</option>
+    </select>
+    <div className="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+      <ChevronDown className="h-4 w-4 text-white/50" />
+    </div>
+  </div>
+</div>
             </div>
           </div>
 
